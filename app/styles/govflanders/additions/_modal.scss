@@ -1,0 +1,27 @@
+/* ==========================================================================
+  Addition:
+  * Support a modal footer
+  * Support a modal header
+  * Other positioning of controls
+   ========================================================================== */
+
+.vl-modal.vl-modal--padding-custom {
+  .vl-modal-dialog {
+    padding: 1rem 3rem;
+  }
+
+/* Content
+    ========================================================================== */
+
+  .vl-modal-dialog__content {
+    padding: 2rem 0;
+  }
+
+
+/* Sizes
+    ========================================================================== */
+
+  .vl-modal-dialog--large {
+    width: 88rem;
+  }
+}

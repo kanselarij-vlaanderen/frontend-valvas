@@ -1,0 +1,123 @@
+/* Official code
+   ========================================================================== */
+
+@import '_colors';
+
+// Core (loaded from node_modules)
+// @import "node_modules/@govflanders/vl-ui-core/src/scss/_setting.scss";
+// @import "node_modules/@govflanders/vl-ui-core/src/scss/_tool.scss";
+// @import "node_modules/@govflanders/vl-ui-core/src/scss/_core.scss";
+// @import "node_modules/@govflanders/vl-ui-core/src/scss/_generic.scss";
+// @import "node_modules/@govflanders/vl-ui-core/src/scss/_element.scss";
+// @import "node_modules/@govflanders/vl-ui-core/src/scss/_object.scss";
+
+// Components (loaded locally to easily read source)
+@import 'govflanders/core/_setting.scss';
+@import 'govflanders/core/_tool.scss';
+@import 'govflanders/core/_generic.scss';
+@import 'govflanders/core/_element.scss';
+@import 'govflanders/core/_object.scss';
+
+// Components (loaded from node_modules)
+// @import "node_modules/@govflanders/vl-ui-accordion/src/scss/_accordion";
+// @import "node_modules/@govflanders/vl-ui-action-group/src/scss/_action-group.scss";
+// @import "node_modules/@govflanders/vl-ui-alert/src/scss/_alert";
+// @import "node_modules/@govflanders/vl-ui-autocomplete/src/scss/_autocomplete";
+// @import "node_modules/@govflanders/vl-ui-badge/src/scss/_badge";
+// @import "node_modules/@govflanders/vl-ui-button/src/scss/_button.scss";
+// @import "node_modules/@govflanders/vl-ui-checkbox/src/scss/_checkbox";
+// @import "node_modules/@govflanders/vl-ui-data-table/src/scss/_data-table";
+// @import "node_modules/@govflanders/vl-ui-datepicker/src/scss/_datepicker";
+// @import "node_modules/@govflanders/vl-ui-description-data/src/scss/_description-data";
+// @import "node_modules/@govflanders/vl-ui-document/src/scss/_document.scss";
+// @import "node_modules/@govflanders/vl-ui-form-message/src/scss/_form-message.scss";
+// @import "node_modules/@govflanders/vl-ui-form-structure/src/scss/_form-structure.scss";
+// @import "node_modules/@govflanders/vl-ui-icon/src/scss/_icon.scss";
+// @import "node_modules/@govflanders/vl-ui-info-tile/src/scss/_info-tile.scss";
+// @import "node_modules/@govflanders/vl-ui-input-addon/src/scss/_input-addon.scss";
+// @import "node_modules/@govflanders/vl-ui-input-field/src/scss/_input-field.scss";
+// @import "node_modules/@govflanders/vl-ui-link-list/src/scss/link-list";
+// @import "node_modules/@govflanders/vl-ui-link/src/scss/_link.scss";
+// @import "node_modules/@govflanders/vl-ui-loader/src/scss/_loader.scss";
+// @import "node_modules/@govflanders/vl-ui-modal/src/scss/_modal";
+// @import "node_modules/@govflanders/vl-ui-pager/src/scss/_pager";
+// @import "node_modules/@govflanders/vl-ui-pill-input/src/scss/_pill-input";
+// @import "node_modules/@govflanders/vl-ui-pill/src/scss/_pill";
+// @import "node_modules/@govflanders/vl-ui-popover/src/scss/_popover";
+// @import "node_modules/@govflanders/vl-ui-radio/src/scss/_radio";
+// @import "node_modules/@govflanders/vl-ui-search/src/scss/_search;
+// @import "node_modules/@govflanders/vl-ui-tabs/src/scss/_tabs";
+// @import "node_modules/@govflanders/vl-ui-textarea/src/scss/_textarea";
+// @import "node_modules/@govflanders/vl-ui-titles/src/scss/_titles";
+// @import "node_modules/@govflanders/vl-ui-typography/src/scss/_typography";
+// @import "node_modules/@govflanders/vl-ui-upload/src/scss/_upload";
+// @import "node_modules/@govflanders/vl-ui-input-group/src/scss/_input-group";
+
+// Components (loaded locally to easily read source)
+@import 'govflanders/components/_accordion';
+@import 'govflanders/components/_action-group';
+@import 'govflanders/components/_alert';
+@import 'govflanders/components/_autocomplete';
+@import 'govflanders/components/_badge';
+@import 'govflanders/components/_button';
+@import 'govflanders/components/_checkbox';
+@import 'govflanders/components/_data-table';
+@import 'govflanders/components/_datepicker';
+@import 'govflanders/components/_description-data';
+@import 'govflanders/components/_document';
+@import 'govflanders/components/_form-message';
+@import 'govflanders/components/_form-structure';
+@import 'govflanders/components/_icon';
+@import 'govflanders/components/_info-tile';
+@import 'govflanders/components/_input-addon';
+@import 'govflanders/components/_input-field';
+@import 'govflanders/components/_input-group';
+@import 'govflanders/components/_link-list';
+@import 'govflanders/components/_link';
+@import 'govflanders/components/_loader';
+@import 'govflanders/components/_modal';
+@import 'govflanders/components/_pager';
+@import 'govflanders/components/_pill-input';
+@import 'govflanders/components/_pill';
+@import 'govflanders/components/_popover';
+@import 'govflanders/components/_radio';
+@import 'govflanders/components/_search';
+@import 'govflanders/components/_side-navigation';
+@import 'govflanders/components/_tabs';
+@import 'govflanders/components/_textarea';
+@import 'govflanders/components/_titles';
+@import 'govflanders/components/_typography';
+@import 'govflanders/components/_upload';
+
+// Interdependent components (loaded from node_modules)
+// @import "node_modules/@govflanders/vl-ui-select/src/scss/_select";
+// @import "node_modules/@govflanders/vl-ui-select/src/scss/_js-select";
+
+// Interdependent components - These are source order dependent
+@import 'govflanders/components/_select';
+@import 'govflanders/components/_js-select';
+
+/* Unofficial code
+      ========================================================================== */
+
+// Additions to existing components
+@import 'govflanders/additions/_badge';
+@import 'govflanders/additions/_button';
+@import 'govflanders/additions/_checkbox';
+@import 'govflanders/additions/_data-table';
+@import 'govflanders/additions/_icon-list';
+@import 'govflanders/additions/_link-list';
+@import 'govflanders/additions/_modal';
+@import 'govflanders/additions/_pill-input';
+@import 'govflanders/additions/_popover';
+@import 'govflanders/additions/_tabs';
+
+// Additions to existing utilities
+@import 'govflanders/additions/_background';
+@import 'govflanders/additions/_typography';
+
+// Imports utilities (loaded from node_modules)
+// @import "node_modules/@govflanders/vl-ui-util/src/scss/util";
+
+// Utilities (loaded locally to easily read source)
+@import 'govflanders/util/_util';
