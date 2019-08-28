@@ -13,14 +13,8 @@
             <form class="form filter__form">
               <div>
                 <div class="filter__field form-item">
-                  <label class="filter__field filter__field__label">
-                    Zoek naar
-                  </label>
-                  <div class="form-element">
-                    <div class="form__input">
-                      <input placeholder="Zoek naar" class="input-field input-field--block form-text" type="text" value="" size="30" maxlength="128">
-                    </div>
-                  </div>
+                  {{web-components/vl-form-label value="Zoek naar"}}
+                  {{web-components/vl-form-input width="4" value=(mut searchInput)}}
                 </div>
                 <div class="filter__field form-item">
                   <label class="filter__field filter__field__label">
