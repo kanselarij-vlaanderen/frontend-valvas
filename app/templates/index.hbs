@@ -1,10 +1,9 @@
 <div class="main-content">
   <div class="region region--no-space-bottom">
     <div class="layout layout--wide">
-      <h1 class="h1">XXX beslissingen gevonden</h1>
+      <h1 class="h1">{{model.count}} beslissingen gevonden</h1>
     </div>
   </div>
-
   <div class="region">
     <div class="layout layout--wide">
       <div class="grid">
@@ -117,32 +116,9 @@
           <div class="view-ip-decisions-search">
             <div class="view-content">
               <div class="item-list">
-                <h2 class="h2 u-spacer">Ministerraad van XXX</h2>
-                <ul>
-                  <li class="decision u-spacer">
-                    <div class="u-named-target-wrapper">
-                      <div class="u-named-target-dummy"></div>
-                    </div>
-                    <h4 class="h4">XXX</h4>
-                    <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
-                      XXX, op voorstel van <a href="XXX">XXX</a>
-                    </div>
-                    <div class="decision__text typography">
-                      <p>
-                        XXX
-                      </p>
-                    </div>
-                    <div class="decision__links">
-                      <div class="link-group link-group--bordered">
-                        <button class="link">Lees meer</button>
-                        <a href="#" class="link--icon">
-                          <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
-                          XXX documenten
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                {{#each model.data as |newsletterInfo|}}
+                  {{newsletter-info-view newsletterInfo=newsletterInfo.attributes}}
+                {{/each}}
               </div>
             </div>
 

@@ -1,0 +1,51 @@
+<h2 class="h2 u-spacer">Ministerraad van {{moment-format newsletterInfo.publicationDate "DD MMMM YYYY"}}</h2>
+<ul>
+  <li class="decision u-spacer">
+    <div class="u-named-target-wrapper">
+      <div class="u-named-target-dummy"></div>
+    </div>
+    <h4 class="h4">{{newsletterInfo.title}}</h4>
+    <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
+      {{moment-format newsletterInfo.publicationDate "DD MMMM YYYY"}}, op voorstel van <a href="XXX">{{newsletterInfo.mandateeProposal}}</a>
+    </div>
+    <div class="decision__text typography">
+      <p>
+        {{#if isLongText}}
+          {{shortenText}}
+        {{else}}
+          {{textToDisplay}}
+        {{/if}}
+      </p>
+    </div>
+    <div class="decision__links">
+      <div class="link-group link-group--bordered">
+        {{#if isLongText}}
+          <button class="link" {{action "readMore"}}>Lees meer</button>
+        {{/if}}
+        {{#if newsletterInfo.documents}}
+          <a href="#" class="link--icon">
+            <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
+            {{newsletterInfo.documents.length}} documenten
+          </a>
+        {{else}}
+          <button class="link" {{action (mut showGeenDocumenten) true}}>
+            <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
+            Geen documenten beschikbaar
+          </button>
+          {{#if showGeenDocumenten}}
+            <div class="filter__form">
+              <div class="u-align-right">
+                <button class="link link--icon--close" title="Venster sluiten" {{action (mut showGeenDocumenten) false}}>
+                  <span class="u-visually-hidden">Venster sluiten</span>
+                </button>
+              </div>
+              <p>
+                Op 29 januari 2016 besliste de Vlaamse Regering om alle nota’s en mededelingen actief openbaar te maken, met uitzondering van de documenten bij individuele beslissingen. Individuele beslissingen regelen een persoonlijke rechtstoestand en gelden voor één geval of voor enkele welbepaalde gevallen, zoals benoemingen, subsidiebesluiten voor projecten of investeringssubsidies voor bedrijven.
+              </p>
+            </div>
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
+  </li>
+</ul>
