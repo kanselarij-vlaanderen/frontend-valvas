@@ -4,5 +4,6 @@ export default Controller.extend({
   queryParams: ['search', 'startDate', 'endDate'],
   search: null,
   startDate: null,
-  endDate: null
+  endDate: null,
+  presentedBy: null
 });

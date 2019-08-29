@@ -10,6 +10,9 @@ export default Route.extend({
     },
     endDate: {
       refreshModel: true
+    },
+    presentedBy: {
+      refreshModel: true
     }
   },
 

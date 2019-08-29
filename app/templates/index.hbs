@@ -18,7 +18,6 @@
                 </div>
 
                 {{select-date-council setStartDate=(action (mut startDateInput)) setEndDate=(action (mut endDateInput))}}
-
                 <div class="filter__field form-item">
                   <label class="filter__field filter__field__label">
                     Ministeriële bevoegdheden
@@ -35,7 +34,7 @@
                   </label>
                   <div class="form-element">
                     <div class="form__input">
-                      XXX
+                      {{select-presented-by setPresentedBy=(action (mut presentedByInput))}}
                     </div>
                   </div>
                 </div>

@@ -1,0 +1,7 @@
+{{#power-select
+    selected=selected
+    options=options
+    onChange=(action "onChange")
+    as |presentedBy|}}
+  {{presentedBy.label}} ({{presentedBy.councilsNumber}})
+{{/power-select}}

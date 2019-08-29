@@ -1,11 +1,8 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
+import moment from 'moment';
 
 export default Component.extend({
-  // Quand le component load, on a startDate et endDate à null.
-  // Si on choisit une des options, ça les set. Et si on choisit de choisir les dates,
-  // idem ça les set. Comme ça le component se sert des mêmes valeurs pour les deux.
-
   showDateInputs: false,
   startDate: null,
   endDate: null,
@@ -35,9 +32,6 @@ export default Component.extend({
 
   actions: {
     onChange(selected) {
-      // On prend le monthsNumber pour set la startDate, et on met la endDate à ajd.
-      // Puis pour set les data, on appelle les trucs d'en haut
-
       this.set('showDateInputs', false);
       this.set('selected', selected);
       if (selected.id == 1) {
