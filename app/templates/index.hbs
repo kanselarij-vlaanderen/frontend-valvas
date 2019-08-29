@@ -16,38 +16,9 @@
                   {{web-components/vl-form-label value="Zoek naar"}}
                   {{web-components/vl-form-input width="4" value=(mut searchInput)}}
                 </div>
-                <div class="filter__field form-item">
-                  <label class="filter__field filter__field__label">
-                    Datum ministerraad
-                  </label>
-                  <div class="form-item form__row">
-                    <div class="form__input">
-                      XXX
-                    </div>
-                  </div>
-                </div>
-                <div class="filter__field form-item">
-                  <div class="grid">
-                    <div class="col--6-12">
-                      <div class="form-item form__row">
-                        <label class="form__label u-visually-hidden">
-                          Begindatum
-                        </label>
-                        <div class="form__input"><input placeholder="Begindatum" class="input-field input-field--block form-text" type="text" value="" size="30" maxlength="30"></div>
-                      </div>
-                    </div>
-                    <div class="col--6-12">
-                      <div class="form-item form__row">
-                        <label class="form__label u-visually-hidden">
-                          Einddatum
-                        </label>
-                        <div class="form__input">
-                          <input placeholder="Einddatum" class="input-field input-field--block form-text" type="text" value="" size="30" maxlength="30">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
+                {{select-date-council setStartDate=(action (mut startDateInput)) setEndDate=(action (mut endDateInput))}}
+
                 <div class="filter__field form-item">
                   <label class="filter__field filter__field__label">
                     Ministeriële bevoegdheden

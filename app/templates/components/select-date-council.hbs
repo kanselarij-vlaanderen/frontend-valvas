@@ -1,0 +1,40 @@
+<div class="filter__field form-item">
+  <label class="filter__field filter__field__label">
+    Datum ministerraad
+  </label>
+  <div class="">
+    {{#power-select
+        selected=selected
+        options=options
+        onChange=(action "onChange")
+        as |selectDateOption|}}
+      {{#if selectDateOption.councilsNumber}}
+        {{selectDateOption.label}} ({{selectDateOption.councilsNumber}})
+      {{else}}
+        {{selectDateOption.label}}
+      {{/if}}
+    {{/power-select}}
+  </div>
+</div>
+{{#if showDateInputs}}
+  <div class="filter__field form-item">
+    <div class="grid">
+      <div class="col--6-12">
+        <div class="form-item form__row">
+          {{web-components/vl-datepicker
+            selectedDate=startDate
+            dateChanged=(action (mut selectStartDate))
+          }}
+        </div>
+      </div>
+      <div class="col--6-12">
+        <div class="form-item form__row">
+          {{web-components/vl-datepicker
+            selectedDate=endDate
+            dateChanged=(action (mut selectEndDate))
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}

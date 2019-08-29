@@ -25,7 +25,7 @@ module.exports = function(environment) {
       allowEmpty: true,
       includeLocales: ['nl-be'],
       includeTimezone: 'all'
-    },
+    }
   };
 
   if (environment === 'development') {

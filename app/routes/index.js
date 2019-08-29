@@ -4,6 +4,12 @@ export default Route.extend({
   queryParams: {
     search: {
       refreshModel: true
+    },
+    startDate: {
+      refreshModel: true
+    },
+    endDate: {
+      refreshModel: true
     }
   },
 
