@@ -2,6 +2,11 @@
   <div class="region region--no-space-bottom">
     <div class="layout layout--wide">
       <h1 class="h1">{{model.count}} beslissingen gevonden</h1>
+      {{#if showBackLink}}
+        {{#link-to "index"  class="listing-link active"}}
+          <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
+        {{/link-to}}
+      {{/if}}
     </div>
   </div>
   <div class="region">
@@ -24,7 +29,7 @@
                   </label>
                   <div class="form-element">
                     <div class="form__input">
-                      {{select-ministerial-powers setMinisterialPowers=(action (mut ministerialPowersInput))}}
+                      {{select-ministerial-power setMinisterialPower=(action (mut ministerialPowerInput))}}
                     </div>
                   </div>
                 </div>
@@ -39,7 +44,7 @@
                   </div>
                 </div>
                 <div class="filter__field form-item">
-                  <input class="form-submit button" type="submit" value="Zoek">
+                  <input class="form-submit button" onclick={{action "search"}} value="Zoek">
                 </div>
               </div>
             </form>

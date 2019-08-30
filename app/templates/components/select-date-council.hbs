@@ -23,7 +23,7 @@
         <div class="form-item form__row">
           {{web-components/vl-datepicker
             selectedDate=startDate
-            dateChanged=(action (mut selectStartDate))
+            dateChanged=(action "onChangeStart")
           }}
         </div>
       </div>
@@ -31,7 +31,7 @@
         <div class="form-item form__row">
           {{web-components/vl-datepicker
             selectedDate=endDate
-            dateChanged=(action (mut selectEndDate))
+            dateChanged=(action "onChangeEnd")
           }}
         </div>
       </div>

@@ -46,6 +46,16 @@ export default Component.extend({
       }
       this.setStartDate(this.startDate);
       this.setEndDate(this.endDate);
+    },
+
+    onChangeStart(startDate) {
+      this.set('startDate', startDate);
+      this.setStartDate(startDate);
+    },
+
+    onChangeEnd(endDate) {
+      this.set('endDate', endDate);
+      this.setEndDate(endDate);
     }
   }
 });

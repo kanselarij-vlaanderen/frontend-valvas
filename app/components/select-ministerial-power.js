@@ -12,6 +12,12 @@ export default Component.extend({
     });
   }),
 
+  createOptions: task(function* (options, ministerialPowers) {
+    ministerialPowers.forEach( yield (ministerialPower) => {
+      options.push({ label: ministerialPower.label, councilsNumber: null });
+    });
+  }),
+
   async init() {
     this._super(...arguments);
 
@@ -28,9 +34,7 @@ export default Component.extend({
 
     const ministerialPowers = await this.store.findAll('theme');
     let options = [];
-    ministerialPowers.forEach( (ministerialPower) => {
-      options.push({ label: ministerialPower.label, councilsNumber: null });
-    });
+    await this.createOptions.perform(options, ministerialPowers);
     await this.updateCouncilsNumber.perform(options);
     this.set('options', options);
   },
@@ -38,7 +42,7 @@ export default Component.extend({
   actions: {
     onChange(selected) {
       this.set('selected', selected);
-      this.setPresentedBy(selected.label);
+      this.setMinisterialPower(selected.label);
     }
   }
 });

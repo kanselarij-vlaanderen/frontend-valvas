@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | select-ministerial-powers', function(hooks) {
+module('Integration | Component | select-ministerial-power', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<SelectMinisterialPowers />`);
+    await render(hbs`<SelectMinisterialPower />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <SelectMinisterialPowers>
+      <SelectMinisterialPower>
         template block text
-      </SelectMinisterialPowers>
+      </SelectMinisterialPower>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');
