@@ -3,7 +3,7 @@
     <div class="layout layout--wide">
       <h1 class="h1">{{model.count}} beslissingen gevonden</h1>
       {{#if showBackLink}}
-        <a onclick={{action "clearParams"}} class="listing-link active">
+        <a role="button" onclick={{action "clearParams"}} class="listing-link active">
           <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
         </a>
       {{/if}}
