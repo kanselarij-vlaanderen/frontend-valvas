@@ -3,9 +3,9 @@
     <div class="layout layout--wide">
       <h1 class="h1">{{model.count}} beslissingen gevonden</h1>
       {{#if showBackLink}}
-        {{#link-to "index"  class="listing-link active"}}
+        <a onclick={{action "clearParams"}} class="listing-link active">
           <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
-        {{/link-to}}
+        </a>
       {{/if}}
     </div>
   </div>
@@ -13,42 +13,7 @@
     <div class="layout layout--wide">
       <div class="grid">
         <div class="col--4-12">
-          <div class="filter u-spacer--small">
-            <p class="filter__intro">Verfijn uw zoekresultaat</p>
-            <form class="form filter__form">
-              <div>
-                <div class="filter__field form-item">
-                  {{web-components/vl-form-label value="Zoek naar"}}
-                  {{web-components/vl-form-input width="4" value=(mut searchInput)}}
-                </div>
-
-                {{select-date-council setStartDate=(action (mut startDateInput)) setEndDate=(action (mut endDateInput))}}
-                <div class="filter__field form-item">
-                  <label class="filter__field filter__field__label">
-                    Ministeriële bevoegdheden
-                  </label>
-                  <div class="form-element">
-                    <div class="form__input">
-                      {{select-ministerial-power setMinisterialPower=(action (mut ministerialPowerInput))}}
-                    </div>
-                  </div>
-                </div>
-                <div class="filter__field form-item">
-                  <label class="filter__field filter__field__label">
-                    Voorgesteld door
-                  </label>
-                  <div class="form-element">
-                    <div class="form__input">
-                      {{select-presented-by setPresentedBy=(action (mut presentedByInput))}}
-                    </div>
-                  </div>
-                </div>
-                <div class="filter__field form-item">
-                  <input class="form-submit button" onclick={{action "search"}} value="Zoek">
-                </div>
-              </div>
-            </form>
-          </div>
+          {{search-box searchNewsletters=(action "searchNewsletters") search=search startDate=startDate endDate=endDate presentedBy=presentedBy ministerialPower=ministerialPower}}
 
           <ul class="link-list link-list--small u-spacer--small">
             <li>
