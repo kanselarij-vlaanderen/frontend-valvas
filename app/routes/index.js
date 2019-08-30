@@ -13,6 +13,9 @@ export default Route.extend({
     },
     presentedBy: {
       refreshModel: true
+    },
+    ministerialPower: {
+      refreshModel: true
     }
   },
 

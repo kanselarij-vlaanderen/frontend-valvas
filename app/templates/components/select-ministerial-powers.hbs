@@ -1,0 +1,7 @@
+{{#power-select
+    selected=selected
+    options=options
+    onChange=(action "onChange")
+    as |ministerialPower|}}
+  {{ministerialPower.label}} ({{ministerialPower.councilsNumber}})
+{{/power-select}}

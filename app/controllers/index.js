@@ -5,5 +5,6 @@ export default Controller.extend({
   search: null,
   startDate: null,
   endDate: null,
-  presentedBy: null
+  presentedBy: null,
+  ministerialPower: null
 });
