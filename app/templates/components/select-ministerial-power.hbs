@@ -3,5 +3,5 @@
     options=options
     onChange=(action "onChange")
     as |ministerialPower|}}
-  {{ministerialPower.label}} ({{ministerialPower.councilsNumber}})
+  {{ministerialPower.label}} {{#if ministerialPower.isSpecific}}({{ministerialPower.councilsNumber}}){{/if}}
 {{/power-select}}

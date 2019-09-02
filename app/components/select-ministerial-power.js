@@ -29,12 +29,18 @@ export default Component.extend({
   }),
 
   createOptions: task(function* (options, ministerialPowers) {
+    options.push({
+      id: 0,
+      label: "Alle bevoegdheden",
+      isSpecific: false
+    });
     ministerialPowers.forEach( yield (ministerialPower) => {
       options.push({
         id: parseInt(ministerialPower.id),
         label: ministerialPower.label,
         scopeNote: ministerialPower.scopeNote,
-        councilsNumber: null
+        councilsNumber: null,
+        isSpecific: true
       });
     });
   }),
@@ -46,12 +52,19 @@ export default Component.extend({
     await this.createOptions.perform(options, ministerialPowers);
     await this.updateCouncilsNumber.perform(options);
     this.set('options', options);
+    if(!this.selectedMinisterialPower) {
+      this.set('selectedMinisterialPower', options.findBy('id', 0));
+    }
   },
 
   actions: {
     onChange(selected) {
       this.set('selectedMinisterialPower', selected);
-      this.setMinisterialPower(selected.id);
+      if(selected.id != 0) {
+        this.setMinisterialPower(selected.id);
+      } else {
+        this.setMinisterialPower(null);
+      }
     }
   }
 });

@@ -29,19 +29,27 @@ export default Component.extend({
   async init() {
     this._super(...arguments);
     let options = [
-      { id: 1, label: 'Martha Martha',     councilsNumber: null },
-      { id: 2, label: 'Paul Paul',         councilsNumber: null },
-      { id: 3, label: 'Yves Yves',         councilsNumber: null },
-      { id: 4, label: 'Florette Florette', councilsNumber: null }
+      { id: 0, label: "Alle ministers",    councilsNumber: null, isSpecific: false },
+      { id: 1, label: 'Martha Martha',     councilsNumber: null, isSpecific: true  },
+      { id: 2, label: 'Paul Paul',         councilsNumber: null, isSpecific: true  },
+      { id: 3, label: 'Yves Yves',         councilsNumber: null, isSpecific: true  },
+      { id: 4, label: 'Florette Florette', councilsNumber: null, isSpecific: true  }
     ];
     await this.updateCouncilsNumber.perform(options);
     this.set('options', options);
+    if(!this.selectedPresentedBy) {
+      this.set('selectedPresentedBy', options.findBy('id', 0));
+    }
   },
 
   actions: {
     onChange(selected) {
       this.set('selectedPresentedBy', selected);
-      this.setPresentedBy(selected.id);
+      if(selected.id != 0) {
+        this.setPresentedBy(selected.id);
+      } else {
+        this.setPresentedBy(null);
+      }
     }
   }
 });

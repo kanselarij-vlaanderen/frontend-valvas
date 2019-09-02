@@ -3,5 +3,5 @@
     options=options
     onChange=(action "onChange")
     as |presentedBy|}}
-  {{presentedBy.label}} {{#if presentedBy.councilsNumber}}({{presentedBy.councilsNumber}}){{/if}}
+  {{presentedBy.label}} {{#if presentedBy.isSpecific}}({{presentedBy.councilsNumber}}){{/if}}
 {{/power-select}}
