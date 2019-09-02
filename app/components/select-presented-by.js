@@ -1,7 +1,24 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
+import { computed } from '@ember/object';
 
 export default Component.extend({
+  selectedPresentedBy: computed('options.[]', 'presentedById', {
+    get() {
+      if (this._selectedPresentedBy) {
+        return this._selectedPresentedBy;
+      }
+      if(this.presentedById && this.options) {
+        return this.options.findBy('id', parseInt(this.presentedById));
+      } else {
+        return null;
+      }
+    },
+    set(key, value) {
+      return this._selectedPresentedBy = value;
+    }
+  }),
+
   updateCouncilsNumber: task(function* (options) {
     options.forEach( yield (option) => {
       // TODO - Fetch the number of councils through mu-search
@@ -23,8 +40,8 @@ export default Component.extend({
 
   actions: {
     onChange(selected) {
-      this.set('selected', selected);
-      this.setPresentedBy(selected.label);
+      this.set('selectedPresentedBy', selected);
+      this.setPresentedBy(selected.id);
     }
   }
 });

@@ -6,8 +6,8 @@ export default Component.extend({
     this.set('searchInput', this.search);
     this.set('startDateInput', this.startDate);
     this.set('endDateInput', this.endDate);
-    this.set('presentedByInput', this.presentedBy);
-    this.set('ministerialPowerInput', this.ministerialPower);
+    this.set('presentedByIdInput', this.presentedById);
+    this.set('ministerialPowerIdInput', this.ministerialPowerId);
   },
 
   actions: {
@@ -16,8 +16,8 @@ export default Component.extend({
         this.searchInput,
         this.startDateInput,
         this.endDateInput,
-        this.presentedByInput,
-        this.ministerialPowerInput
+        this.presentedByIdInput,
+        this.ministerialPowerIdInput
       );
     }
   }

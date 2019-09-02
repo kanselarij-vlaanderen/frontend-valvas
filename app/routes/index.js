@@ -1,6 +1,10 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
+  store: service(),
+  firstTimeLoading: true,
+
   queryParams: {
     search: {
       refreshModel: true
@@ -11,15 +15,29 @@ export default Route.extend({
     endDate: {
       refreshModel: true
     },
-    presentedBy: {
+    presentedById: {
       refreshModel: true
     },
-    ministerialPower: {
+    ministerialPowerId: {
       refreshModel: true
     }
   },
 
-  model(/*params*/) {
+  async model(/*params*/) {
+    if(this.firstTimeLoading) {
+      await this.store.createRecord('theme', {
+        id: 1,
+        label: 'Haven',
+        scopeNote: 'Scope note Haven'
+      });
+      await this.store.createRecord('theme', {
+        id: 2,
+        label: 'Brussel',
+        scopeNote: 'Scope note Brussel'
+      });
+      this.set('firstTimeLoading', false);
+    }
+
     const mockJsonNewsletterInfo =   {
       count: 4,
       data: [

@@ -14,7 +14,7 @@
         </label>
         <div class="form-element">
           <div class="form__input">
-            {{select-ministerial-power setMinisterialPower=(action (mut ministerialPowerInput))}}
+            {{select-ministerial-power setMinisterialPower=(action (mut ministerialPowerIdInput)) ministerialPowerId=ministerialPowerId}}
           </div>
         </div>
       </div>
@@ -24,7 +24,7 @@
         </label>
         <div class="form-element">
           <div class="form__input">
-            {{select-presented-by setPresentedBy=(action (mut presentedByInput))}}
+            {{select-presented-by setPresentedBy=(action (mut presentedByIdInput)) presentedById=presentedById}}
           </div>
         </div>
       </div>

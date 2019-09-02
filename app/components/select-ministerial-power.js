@@ -1,9 +1,25 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   store: service(),
+  selectedMinisterialPower: computed('options.[]', 'ministerialPowerId', {
+    get() {
+      if (this._selectedMinisterialPower) {
+        return this._selectedMinisterialPower;
+      }
+      if(this.ministerialPowerId && this.options) {
+        return this.options.findBy('id', parseInt(this.ministerialPowerId));
+      } else {
+        return null;
+      }
+    },
+    set(key, value) {
+      return this._selectedMinisterialPower = value;
+    }
+  }),
 
   updateCouncilsNumber: task(function* (options) {
     options.forEach( yield (option) => {
@@ -14,24 +30,17 @@ export default Component.extend({
 
   createOptions: task(function* (options, ministerialPowers) {
     ministerialPowers.forEach( yield (ministerialPower) => {
-      options.push({ label: ministerialPower.label, councilsNumber: null });
+      options.push({
+        id: parseInt(ministerialPower.id),
+        label: ministerialPower.label,
+        scopeNote: ministerialPower.scopeNote,
+        councilsNumber: null
+      });
     });
   }),
 
   async init() {
     this._super(...arguments);
-
-    // Insert mock theme records in the store
-    await this.store.createRecord('theme', {
-      label: 'Haven',
-      scopeNote: 'Scope note Haven'
-    });
-    await this.store.createRecord('theme', {
-      label: 'Brussel',
-      scopeNote: 'Scope note Brussel'
-    });
-    // ---------------------------------------
-
     const ministerialPowers = await this.store.findAll('theme');
     let options = [];
     await this.createOptions.perform(options, ministerialPowers);
@@ -41,8 +50,8 @@ export default Component.extend({
 
   actions: {
     onChange(selected) {
-      this.set('selected', selected);
-      this.setMinisterialPower(selected.label);
+      this.set('selectedMinisterialPower', selected);
+      this.setMinisterialPower(selected.id);
     }
   }
 });

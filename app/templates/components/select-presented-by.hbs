@@ -1,7 +1,7 @@
 {{#power-select
-    selected=selected
+    selected=selectedPresentedBy
     options=options
     onChange=(action "onChange")
     as |presentedBy|}}
-  {{presentedBy.label}} ({{presentedBy.councilsNumber}})
+  {{presentedBy.label}} {{#if presentedBy.councilsNumber}}({{presentedBy.councilsNumber}}){{/if}}
 {{/power-select}}
