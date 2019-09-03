@@ -4,10 +4,10 @@
     <div>
       <div class="filter__field form-item">
         {{web-components/vl-form-label value="Zoek naar"}}
-        {{web-components/vl-form-input width="4" value=(mut searchInput)}}
+        {{web-components/vl-form-input width="4" value=(mut searchInput) placeholder="Zoek naar"}}
       </div>
 
-      {{select-date-council setStartDate=(action (mut startDateInput)) setEndDate=(action (mut endDateInput))}}
+      {{select-date-council setStartDate=(action (mut startDateInput)) setEndDate=(action (mut endDateInput)) setDateChoiceId=(action (mut dateChoiceIdInput)) startDateInput=startDate endDateInput=endDate dateChoiceId=dateChoiceId}}
       <div class="filter__field form-item">
         <label class="filter__field filter__field__label">
           Ministeriële bevoegdheden

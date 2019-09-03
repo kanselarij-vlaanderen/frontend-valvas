@@ -4,15 +4,11 @@
   </label>
   <div class="">
     {{#power-select
-        selected=selected
+        selected=selectedDateChoice
         options=options
         onChange=(action "onChange")
         as |selectDateOption|}}
-      {{#if selectDateOption.councilsNumber}}
-        {{selectDateOption.label}} ({{selectDateOption.councilsNumber}})
-      {{else}}
-        {{selectDateOption.label}}
-      {{/if}}
+        {{selectDateOption.label}} {{#if selectDateOption.monthsNumber}}({{selectDateOption.councilsNumber}}){{/if}}
     {{/power-select}}
   </div>
 </div>

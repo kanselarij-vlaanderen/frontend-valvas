@@ -2,18 +2,20 @@ import Controller from '@ember/controller';
 import { or } from 'ember-awesome-macros';
 
 export default Controller.extend({
-  queryParams: ['search', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'],
+  queryParams: ['search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'],
   search: null,
+  dateChoiceId: null,
   startDate: null,
   endDate: null,
   presentedById: null,
   ministerialPowerId: null,
 
-  showBackLink: or('search', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'),
+  showBackLink: or('search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'),
 
   actions: {
-    searchNewsletters(search, startDate, endDate, presentedById, ministerialPowerId) {
+    searchNewsletters(search, dateChoiceId, startDate, endDate, presentedById, ministerialPowerId) {
       this.set('search', search);
+      this.set('dateChoiceId', dateChoiceId);
       this.set('startDate', startDate);
       this.set('endDate', endDate);
       this.set('presentedById', presentedById);
@@ -22,6 +24,7 @@ export default Controller.extend({
 
     clearParams() {
       this.set('search', null);
+      this.set('dateChoiceId', null);
       this.set('startDate', null);
       this.set('endDate', null);
       this.set('presentedById', null);

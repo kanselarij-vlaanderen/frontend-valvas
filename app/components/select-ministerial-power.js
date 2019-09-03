@@ -7,10 +7,11 @@ export default Component.extend({
   store: service(),
   selectedMinisterialPower: computed('options.[]', 'ministerialPowerId', {
     get() {
-      if (this._selectedMinisterialPower) {
+      if (this.options && !this.ministerialPowerId) { // When we clear the query params, select default option
+        return this.options.findBy('id', 0);
+      } else if (this._selectedMinisterialPower) {
         return this._selectedMinisterialPower;
-      }
-      if(this.ministerialPowerId && this.options) {
+      } else if (this.ministerialPowerId && this.options) {
         return this.options.findBy('id', parseInt(this.ministerialPowerId));
       } else {
         return null;
@@ -21,20 +22,20 @@ export default Component.extend({
     }
   }),
 
-  updateCouncilsNumber: task(function* (options) {
-    options.forEach( yield (option) => {
+  updateCouncilsNumber: task(function*(options) {
+    options.forEach(yield(option) => {
       // TODO - Fetch the number of councils through mu-search
       option.councilsNumber = Math.ceil(Math.random() * 10);
     });
   }),
 
-  createOptions: task(function* (options, ministerialPowers) {
+  createOptions: task(function*(options, ministerialPowers) {
     options.push({
       id: 0,
       label: "Alle bevoegdheden",
       isSpecific: false
     });
-    ministerialPowers.forEach( yield (ministerialPower) => {
+    ministerialPowers.forEach(yield(ministerialPower) => {
       options.push({
         id: parseInt(ministerialPower.id),
         label: ministerialPower.label,
@@ -52,15 +53,12 @@ export default Component.extend({
     await this.createOptions.perform(options, ministerialPowers);
     await this.updateCouncilsNumber.perform(options);
     this.set('options', options);
-    if(!this.selectedMinisterialPower) {
-      this.set('selectedMinisterialPower', options.findBy('id', 0));
-    }
   },
 
   actions: {
     onChange(selected) {
       this.set('selectedMinisterialPower', selected);
-      if(selected.id != 0) {
+      if (selected.id != 0) {
         this.setMinisterialPower(selected.id);
       } else {
         this.setMinisterialPower(null);

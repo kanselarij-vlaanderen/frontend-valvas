@@ -4,6 +4,7 @@ export default Component.extend({
   didReceiveAttrs() {
     // this._super(...arguments);
     this.set('searchInput', this.search);
+    this.set('dateChoiceIdInput', this.dateChoiceId);
     this.set('startDateInput', this.startDate);
     this.set('endDateInput', this.endDate);
     this.set('presentedByIdInput', this.presentedById);
@@ -14,6 +15,7 @@ export default Component.extend({
     search() {
       this.searchNewsletters(
         this.searchInput,
+        this.dateChoiceIdInput,
         this.startDateInput,
         this.endDateInput,
         this.presentedByIdInput,

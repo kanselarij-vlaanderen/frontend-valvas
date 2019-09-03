@@ -9,6 +9,9 @@ export default Route.extend({
     search: {
       refreshModel: true
     },
+    dateChoiceId: {
+      refreshModel: true
+    },
     startDate: {
       refreshModel: true
     },
