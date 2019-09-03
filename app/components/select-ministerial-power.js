@@ -9,9 +9,7 @@ export default Component.extend({
     get() {
       if (this.options && !this.ministerialPowerId) { // When we clear the query params, select default option
         return this.options.findBy('id', 0);
-      } else if (this._selectedMinisterialPower) {
-        return this._selectedMinisterialPower;
-      } else if (this.ministerialPowerId && this.options) {
+      } else if (this.options && this.ministerialPowerId) {
         return this.options.findBy('id', parseInt(this.ministerialPowerId));
       } else {
         return null;

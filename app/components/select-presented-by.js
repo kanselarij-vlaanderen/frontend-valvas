@@ -7,9 +7,7 @@ export default Component.extend({
     get() {
       if (this.options && !this.presentedById) { // When we clear the query params, select default option
         return this.options.findBy('id', 0);
-      } else if (this._selectedPresentedBy) {
-        return this._selectedPresentedBy;
-      } else if (this.presentedById && this.options) {
+      } else if (this.options && this.presentedById) {
         return this.options.findBy('id', parseInt(this.presentedById));
       } else {
         return null;

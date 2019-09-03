@@ -4,7 +4,6 @@ import moment from 'moment';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  showDateInputs: false,
   startDate: null,
   endDate: null,
 
@@ -12,9 +11,7 @@ export default Component.extend({
     get() {
       if (this.options && !this.dateChoiceId) { // When we clear the query params, select default option
         return this.options.findBy('id', 0);
-      } else if (this._selectedDateChoice) {
-        return this._selectedDateChoice;
-      } else if (this.dateChoiceId && this.options) {
+      } else if (this.options && this.dateChoiceId) {
         return this.options.findBy('id', parseInt(this.dateChoiceId));
       } else {
         return null;
@@ -97,24 +94,18 @@ export default Component.extend({
       if (selected.id == 0) {
         this.set('startDate', null);
         this.set('endDate', null);
-        this.setDateChoiceId(null);
-      } else if (selected.id == 5) {
-        this.setDateChoiceId(selected.id);
-      } else {
-        const months = selected.monthsNumber;
-        this.set('startDate', moment().subtract(months, 'months').toDate());
-        this.set('endDate', new Date());
-        this.setDateChoiceId(selected.id);
-      }
-      if (this.startDate) {
-        this.setStartDate(moment(this.startDate).format('DD-MM-YYYY'));
-      } else {
         this.setStartDate(this.startDate);
-      }
-      if (this.endDate) {
-        this.setEndDate(moment(this.endDate).format('DD-MM-YYYY'));
-      } else {
         this.setEndDate(this.endDate);
+        this.setDateChoiceId(null);
+      } else {
+        this.setDateChoiceId(selected.id);
+        if (selected.id != 5) {
+          const months = selected.monthsNumber;
+          this.set('startDate', moment().subtract(months, 'months').toDate());
+          this.set('endDate', new Date());
+          this.setStartDate(moment(this.startDate).format('DD-MM-YYYY'));
+          this.setEndDate(moment(this.endDate).format('DD-MM-YYYY'));
+        }
       }
     },
 

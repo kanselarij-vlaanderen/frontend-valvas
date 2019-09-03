@@ -2,7 +2,6 @@ import Component from '@ember/component';
 
 export default Component.extend({
   didReceiveAttrs() {
-    // this._super(...arguments);
     this.set('searchInput', this.search);
     this.set('dateChoiceIdInput', this.dateChoiceId);
     this.set('startDateInput', this.startDate);

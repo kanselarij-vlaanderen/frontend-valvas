@@ -8,7 +8,7 @@
         options=options
         onChange=(action "onChange")
         as |selectDateOption|}}
-        {{selectDateOption.label}} {{#if selectDateOption.monthsNumber}}({{selectDateOption.councilsNumber}}){{/if}}
+      {{selectDateOption.label}} {{#if selectDateOption.monthsNumber}}({{selectDateOption.councilsNumber}}){{/if}}
     {{/power-select}}
   </div>
 </div>
@@ -20,6 +20,7 @@
           {{web-components/vl-datepicker
             selectedDate=startDate
             dateChanged=(action "onChangeStart")
+            dateFormat='d-m-Y'
           }}
         </div>
       </div>
@@ -28,6 +29,7 @@
           {{web-components/vl-datepicker
             selectedDate=endDate
             dateChanged=(action "onChangeEnd")
+            dateFormat='d-m-Y'
           }}
         </div>
       </div>
