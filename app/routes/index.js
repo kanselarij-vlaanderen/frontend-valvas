@@ -34,7 +34,7 @@ export default Route.extend({
     const meetings = await this.store.query('meeting', queryParams);
     const firstMeetingId = meetings.get('firstObject').id;
 
-    const endpoint = `search/news-items?filter[sessionId]=${firstMeetingId}&sort[priority]=asc`;
+    const endpoint = `news-items/search?filter[sessionId]=${firstMeetingId}&sort[priority]=asc`;
     const newsItems = await fetch(endpoint);
     return newsItems.json();
   }
