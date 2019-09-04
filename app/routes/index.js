@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import fetch from 'fetch';
 
 export default Route.extend({
   store: service(),
@@ -32,6 +33,9 @@ export default Route.extend({
     }
     const meetings = await this.store.query('meeting', queryParams);
     const firstMeetingId = meetings.get('firstObject').id;
-    // TODO: finish model
+
+    const endpoint = `search/news-items?filter[sessionId]=${firstMeetingId}&sort[priority]=asc`;
+    const newsItems = await fetch(endpoint);
+    return newsItems.json();
   }
 });
