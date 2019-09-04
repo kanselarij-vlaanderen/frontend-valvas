@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
   store: service(),
+
   selectedMinisterialPower: computed('options.[]', 'ministerialPowerId', {
     get() {
       if (this.options && !this.ministerialPowerId) { // When we clear the query params, select default option
@@ -18,13 +19,6 @@ export default Component.extend({
     set(key, value) {
       return this._selectedMinisterialPower = value;
     }
-  }),
-
-  updateCouncilsNumber: task(function*(options) {
-    options.forEach(yield(option) => {
-      // TODO - Fetch the number of councils through mu-search
-      option.councilsNumber = Math.ceil(Math.random() * 10);
-    });
   }),
 
   createOptions: task(function*(options, ministerialPowers) {
@@ -41,6 +35,13 @@ export default Component.extend({
         councilsNumber: null,
         isSpecific: true
       });
+    });
+  }),
+
+  updateCouncilsNumber: task(function*(options) {
+    options.forEach(yield(option) => {
+      // TODO - Fetch the number of councils through mu-search
+      option.councilsNumber = Math.ceil(Math.random() * 10);
     });
   }),
 

@@ -1,8 +1,11 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 export default Component.extend({
+  store: service(),
+
   selectedPresentedBy: computed('options.[]', 'presentedById', {
     get() {
       if (this.options && !this.presentedById) { // When we clear the query params, select default option
@@ -18,6 +21,22 @@ export default Component.extend({
     }
   }),
 
+  createOptions: task(function*(options, mandatees) {
+    options.push({
+      id: 0,
+      label: "Alle ministers",
+      isSpecific: false
+    });
+    mandatees.forEach(yield(mandatee) => {
+      options.push({
+        id: parseInt(mandatee.id),
+        label: mandatee.get('person.firstName') + ' ' + mandatee.get('person.lastName'),
+        councilsNumber: null,
+        isSpecific: true
+      });
+    });
+  }),
+
   updateCouncilsNumber: task(function*(options) {
     options.forEach(yield(option) => {
       // TODO - Fetch the number of councils through mu-search
@@ -27,37 +46,13 @@ export default Component.extend({
 
   async init() {
     this._super(...arguments);
-    let options = [{
-        id: 0,
-        label: "Alle ministers",
-        councilsNumber: null,
-        isSpecific: false
-      },
-      {
-        id: 1,
-        label: 'Martha Martha',
-        councilsNumber: null,
-        isSpecific: true
-      },
-      {
-        id: 2,
-        label: 'Paul Paul',
-        councilsNumber: null,
-        isSpecific: true
-      },
-      {
-        id: 3,
-        label: 'Yves Yves',
-        councilsNumber: null,
-        isSpecific: true
-      },
-      {
-        id: 4,
-        label: 'Florette Florette',
-        councilsNumber: null,
-        isSpecific: true
-      }
-    ];
+    const queryParams = {
+      'filter[:has-no:end]': true
+    };
+    const mandatees = await this.store.findAll('mandatee', queryParams);
+    console.log(mandatees);
+    let options = [];
+    await this.createOptions.perform(options, mandatees);
     await this.updateCouncilsNumber.perform(options);
     this.set('options', options);
   },

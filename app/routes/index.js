@@ -28,6 +28,7 @@ export default Route.extend({
 
   async model(/*params*/) {
     if(this.firstTimeLoading) {
+      // TMP - create records for ministerial powers
       await this.store.createRecord('theme', {
         id: 1,
         label: 'Haven',
@@ -38,6 +39,56 @@ export default Route.extend({
         label: 'Brussel',
         scopeNote: 'Scope note Brussel'
       });
+
+      // TMP - create records for presented by
+      await this.store.createRecord('person', {
+        id: 1,
+        firstName: 'Martha',
+        lastName: 'Martha'
+      });
+      await this.store.createRecord('person', {
+        id: 2,
+        firstName: 'Paul',
+        lastName: 'Paul'
+      });
+      await this.store.createRecord('person', {
+        id: 3,
+        firstName: 'Yves',
+        lastName: 'Yves'
+      });
+      await this.store.createRecord('person', {
+        id: 4,
+        firstName: 'Florette',
+        lastName: 'Florette'
+      });
+
+      const martha = await this.store.findRecord('person', 1);
+      const paul = await this.store.findRecord('person', 2);
+      const yves = await this.store.findRecord('person', 3);
+      const florette = await this.store.findRecord('person', 4);
+
+      await this.store.createRecord('mandatee', {
+        id: 1,
+        start: '2019-05-15T00:00:00.000Z',
+        person: martha
+      });
+      await this.store.createRecord('mandatee', {
+        id: 2,
+        start: '2018-05-15T00:00:00.000Z',
+        person: paul
+      });
+      await this.store.createRecord('mandatee', {
+        id: 3,
+        start: '2018-04-15T00:00:00.000Z',
+        end: '2019-05-15T00:00:00.000Z',
+        person: yves
+      });
+      await this.store.createRecord('mandatee', {
+        id: 4,
+        start: '2019-07-15T00:00:00.000Z',
+        person: florette
+      });
+
       this.set('firstTimeLoading', false);
     }
 
