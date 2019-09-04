@@ -6,8 +6,8 @@ export default Component.extend({
   showGeenDocumenten: false,
 
   didReceiveAttrs() {
-    if (this.newsletterInfo.richtText) {
-      this.set('textToDisplay', htmlSafe(this.newsletterInfo.richtText));
+    if (this.newsletterInfo.htmlContent) {
+      this.set('textToDisplay', htmlSafe(this.newsletterInfo.htmlContent));
     } else {
       this.set('textToDisplay', this.newsletterInfo.text);
     }
