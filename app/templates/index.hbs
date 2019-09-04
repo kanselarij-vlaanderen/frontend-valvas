@@ -46,25 +46,27 @@
           </div>
         </div>
 
-        <div class="col--8-12">
-          <div class="view-ip-decisions-search">
-            <div class="view-content">
-              <div class="item-list">
-                {{#each model.data as |newsletterInfo|}}
-                  {{newsletter-info-view newsletterInfo=newsletterInfo.attributes}}
-                {{/each}}
+        {{#if model.data.length}}
+          <div class="col--8-12">
+            <div class="view-ip-decisions-search">
+              <div class="view-content">
+                <div class="item-list">
+                  {{#each model.data as |newsletterInfo|}}
+                    {{newsletter-info-view newsletterInfo=newsletterInfo.attributes}}
+                  {{/each}}
+                </div>
               </div>
-            </div>
 
-            <ul class="pager pager--infinite-scroll u-align-center">
-              <li class="pager__item">
-                <a class="button" href="XXX">
-                  Laad meer
-                </a>
-              </li>
-            </ul>
+              <ul class="pager pager--infinite-scroll u-align-center">
+                <li class="pager__item">
+                  <a class="button" href="XXX">
+                    Laad meer
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        {{/if}}
       </div>
     </div>
   </div>

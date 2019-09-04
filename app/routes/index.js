@@ -30,12 +30,20 @@ export default Route.extend({
   async model(/*params*/) {
     const queryParams = {
       sort: '-planned-start'
-    }
+    };
     const meetings = await this.store.query('meeting', queryParams);
-    const firstMeetingId = meetings.get('firstObject').id;
 
-    const endpoint = `news-items/search?filter[sessionId]=${firstMeetingId}&sort[priority]=asc`;
-    const newsItems = await fetch(endpoint);
-    return newsItems.json();
+    if (meetings.length) {
+      const firstMeetingId = meetings.get('firstObject').id;
+
+      const endpoint = `news-items/search?filter[sessionId]=${firstMeetingId}&sort[priority]=asc`;
+      const newsItems = await fetch(endpoint);
+      return newsItems.json();
+    } else {
+      return {
+        count: 0,
+        data: []
+      };
+    }
   }
 });
