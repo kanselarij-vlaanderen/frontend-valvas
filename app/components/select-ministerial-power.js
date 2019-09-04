@@ -28,9 +28,10 @@ export default Component.extend({
       isSpecific: false
     });
     ministerialPowers.forEach(yield(ministerialPower) => {
+      const capitalizedLabel = ministerialPower.label.charAt(0).toUpperCase() + ministerialPower.label.slice(1);
       options.push({
         id: parseInt(ministerialPower.id),
-        label: ministerialPower.label,
+        label: capitalizedLabel,
         scopeNote: ministerialPower.scopeNote,
         councilsNumber: null,
         isSpecific: true

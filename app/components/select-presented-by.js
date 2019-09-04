@@ -50,7 +50,6 @@ export default Component.extend({
       'filter[:has-no:end]': true
     };
     const mandatees = await this.store.findAll('mandatee', queryParams);
-    console.log(mandatees);
     let options = [];
     await this.createOptions.perform(options, mandatees);
     await this.updateCouncilsNumber.perform(options);

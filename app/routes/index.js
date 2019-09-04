@@ -28,18 +28,6 @@ export default Route.extend({
 
   async model(/*params*/) {
     if(this.firstTimeLoading) {
-      // TMP - create records for ministerial powers
-      await this.store.createRecord('theme', {
-        id: 1,
-        label: 'Haven',
-        scopeNote: 'Scope note Haven'
-      });
-      await this.store.createRecord('theme', {
-        id: 2,
-        label: 'Brussel',
-        scopeNote: 'Scope note Brussel'
-      });
-
       // TMP - create records for presented by
       await this.store.createRecord('person', {
         id: 1,
