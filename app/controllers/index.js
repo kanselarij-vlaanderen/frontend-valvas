@@ -11,7 +11,7 @@ export default Controller.extend({
   ministerialPowerId: null,
   pageNumber: null,
 
-  showBackLink: or('search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'),
+  showBackLink: or('search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId', 'pageNumber'),
 
   actions: {
     searchNews(search, dateChoiceId, startDate, endDate, presentedById, ministerialPowerId) {
@@ -38,6 +38,7 @@ export default Controller.extend({
       this.set('endDate', null);
       this.set('presentedById', null);
       this.set('ministerialPowerId', null);
+      this.set('pageNumber', null);
     }
   }
 });

@@ -35,21 +35,43 @@ export default Route.extend({
     if (!pageNumber) {
       pageNumber = 1;
     }
-    const queryParams = {
-      sort: '-planned-start'
-    };
-    const meetings = await this.store.query('meeting', queryParams);
 
-    if (meetings.length) {
-      const firstMeetingId = meetings.get('firstObject').id;
-      const endpoint = `news-items/search?filter[sessionId]=${firstMeetingId}&sort[priority]=asc&page[number]=${pageNumber}`;
+    if (params.search || params.startDate || params.endDate || params.presentedById || params.ministerialPowerId ) {
+      let endpoint = `news-items/search?`;
+      if (params.search) {
+        endpoint = `${endpoint}&filter[htmlContent]=${params.search}`;
+      }
+      if (params.startDate) {
+        endpoint = `${endpoint}&filter[:gte:sessionDate]=${moment(params.startDate, 'DD-MM-YYYY').toDate().toISOString()}`;
+      }
+      if (params.endDate) {
+        endpoint = `${endpoint}&filter[:lte:sessionDate]=${moment(params.endDate, 'DD-MM-YYYY').toDate().toISOString()}`;
+      }
+      if (params.presentedById) {
+        endpoint = `${endpoint}&filter[mandateeIds]=${params.presentedById}`;
+      }
+      if (params.ministerialPowerId) {
+        endpoint = `${endpoint}&filter[themeId]=${params.ministerialPowerId}`;
+      }
+      endpoint = `${endpoint}&sort[priority]=asc&page[number]=${pageNumber}`;
       const newsItems = await fetch(endpoint);
       return newsItems.json();
     } else {
-      return {
-        count: 0,
-        data: []
+      const queryParams = {
+        sort: '-planned-start'
       };
+      const meetings = await this.store.query('meeting', queryParams);
+      if (meetings.length) {
+        const firstMeetingId = meetings.get('firstObject').id;
+        const endpoint = `news-items/search?filter[sessionId]=${firstMeetingId}&sort[priority]=asc&page[number]=${pageNumber}`;
+        const newsItems = await fetch(endpoint);
+        return newsItems.json();
+      } else {
+        return {
+          count: 0,
+          data: []
+        };
+      }
     }
   }
 });
