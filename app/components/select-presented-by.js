@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { task } from 'ember-concurrency';
+import { task, all } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
@@ -21,20 +21,33 @@ export default Component.extend({
     }
   }),
 
+  createOption: task(function*(options, mandatee) {
+    const person = yield mandatee.get('person');
+    const firstName = yield person.firstName;
+    const lastName = yield person.lastName;
+
+    let label = '';
+    if (firstName) {
+      label = `${firstName} `;
+    }
+    if (lastName) {
+      label = `${label}${lastName}`;
+    }
+    options.push({
+      id: parseInt(mandatee.id),
+      label: label,
+      councilsNumber: null,
+      isSpecific: true
+    });
+  }),
+
   createOptions: task(function*(options, mandatees) {
     options.push({
       id: 0,
       label: "Alle ministers",
       isSpecific: false
     });
-    mandatees.forEach(yield(mandatee) => {
-      options.push({
-        id: parseInt(mandatee.id),
-        label: mandatee.get('person.firstName') + ' ' + mandatee.get('person.lastName'),
-        councilsNumber: null,
-        isSpecific: true
-      });
-    });
+    yield all(mandatees.map(mandatee => this.createOption.perform(options, mandatee)));
   }),
 
   updateCouncilsNumber: task(function*(options) {
@@ -47,9 +60,10 @@ export default Component.extend({
   async init() {
     this._super(...arguments);
     const queryParams = {
-      'filter[:has-no:end]': true
+      // 'filter[:has-no:end]': true
+      page: { size: 10 }
     };
-    const mandatees = await this.store.findAll('mandatee', queryParams);
+    const mandatees = await this.store.query('mandatee', queryParams);
     let options = [];
     await this.createOptions.perform(options, mandatees);
     await this.updateCouncilsNumber.perform(options);
