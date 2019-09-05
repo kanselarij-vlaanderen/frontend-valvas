@@ -1,4 +1,4 @@
-<h2 class="h2 u-spacer">Ministerraad van {{moment-format newsInfo.publicationDate "DD MMMM YYYY"}}</h2>
+<h2 class="h2 u-spacer">Ministerraad van {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}}</h2>
 <ul>
   <li class="decision u-spacer">
     <div class="u-named-target-wrapper">
@@ -6,7 +6,14 @@
     </div>
     <h4 class="h4">{{newsInfo.title}}</h4>
     <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
-      {{moment-format newsInfo.publicationDate "DD MMMM YYYY"}}, op voorstel van <a href="XXX">{{newsInfo.mandateeProposal}}</a>
+      {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}}, op voorstel van
+      {{#if isArrayMandateeNames}}
+        {{#each mandateesArray as |mandatee|}}
+          <a>{{mandatee.title}} {{mandatee.fullName}}</a>
+        {{/each}}
+      {{else}}
+        <a>{{newsInfo.mandateeTitles}} {{newsInfo.mandateeNames}}</a>
+      {{/if}}
     </div>
     <div class="decision__text typography">
       <p>
@@ -22,14 +29,13 @@
         {{#if isLongText}}
           <button class="link" {{action "readMore"}}>Lees meer</button>
         {{/if}}
+        <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
         {{#if newsInfo.documents}}
           <a href="#" class="link--icon">
-            <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
             {{newsInfo.documents.length}} documenten
           </a>
         {{else}}
           <button class="link" {{action (mut showGeenDocumenten) true}}>
-            <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
             Geen documenten beschikbaar
           </button>
           {{#if showGeenDocumenten}}
