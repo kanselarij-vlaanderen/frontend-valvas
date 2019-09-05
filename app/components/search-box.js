@@ -12,7 +12,7 @@ export default Component.extend({
 
   actions: {
     search() {
-      this.searchNewsletters(
+      this.searchNews(
         this.searchInput,
         this.dateChoiceIdInput,
         this.startDateInput,

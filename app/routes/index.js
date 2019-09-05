@@ -24,10 +24,17 @@ export default Route.extend({
     },
     ministerialPowerId: {
       refreshModel: true
+    },
+    pageNumber: {
+      refreshModel: true
     }
   },
 
-  async model(/*params*/) {
+  async model(params) {
+    let pageNumber = params.pageNumber;
+    if (!pageNumber) {
+      pageNumber = 1;
+    }
     const queryParams = {
       sort: '-planned-start'
     };
@@ -35,8 +42,7 @@ export default Route.extend({
 
     if (meetings.length) {
       const firstMeetingId = meetings.get('firstObject').id;
-
-      const endpoint = `news-items/search?filter[sessionId]=${firstMeetingId}&sort[priority]=asc`;
+      const endpoint = `news-items/search?filter[sessionId]=${firstMeetingId}&sort[priority]=asc&page[number]=${pageNumber}`;
       const newsItems = await fetch(endpoint);
       return newsItems.json();
     } else {

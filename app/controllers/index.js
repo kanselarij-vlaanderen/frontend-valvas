@@ -9,17 +9,26 @@ export default Controller.extend({
   endDate: null,
   presentedById: null,
   ministerialPowerId: null,
+  pageNumber: null,
 
   showBackLink: or('search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'),
 
   actions: {
-    searchNewsletters(search, dateChoiceId, startDate, endDate, presentedById, ministerialPowerId) {
+    searchNews(search, dateChoiceId, startDate, endDate, presentedById, ministerialPowerId) {
       this.set('search', search);
       this.set('dateChoiceId', dateChoiceId);
       this.set('startDate', startDate);
       this.set('endDate', endDate);
       this.set('presentedById', presentedById);
       this.set('ministerialPowerId', ministerialPowerId);
+    },
+
+    nextPage() {
+      if (!this.pageNumber) {
+        this.set('pageNumber', 2);
+      } else {
+        this.set('pageNumber', parseInt(this.pageNumber) + 1);
+      }
     },
 
     clearParams() {

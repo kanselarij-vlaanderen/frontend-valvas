@@ -9,7 +9,7 @@
       {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}}, op voorstel van
       {{#if isArrayMandateeNames}}
         {{#each mandateesArray as |mandatee|}}
-          <a>{{mandatee.title}} {{mandatee.fullName}}</a>
+          <a>{{mandatee.title}} {{mandatee.fullName}}</a>{{mandatee.connector}}
         {{/each}}
       {{else}}
         <a>{{newsInfo.mandateeTitles}} {{newsInfo.mandateeNames}}</a>
