@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { task } from 'ember-concurrency';
+import { task, all } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
@@ -33,17 +33,24 @@ export default Component.extend({
         id: parseInt(ministerialPower.id),
         label: capitalizedLabel,
         scopeNote: ministerialPower.scopeNote,
-        councilsNumber: null,
+        councilNumber: null,
         isSpecific: true
       });
     });
   }),
 
-  updateCouncilsNumber: task(function*(options) {
-    options.forEach(yield(option) => {
-      // TODO - Fetch the number of councils through mu-search
-      option.councilsNumber = Math.ceil(Math.random() * 10);
-    });
+  updateCouncilNumber: task(function*(option) {
+    const endpoint = `news-items/search?filter[themeId]=${option.id}`;
+    const newsItems = (yield fetch(endpoint)).json();
+    if (newsItems.count != undefined) {
+      option.councilNumber = newsItems.json().count;
+    } else {
+      option.councilNumber = 0;
+    }
+  }),
+
+  updateCouncilNumbers: task(function*(options) {
+    yield all(options.map(option => this.updateCouncilNumber.perform(option)));
   }),
 
   async init() {
@@ -51,7 +58,7 @@ export default Component.extend({
     const ministerialPowers = await this.store.findAll('theme');
     let options = [];
     await this.createOptions.perform(options, ministerialPowers);
-    await this.updateCouncilsNumber.perform(options);
+    await this.updateCouncilNumbers.perform(options);
     this.set('options', options);
   },
 

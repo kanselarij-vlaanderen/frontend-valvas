@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { task, all } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import fetch from 'fetch';
 
 export default Component.extend({
   store: service(),
@@ -36,7 +37,7 @@ export default Component.extend({
     options.push({
       id: parseInt(mandatee.id),
       label: label,
-      councilsNumber: null,
+      councilNumber: null,
       isSpecific: true
     });
   }),
@@ -50,11 +51,18 @@ export default Component.extend({
     yield all(mandatees.map(mandatee => this.createOption.perform(options, mandatee)));
   }),
 
-  updateCouncilsNumber: task(function*(options) {
-    options.forEach(yield(option) => {
-      // TODO - Fetch the number of councils through mu-search
-      option.councilsNumber = Math.ceil(Math.random() * 10);
-    });
+  updateCouncilNumber: task(function*(option) {
+    const endpoint = `news-items/search?filter[mandateeIds]=${option.id}`;
+    const newsItems = (yield fetch(endpoint)).json();
+    if (newsItems.count != undefined) {
+      option.councilNumber = newsItems.json().count;
+    } else {
+      option.councilNumber = 0;
+    }
+  }),
+
+  updateCouncilNumbers: task(function*(options) {
+    yield all(options.map(option => this.updateCouncilNumber.perform(option)));
   }),
 
   async init() {
@@ -66,7 +74,7 @@ export default Component.extend({
     const mandatees = await this.store.query('mandatee', queryParams);
     let options = [];
     await this.createOptions.perform(options, mandatees);
-    await this.updateCouncilsNumber.perform(options);
+    await this.updateCouncilNumbers.perform(options);
     this.set('options', options);
   },
 

@@ -25,7 +25,7 @@ export default Controller.extend({
 
     nextPage() {
       if (!this.pageNumber) {
-        this.set('pageNumber', 2);
+        this.set('pageNumber', 1);
       } else {
         this.set('pageNumber', parseInt(this.pageNumber) + 1);
       }

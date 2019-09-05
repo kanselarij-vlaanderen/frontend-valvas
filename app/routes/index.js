@@ -33,7 +33,7 @@ export default Route.extend({
   async model(params) {
     let pageNumber = params.pageNumber;
     if (!pageNumber) {
-      pageNumber = 1;
+      pageNumber = 0;
     }
 
     if (params.search || params.startDate || params.endDate || params.presentedById || params.ministerialPowerId ) {
