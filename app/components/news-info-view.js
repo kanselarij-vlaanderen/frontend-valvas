@@ -6,10 +6,10 @@ export default Component.extend({
   showGeenDocumenten: false,
 
   didReceiveAttrs() {
-    if (this.newsletterInfo.htmlContent) {
-      this.set('textToDisplay', htmlSafe(this.newsletterInfo.htmlContent));
+    if (this.newsInfo.htmlContent) {
+      this.set('textToDisplay', htmlSafe(this.newsInfo.htmlContent));
     } else {
-      this.set('textToDisplay', this.newsletterInfo.text);
+      this.set('textToDisplay', this.newsInfo.text);
     }
 
     if (this.textToDisplay.length > 500) {

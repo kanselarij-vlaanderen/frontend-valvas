@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | newsletter-info-view', function(hooks) {
+module('Integration | Component | news-info-view', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {

@@ -1,12 +1,12 @@
-<h2 class="h2 u-spacer">Ministerraad van {{moment-format newsletterInfo.publicationDate "DD MMMM YYYY"}}</h2>
+<h2 class="h2 u-spacer">Ministerraad van {{moment-format newsInfo.publicationDate "DD MMMM YYYY"}}</h2>
 <ul>
   <li class="decision u-spacer">
     <div class="u-named-target-wrapper">
       <div class="u-named-target-dummy"></div>
     </div>
-    <h4 class="h4">{{newsletterInfo.title}}</h4>
+    <h4 class="h4">{{newsInfo.title}}</h4>
     <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
-      {{moment-format newsletterInfo.publicationDate "DD MMMM YYYY"}}, op voorstel van <a href="XXX">{{newsletterInfo.mandateeProposal}}</a>
+      {{moment-format newsInfo.publicationDate "DD MMMM YYYY"}}, op voorstel van <a href="XXX">{{newsInfo.mandateeProposal}}</a>
     </div>
     <div class="decision__text typography">
       <p>
@@ -22,10 +22,10 @@
         {{#if isLongText}}
           <button class="link" {{action "readMore"}}>Lees meer</button>
         {{/if}}
-        {{#if newsletterInfo.documents}}
+        {{#if newsInfo.documents}}
           <a href="#" class="link--icon">
             <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
-            {{newsletterInfo.documents.length}} documenten
+            {{newsInfo.documents.length}} documenten
           </a>
         {{else}}
           <button class="link" {{action (mut showGeenDocumenten) true}}>

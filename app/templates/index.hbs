@@ -51,8 +51,8 @@
             <div class="view-ip-decisions-search">
               <div class="view-content">
                 <div class="item-list">
-                  {{#each model.data as |newsletterInfo|}}
-                    {{newsletter-info-view newsletterInfo=newsletterInfo.attributes}}
+                  {{#each model.data as |newsInfo|}}
+                    {{news-info-view newsInfo=newsInfo.attributes}}
                   {{/each}}
                 </div>
               </div>
