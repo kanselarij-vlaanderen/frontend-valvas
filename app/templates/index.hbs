@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="region region--no-space-bottom">
     <div class="layout layout--wide">
-      <h1 class="h1">{{model.count}} beslissingen gevonden</h1>
+      <h1 class="h1">{{count}} beslissingen gevonden</h1>
       {{#if showBackLink}}
         <a role="button" onclick={{action "clearParams"}} class="listing-link active">
           <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
@@ -46,13 +46,16 @@
           </div>
         </div>
 
-        {{#if model.data.length}}
+        {{#if groupedMeetings.length}}
           <div class="col--8-12">
             <div class="view-ip-decisions-search">
               <div class="view-content">
                 <div class="item-list">
-                  {{#each model.data as |newsInfo|}}
-                    {{news-info-view newsInfo=newsInfo.attributes}}
+                  {{#each groupedMeetings as |groupedMeeting|}}
+                    <h2 class="h2 u-spacer">Ministerraad van {{moment-format groupedMeeting.sessionDate "DD MMMM YYYY"}}</h2>
+                    {{#each groupedMeeting.meetings as |newsInfo|}}
+                      {{news-info-view newsInfo=newsInfo}}
+                    {{/each}}
                   {{/each}}
                 </div>
               </div>
