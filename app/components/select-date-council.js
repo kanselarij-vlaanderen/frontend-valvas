@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { task } from 'ember-concurrency';
+import { task, all } from 'ember-concurrency';
 import moment from 'moment';
 import { computed } from '@ember/object';
 
@@ -12,7 +12,7 @@ export default Component.extend({
       if (this.options && !this.dateChoiceId) { // When we clear the query params, select default option
         return this.options.findBy('id', 0);
       } else if (this.options && this.dateChoiceId) {
-        return this.options.findBy('id', parseInt(this.dateChoiceId));
+        return this.options.findBy('id', this.dateChoiceId);
       } else {
         return null;
       }
@@ -28,13 +28,18 @@ export default Component.extend({
     }
   }),
 
-  updateCouncilsNumber: task(function*(options) {
-    options.forEach(yield(option) => {
-      // TODO - Fetch the number of councils through mu-search
-      if (option.monthsNumber) {
-        option.councilsNumber = Math.ceil(Math.random() * 10);
-      }
-    });
+  updateCouncilNumber: task(function*(option) {
+    const endpoint = `news-items/search?filter[:gte:sessionDate]=${moment().subtract(option.monthsNumber, 'months').toDate().toISOString()}&sort[priority]=asc&page[number]=0`;
+    const newsItems = yield (yield fetch(endpoint)).json();
+    if (newsItems.count != undefined) {
+      option.councilNumber = newsItems.count;
+    } else {
+      option.councilNumber = 0;
+    }
+  }),
+
+  updateCouncilNumbers: task(function*(options) {
+    yield all(options.map(option => this.updateCouncilNumber.perform(option)));
   }),
 
   async init() {
@@ -43,40 +48,40 @@ export default Component.extend({
         id: 0,
         label: 'Alle ministerraden',
         monthsNumber: null,
-        councilsNumber: null
+        councilNumber: null
       },
       {
         id: 1,
         label: 'Laatste ministerraad',
         monthsNumber: 1,
-        councilsNumber: null
+        councilNumber: null
       },
       {
         id: 2,
         label: 'Afgelopen 3 maanden',
         monthsNumber: 3,
-        councilsNumber: null
+        councilNumber: null
       },
       {
         id: 3,
         label: 'Afgelopen 6 maanden',
         monthsNumber: 6,
-        councilsNumber: null
+        councilNumber: null
       },
       {
         id: 4,
         label: 'Afgelopen 12 maanden',
         monthsNumber: 12,
-        councilsNumber: null
+        councilNumber: null
       },
       {
         id: 5,
         label: 'Kies een datum',
         monthsNumber: null,
-        councilsNumber: null
+        councilNumber: null
       }
     ];
-    await this.updateCouncilsNumber.perform(options);
+    await this.updateCouncilNumbers.perform(options);
     this.set('options', options);
 
     if (this.startDateInput) {

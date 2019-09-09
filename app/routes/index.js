@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import fetch from 'fetch';
+import moment from 'moment';
 
 export default Route.extend({
   store: service(),

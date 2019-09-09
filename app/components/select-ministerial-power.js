@@ -11,7 +11,7 @@ export default Component.extend({
       if (this.options && !this.ministerialPowerId) { // When we clear the query params, select default option
         return this.options.findBy('id', 0);
       } else if (this.options && this.ministerialPowerId) {
-        return this.options.findBy('id', parseInt(this.ministerialPowerId));
+        return this.options.findBy('id', this.ministerialPowerId);
       } else {
         return null;
       }
@@ -30,7 +30,7 @@ export default Component.extend({
     ministerialPowers.forEach(yield(ministerialPower) => {
       const capitalizedLabel = ministerialPower.label.charAt(0).toUpperCase() + ministerialPower.label.slice(1);
       options.push({
-        id: parseInt(ministerialPower.id),
+        id: ministerialPower.id,
         label: capitalizedLabel,
         scopeNote: ministerialPower.scopeNote,
         councilNumber: null,
@@ -41,9 +41,9 @@ export default Component.extend({
 
   updateCouncilNumber: task(function*(option) {
     const endpoint = `news-items/search?filter[themeId]=${option.id}`;
-    const newsItems = (yield fetch(endpoint)).json();
+    const newsItems = yield (yield fetch(endpoint)).json();
     if (newsItems.count != undefined) {
-      option.councilNumber = newsItems.json().count;
+      option.councilNumber = newsItems.count;
     } else {
       option.councilNumber = 0;
     }

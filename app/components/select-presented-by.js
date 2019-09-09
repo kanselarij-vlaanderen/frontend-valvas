@@ -12,7 +12,7 @@ export default Component.extend({
       if (this.options && !this.presentedById) { // When we clear the query params, select default option
         return this.options.findBy('id', 0);
       } else if (this.options && this.presentedById) {
-        return this.options.findBy('id', parseInt(this.presentedById));
+        return this.options.findBy('id', this.presentedById);
       } else {
         return null;
       }
@@ -35,7 +35,7 @@ export default Component.extend({
       label = `${label}${lastName}`;
     }
     options.push({
-      id: parseInt(mandatee.id),
+      id: mandatee.id,
       label: label,
       councilNumber: null,
       isSpecific: true
@@ -53,9 +53,9 @@ export default Component.extend({
 
   updateCouncilNumber: task(function*(option) {
     const endpoint = `news-items/search?filter[mandateeIds]=${option.id}`;
-    const newsItems = (yield fetch(endpoint)).json();
+    const newsItems = yield (yield fetch(endpoint)).json();
     if (newsItems.count != undefined) {
-      option.councilNumber = newsItems.json().count;
+      option.councilNumber = newsItems.count;
     } else {
       option.councilNumber = 0;
     }
