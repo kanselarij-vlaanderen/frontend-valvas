@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import { A } from '@ember/array';
+import moment from 'moment';
 
 export default Service.extend({
   count: 0,
@@ -9,8 +10,32 @@ export default Service.extend({
     this.set('cache', A());
   },
 
-  async search({search, startDate, endDate, presentedById, ministerialPowerId, pageNumber=0, pageSize=10}) {
-    let endpoint = `news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=desc`;
+  async search(params) {
+    const endpoint = this.constructEndpoint(params);
+    const newsItems = await fetch(endpoint);
+    const jsonifiedNewsItems = await newsItems.json();
+    if (jsonifiedNewsItems.count > 0) {
+      this.set('cache', A(jsonifiedNewsItems.data));
+      this.set('count', jsonifiedNewsItems.count);
+    } else {
+      this.set('cache', A());
+      this.set('count', 0);
+    }
+  },
+
+  async loadMore(params) {
+    const endpoint = this.constructEndpoint(params);
+    const newsItems = await fetch(endpoint);
+    const jsonifiedNewsItems = await newsItems.json();
+    if (jsonifiedNewsItems.data.length > 0) {
+      jsonifiedNewsItems.data.forEach((item) => {
+        this.cache.pushObject(item);
+      });
+    }
+  },
+
+  constructEndpoint({search, startDate, endDate, presentedById, ministerialPowerId, pageNumber=0, pageSize=10}) {
+    let endpoint = `news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=asc`;
 
     if (search || startDate || endDate || presentedById || ministerialPowerId ) {
       if (search) {
@@ -31,19 +56,6 @@ export default Service.extend({
     } else {
       endpoint = `${endpoint}&filter[:sqs:title]=*`;
     }
-
-    const newsItems = await fetch(endpoint);
-    const jsonifiedNewsItems = await newsItems.json();
-    if (jsonifiedNewsItems.count > 0) {
-      this.set('cache', A(jsonifiedNewsItems.data));
-      this.set('count', jsonifiedNewsItems.count);
-    } else {
-      this.set('cache', A());
-      this.set('count', 0);
-    }
-  },
-
-  loadMore(params) {
-    // TODO
+    return endpoint;
   }
 });

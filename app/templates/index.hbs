@@ -62,9 +62,9 @@
 
               <ul class="pager pager--infinite-scroll u-align-center">
                 <li class="pager__item">
-                  <a class="button" role="button" onclick={{action "nextPage"}}>
+                  <button class="button {{if disableLoadMore "vl-button--disabled" ""}}" {{action "loadMore"}} disabled={{disableLoadMore}}>
                     Laad meer
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>

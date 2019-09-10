@@ -1,15 +1,17 @@
 import Controller from '@ember/controller';
-import { or } from 'ember-awesome-macros';
-import { groupBy } from 'ember-awesome-macros/array';
+import { or, equal } from 'ember-awesome-macros';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 
 export default Controller.extend({
   searchNewsItems: service(),
   data: alias('searchNewsItems.cache'),
   count: alias('searchNewsItems.count'),
+
+  disableLoadMore: equal('data.length', 'count'),
 
   groupedMeetings: computed('searchNewsItems.cache{,.[]}', function() {
     let attributes = A();
@@ -18,11 +20,10 @@ export default Controller.extend({
     })
 
     let groupedMeetings = A();
-    let sessionIds = A();
     attributes.forEach(function(newsItem) {
       let hasSessionId = groupedMeetings.findBy('sessionId', newsItem.sessionId);
       if(!hasSessionId) {
-       groupedMeetings.pushObject(Ember.Object.create({
+       groupedMeetings.pushObject(EmberObject.create({
           sessionId: newsItem.sessionId,
           sessionDate: newsItem.sessionDate,
           meetings: []
@@ -43,7 +44,7 @@ export default Controller.extend({
   ministerialPowerId: null,
   pageNumber: null,
 
-  showBackLink: or('search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId', 'pageNumber'),
+  showBackLink: or('search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'),
 
   actions: {
     searchNews(search, dateChoiceId, startDate, endDate, presentedById, ministerialPowerId) {
@@ -55,12 +56,21 @@ export default Controller.extend({
       this.set('ministerialPowerId', ministerialPowerId);
     },
 
-    nextPage() {
+    loadMore() {
       if (!this.pageNumber) {
         this.set('pageNumber', 1);
       } else {
         this.set('pageNumber', parseInt(this.pageNumber) + 1);
       }
+      const params = {
+        search:             this.search,
+        startDate:          this.startDate,
+        endDate:            this.endDate,
+        presentedById:      this.presentedById,
+        ministerialPowerId: this.ministerialPowerId,
+        pageNumber:         this.pageNumber
+      };
+      this.searchNewsItems.loadMore(params);
     },
 
     clearParams() {
@@ -70,7 +80,6 @@ export default Controller.extend({
       this.set('endDate', null);
       this.set('presentedById', null);
       this.set('ministerialPowerId', null);
-      this.set('pageNumber', null);
     }
   }
 });
