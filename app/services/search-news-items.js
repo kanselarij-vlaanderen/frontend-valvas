@@ -35,7 +35,8 @@ export default Service.extend({
   },
 
   constructEndpoint({search, startDate, endDate, presentedById, ministerialPowerId, pageNumber=0, pageSize=10}) {
-    let endpoint = `news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=asc`;
+    const rootURL = 'beslissingenvlaamseregering/'; // TODO retrieve rootURL from config/environment.js
+    let endpoint = `${rootURL}news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=asc`;
 
     if (search || startDate || endDate || presentedById || ministerialPowerId ) {
       if (search) {
