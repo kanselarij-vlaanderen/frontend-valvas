@@ -2,7 +2,7 @@ import DS from 'ember-data';
 
 // TODO derive namespace from rootURL in config/environment.js
 export default DS.JSONAPIAdapter.extend({
-  namespace: '/beslissingenvlaamseregering',
+  namespace: '/vlaamse-regering/beslissingenvlaamseregering',
 
   findHasMany(store, snapshot, url, relationship) {
     var id = snapshot.id;
