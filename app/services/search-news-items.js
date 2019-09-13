@@ -12,26 +12,17 @@ export default Service.extend({
 
   async search(params) {
     const endpoint = this.constructEndpoint(params);
-    const newsItems = await fetch(endpoint);
-    const jsonifiedNewsItems = await newsItems.json();
-    if (jsonifiedNewsItems.count > 0) {
-      this.set('cache', A(jsonifiedNewsItems.data));
-      this.set('count', jsonifiedNewsItems.count);
-    } else {
-      this.set('cache', A());
-      this.set('count', 0);
-    }
+    const json = await (await fetch(endpoint)).json();
+    const newsItems = json.data;
+    this.set('cache', A(newsItems));
+    this.set('count', json.count);
   },
 
   async loadMore(params) {
     const endpoint = this.constructEndpoint(params);
-    const newsItems = await fetch(endpoint);
-    const jsonifiedNewsItems = await newsItems.json();
-    if (jsonifiedNewsItems.data.length > 0) {
-      jsonifiedNewsItems.data.forEach((item) => {
-        this.cache.pushObject(item);
-      });
-    }
+    const json = await (await fetch(endpoint)).json();
+    const newsItems = json.data;
+    this.cache.pushObjects(newsItems);
   },
 
   constructEndpoint({search, startDate, endDate, presentedById, ministerialPowerId, pageNumber=0, pageSize=10}) {

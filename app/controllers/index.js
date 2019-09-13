@@ -17,7 +17,7 @@ export default Controller.extend({
     let attributes = A();
     this.data.forEach((newsItem) => {
       attributes.push(newsItem.attributes);
-    })
+    });
 
     let groupedMeetings = A();
     attributes.forEach(function(newsItem) {

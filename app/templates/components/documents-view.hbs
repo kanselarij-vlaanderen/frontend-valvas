@@ -1,0 +1,24 @@
+<i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
+{{#unless fetchRecord.isRunning}}
+  {{#if record.documentVersions}}
+    <a href="#" class="link--icon">
+      {{record.documentVersions.length}} documenten
+    </a>
+  {{else}}
+    <button class="link" {{action (mut isExpanded) true}}>
+      Geen documenten beschikbaar
+    </button>
+    {{#if isExpanded}}
+      <div class="filter__form">
+        <div class="u-align-right">
+          <button class="link link--icon--close" title="Venster sluiten" {{action (mut isExpanded) false}}>
+            <span class="u-visually-hidden">Venster sluiten</span>
+          </button>
+        </div>
+        <p>
+          Op 29 januari 2016 besliste de Vlaamse Regering om alle nota’s en mededelingen actief openbaar te maken, met uitzondering van de documenten bij individuele beslissingen. Individuele beslissingen regelen een persoonlijke rechtstoestand en gelden voor één geval of voor enkele welbepaalde gevallen, zoals benoemingen, subsidiebesluiten voor projecten of investeringssubsidies voor bedrijven.
+        </p>
+      </div>
+    {{/if}}
+  {{/if}}
+{{/unless}}
