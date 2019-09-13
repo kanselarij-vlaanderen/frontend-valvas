@@ -57,20 +57,7 @@ export default Controller.extend({
     },
 
     loadMore() {
-      if (!this.pageNumber) {
-        this.set('pageNumber', 1);
-      } else {
-        this.set('pageNumber', parseInt(this.pageNumber) + 1);
-      }
-      const params = {
-        search:             this.search,
-        startDate:          this.startDate,
-        endDate:            this.endDate,
-        presentedById:      this.presentedById,
-        ministerialPowerId: this.ministerialPowerId,
-        pageNumber:         this.pageNumber
-      };
-      this.searchNewsItems.loadMore(params);
+      this.searchNewsItems.loadMore();
     },
 
     clearParams() {
