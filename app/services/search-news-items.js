@@ -1,6 +1,7 @@
 import Service from '@ember/service';
 import { A } from '@ember/array';
 import moment from 'moment';
+import fetch from 'fetch';
 
 export default Service.extend({
   count: 0,
@@ -11,6 +12,7 @@ export default Service.extend({
   },
 
   async search(params) {
+    this.set('params', params);
     const endpoint = this.constructEndpoint(params);
     const newsItems = await fetch(endpoint);
     const jsonifiedNewsItems = await newsItems.json();
@@ -23,8 +25,14 @@ export default Service.extend({
     }
   },
 
-  async loadMore(params) {
-    const endpoint = this.constructEndpoint(params);
+  async loadMore() {
+    if (!this.params.pageNumber) {
+      this.set('params.pageNumber', 1);
+    } else {
+      this.set('params.pageNumber', parseInt(this.params.pageNumber) + 1);
+    }
+
+    const endpoint = this.constructEndpoint(this.params);
     const newsItems = await fetch(endpoint);
     const jsonifiedNewsItems = await newsItems.json();
     if (jsonifiedNewsItems.data.length > 0) {

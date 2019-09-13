@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { task, all } from 'ember-concurrency';
 import moment from 'moment';
 import { computed } from '@ember/object';
+import fetch from 'fetch';
 
 export default Component.extend({
   startDate: null,

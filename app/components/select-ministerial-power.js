@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { task, all } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import fetch from 'fetch';
 
 export default Component.extend({
   store: service(),
