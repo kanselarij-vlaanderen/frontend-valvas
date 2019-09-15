@@ -4,7 +4,7 @@ import DS from 'ember-data';
 export default DS.JSONAPIAdapter.extend({
   namespace: '/vlaamse-regering/beslissingenvlaamseregering',
 
-  findHasMany(store, snapshot, url, relationship) {
+  findHasMany(store, snapshot, url) {
     var id = snapshot.id;
     var type = snapshot.modelName;
     url = this.urlPrefix(url, this.buildURL(type, id, snapshot, 'findHasMany'));
@@ -13,7 +13,7 @@ export default DS.JSONAPIAdapter.extend({
     return this.ajax(url, 'GET');
   },
 
-  findBelongsTo(store, snapshot, url, relationship) {
+  findBelongsTo(store, snapshot, url) {
     var id = snapshot.id;
     var type = snapshot.modelName;
     url = this.urlPrefix(url, this.buildURL(type, id, snapshot, 'findBelongsTo'));
