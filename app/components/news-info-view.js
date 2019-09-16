@@ -39,11 +39,10 @@ export default Component.extend({
 
   async didReceiveAttrs() {
     const htmlContent = this.newsInfo.htmlContent;
+    this.set('textToDisplay', htmlSafe(htmlContent));
     if (htmlContent.length > 500) {
       this.set('shortenText', htmlSafe(htmlContent.substr(0, 501) + "..."));
       this.set('isLongText', true);
-    } else {
-      this.set('textToDisplay', htmlSafe(this.newsInfo.htmlContent));
     }
 
     if (isArray(this.newsInfo.mandateeNames)) {
