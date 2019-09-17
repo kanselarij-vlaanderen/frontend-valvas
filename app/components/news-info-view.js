@@ -9,7 +9,7 @@ export default Component.extend({
 
   isLongText: false,
   showGeenDocumenten: false,
-  isArrayMandateeNames: false,
+  isArrayMandatee: false,
 
   createMandatee: task(function*(options, mandateeId) {
     const mandatee = yield this.store.findRecord('mandatee', mandateeId);
@@ -45,8 +45,8 @@ export default Component.extend({
       this.set('isLongText', true);
     }
 
-    if (isArray(this.newsInfo.mandateeNames)) {
-      this.set('isArrayMandateeNames', true);
+    if (isArray(this.newsInfo.mandateeNames) || isArray(this.newsInfo.mandateeFirstNames) || isArray(this.newsInfo.mandateeFamilyNames)) {
+      this.set('isArrayMandatee', true);
       let options = [];
       await this.createMandatees.perform(options, this.newsInfo.mandateeIds);
 
@@ -60,6 +60,12 @@ export default Component.extend({
         i += 1;
       });
       this.set('mandateesArray', options);
+    } else {
+      if (this.newsInfo.mandateeNames) {
+        this.set('mandateeFullName', this.newsInfo.mandateeNames);
+      } else {
+        this.set('mandateeFullName', `${this.newsInfo.mandateeFirstNames} ${this.newsInfo.mandateeFamilyNames}`);
+      }
     }
   },
 

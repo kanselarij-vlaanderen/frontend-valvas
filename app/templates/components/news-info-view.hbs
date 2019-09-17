@@ -6,12 +6,12 @@
     <h4 class="h4">{{newsInfo.title}}</h4>
     <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
       {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}}, op voorstel van
-      {{#if isArrayMandateeNames}}
+      {{#if isArrayMandatee}}
         {{#each mandateesArray as |mandatee|}}
           <a>{{mandatee.title}} {{mandatee.fullName}}</a>{{mandatee.connector}}
         {{/each}}
       {{else}}
-        <a>{{newsInfo.mandateeTitles}} {{newsInfo.mandateeNames}}</a>
+        <a>{{newsInfo.mandateeTitles}} {{mandateeFullName}}</a>
       {{/if}}
     </div>
     <div class="decision__text typography">

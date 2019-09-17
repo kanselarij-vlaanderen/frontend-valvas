@@ -27,7 +27,7 @@ export default Service.extend({
       this.set('params.pageNumber', parseInt(this.params.pageNumber) + 1);
     }
 
-    const endpoint = this.constructEndpoint(params);
+    const endpoint = this.constructEndpoint(this.params);
     const json = await (await fetch(endpoint)).json();
     const newsItems = json.data;
     this.cache.pushObjects(newsItems);

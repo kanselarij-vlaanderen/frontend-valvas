@@ -24,10 +24,14 @@ export default Component.extend({
 
   createOption: task(function*(options, mandatee) {
     const person = yield mandatee.get('person');
+    let name = yield person.alternativeName;
+    if (!name) {
+      name = `${person.firstName} ${person.lastName}`;
+    }
 
     options.push({
       id: mandatee.id,
-      label: yield person.alternativeName,
+      label: name,
       councilNumber: null,
       isSpecific: true
     });

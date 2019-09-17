@@ -5,10 +5,8 @@ export default Model.extend({
   title: attr('string'),
   nickName: attr('string'),
   priority: attr('number'),
-  start: attr('date'),
-  end: attr('date'),
-  dateSwornIn: attr('date'),
-  dateDecree: attr('date'),
+  start: attr('datetime'),
+  end: attr('datetime'),
 
   person: belongsTo('person')
 });
