@@ -20,7 +20,7 @@ export default Service.extend({
     this.set('count', json.count);
   },
 
-  async loadMore(params) {
+  async loadMore() {
     if (!this.params.pageNumber) {
       this.set('params.pageNumber', 1);
     } else {

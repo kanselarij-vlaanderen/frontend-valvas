@@ -45,7 +45,7 @@ export default Component.extend({
       this.set('isLongText', true);
     }
 
-    if (isArray(this.newsInfo.mandateeNames) || isArray(this.newsInfo.mandateeFirstNames) || isArray(this.newsInfo.mandateeFamilyNames)) {
+    if (isArray(this.newsInfo.mandateeNames) || isArray(this.newsInfo.mandateeFirstNames) || isArray(this.newsInfo.mandateeFamilyNames)) {
       this.set('isArrayMandatee', true);
       let options = [];
       await this.createMandatees.perform(options, this.newsInfo.mandateeIds);
