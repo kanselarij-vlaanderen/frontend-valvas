@@ -23,7 +23,7 @@ export default Component.extend({
   }),
 
   createOption: task(function*(options, mandatee) {
-    if (!mandatee.end) { // Some of mandatees that should have an end date don't, which can lead to strange results in the select
+    if (mandatee.start && !mandatee.end) {
       const person = yield mandatee.get('person');
       let name = yield person.alternativeName;
       if (!name) {
@@ -48,18 +48,21 @@ export default Component.extend({
     yield all(mandatees.map(mandatee => this.createOption.perform(options, mandatee)));
   }),
 
-  updateCouncilNumber: task(function*(option) {
+  updateCouncilNumber: task(function*(option, options) {
     const endpoint = `news-items/search?filter[mandateeIds]=${option.id}`;
     const newsItems = yield (yield fetch(endpoint)).json();
-    if (newsItems.count != undefined) {
+    if ((newsItems.count != undefined) && (newsItems.count != 0)) {
       option.councilNumber = newsItems.count;
-    } else {
-      option.councilNumber = 0;
+    } else { // If a mandatee has 0 news, remove it from the options
+      if (option.isSpecific) {
+        const index = options.findIndex(o => o.id == option.id);
+        options.splice(index, 1);
+      }
     }
   }),
 
   updateCouncilNumbers: task(function*(options) {
-    yield all(options.map(option => this.updateCouncilNumber.perform(option)));
+    yield all(options.map(option => this.updateCouncilNumber.perform(option, options)));
   }),
 
   async init() {
