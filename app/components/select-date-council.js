@@ -13,7 +13,7 @@ export default Component.extend({
       if (this.options && !this.dateChoiceId) { // When we clear the query params, select default option
         return this.options.findBy('id', 0);
       } else if (this.options && this.dateChoiceId) {
-        return this.options.findBy('id', this.dateChoiceId);
+        return this.options.findBy('id', parseInt(this.dateChoiceId));
       } else {
         return null;
       }

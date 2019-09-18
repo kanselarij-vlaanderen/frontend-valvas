@@ -5,8 +5,8 @@ export default Model.extend({
   title: attr('string'),
   nickName: attr('string'),
   priority: attr('number'),
-  start: attr('datetime'),
-  end: attr('datetime'),
+  start: attr('date'),
+  end: attr('date'),
 
   person: belongsTo('person')
 });

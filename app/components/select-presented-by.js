@@ -23,18 +23,20 @@ export default Component.extend({
   }),
 
   createOption: task(function*(options, mandatee) {
-    const person = yield mandatee.get('person');
-    let name = yield person.alternativeName;
-    if (!name) {
-      name = `${person.firstName} ${person.lastName}`;
-    }
+    if (!mandatee.end) { // Some of mandatees that should have an end date don't, which can lead to strange results in the select
+      const person = yield mandatee.get('person');
+      let name = yield person.alternativeName;
+      if (!name) {
+        name = `${person.firstName} ${person.lastName}`;
+      }
 
-    options.push({
-      id: mandatee.id,
-      label: name,
-      councilNumber: null,
-      isSpecific: true
-    });
+      options.push({
+        id: mandatee.id,
+        label: name,
+        councilNumber: null,
+        isSpecific: true
+      });
+    }
   }),
 
   createOptions: task(function*(options, mandatees) {
@@ -64,7 +66,6 @@ export default Component.extend({
     this._super(...arguments);
     const queryParams = {
       // 'filter[:has-no:end]': true
-      page: { size: 10 }
     };
     const mandatees = await this.store.query('mandatee', queryParams);
     let options = [];
