@@ -7,6 +7,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('document-view', { path: '/document-view/:id' } );
 });
 
 export default Router;
