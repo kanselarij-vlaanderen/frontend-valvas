@@ -1,8 +1,8 @@
 <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
 {{#unless fetchRecord.isRunning}}
-  {{#if record.documentVersions}}
+  {{#if documentVersions}}
     <button class="link" {{action (mut filesAreExpanded) true}}>
-      {{record.documentVersions.length}} documenten
+      {{documentVersions.length}} documenten
     </button>
 
     {{#if filesAreExpanded}}
@@ -13,7 +13,8 @@
           </button>
         </div>
         <div class="grid">
-          {{#each record.documentVersions as |documentVersion|}}
+          {{#each documentVersions as |documentVersion|}}
+            <!-- {{kaleidos-viewer documentVersion=documentVersion}} -->
             <div class="col--6-12 col--12-12--s">
               <div class="document-miniature">
                 <div class="document-miniature__type">

@@ -20,7 +20,12 @@ export default Component.extend({
     // TODO first try to peek record
     const id = this.model.uuid;
     const record = yield this.store.findRecord('newsletter-info', id);
-    this.set('record', record);
-    yield this.record.documentVersions;
+    const queryParams = {
+      'filter[news-items][id]': record.id,
+      page: { size: 50 }
+    };
+    const documentVersions = yield this.store.query('document-version', queryParams);
+    this.set('documentVersions', documentVersions);
+
   }).keepLatest()
 });
