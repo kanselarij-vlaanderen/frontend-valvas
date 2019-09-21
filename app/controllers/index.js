@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { or, equal } from 'ember-awesome-macros';
+import { or, lt } from 'ember-awesome-macros';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
@@ -11,28 +11,29 @@ export default Controller.extend({
   data: alias('searchNewsItems.cache'),
   count: alias('searchNewsItems.count'),
 
-  disableLoadMore: equal('data.length', 'count'),
+  hasMoreResults: lt('data.length', 'count'),
 
-  groupedMeetings: computed('searchNewsItems.cache{,.[]}', function() {
-    let attributes = A();
-    this.data.forEach((newsItem) => {
-      attributes.push(newsItem.attributes);
-    });
-
-    let groupedMeetings = A();
-    attributes.forEach(function(newsItem) {
-      let hasSessionId = groupedMeetings.findBy('sessionId', newsItem.sessionId);
-      if(!hasSessionId) {
-       groupedMeetings.pushObject(EmberObject.create({
-          sessionId: newsItem.sessionId,
-          sessionDate: newsItem.sessionDate,
-          meetings: []
-       }));
+  sessions: computed('searchNewsItems.cache{,.[]}', function() {
+    let sessions = A();
+    this.data.forEach(function(newsItem) {
+      let session = sessions.findBy('id', newsItem.sessionId);
+      if (!session) {
+        session = EmberObject.create({
+          id: newsItem.sessionId,
+          date: newsItem.sessionDate,
+          news: A(),
+          announcements: A()
+        });
+        sessions.pushObject(session);
       }
-      groupedMeetings.findBy('sessionId', newsItem.sessionId).get('meetings').pushObject(newsItem);
+
+      if (newsItem.category == "mededeling")
+        session.announcements.pushObject(newsItem);
+      else
+        session.news.pushObject(newsItem);
      });
 
-     return groupedMeetings;
+     return sessions;
   }),
 
   queryParams: ['search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'],
@@ -70,3 +71,10 @@ export default Controller.extend({
     }
   }
 });
+
+
+/*
+
+  { sessionDate, news: [], announcements: []
+
+*/

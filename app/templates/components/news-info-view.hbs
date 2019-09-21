@@ -5,13 +5,18 @@
     </div>
     <h4 class="h4">{{newsInfo.title}}</h4>
     <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
-      {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}}, op voorstel van
-      {{#if isArrayMandatee}}
-        {{#each mandateesArray as |mandatee|}}
-          <a>{{mandatee.title}} {{mandatee.fullName}}</a>{{mandatee.connector}}
-        {{/each}}
+      {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}},
+      {{#if (eq newsInfo.category "mededeling")}}
+        mededeling aan de Vlaamse Regering
       {{else}}
-        <a>{{newsInfo.mandateeTitles}} {{mandateeFullName}}</a>
+        op voorstel van
+        {{#if isArrayMandatee}}
+          {{#each mandateesArray as |mandatee|}}
+            <a>{{mandatee.title}} {{mandatee.fullName}}</a>{{mandatee.connector}}
+          {{/each}}
+      {{else}}
+          <a>{{newsInfo.mandateeTitles}} {{mandateeFullName}}</a>
+        {{/if}}
       {{/if}}
     </div>
     <div class="decision__text typography">

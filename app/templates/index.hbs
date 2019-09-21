@@ -13,16 +13,16 @@
     <div class="layout layout--wide">
       <div class="grid">
         <div class="col--4-12">
-          {{search-box searchNews=(action "searchNews") search=search dateChoiceId=dateChoiceId startDate=startDate endDate=endDate presentedById=presentedById ministerialPowerId=ministerialPowerId}}
-          <ul class="link-list link-list--small u-spacer--small">
-            <li>
-              <a href="https://www.vlaanderen.be/vlaamse-regering/beslissingenvlaamseregering.rss" class="link--icon--caret link--block external-link">abonneren op rss feeds</a>
-            </li>
-            <li>
-              <a href="https://www.vlaanderen.be/ontvang-nieuwe-persberichten-en-beslissingen-via-e-mail" class="link--icon--caret link--block external-link">abonneren op de beslissingen van de Vlaamse Regering</a>
-            </li>
-          </ul>
-
+          <!-- {{search-box searchNews=(action "searchNews") search=search dateChoiceId=dateChoiceId startDate=startDate endDate=endDate presentedById=presentedById ministerialPowerId=ministerialPowerId}} -->
+          <!-- <ul class="link-list link-list--small u-spacer--small">
+               <li>
+               <a href="https://www.vlaanderen.be/vlaamse-regering/beslissingenvlaamseregering.rss" class="link--icon--caret link--block external-link">abonneren op rss feeds</a>
+               </li>
+               <li>
+               <a href="https://www.vlaanderen.be/ontvang-nieuwe-persberichten-en-beslissingen-via-e-mail" class="link--icon--caret link--block external-link">abonneren op de beslissingen van de Vlaamse Regering</a>
+               </li>
+               </ul>
+          -->
           <div class="view-ip-decisions-spotlight view-display-id-ip_decisions_spotlight">
             <div class="item-list">
               <ul>
@@ -46,27 +46,36 @@
           </div>
         </div>
 
-        {{#if groupedMeetings.length}}
+        {{#if sessions.length}}
           <div class="col--8-12">
             <div class="view-ip-decisions-search">
               <div class="view-content">
                 <div class="item-list">
-                  {{#each groupedMeetings as |groupedMeeting|}}
-                    <h2 class="h2 u-spacer">Ministerraad van {{moment-format groupedMeeting.sessionDate "DD MMMM YYYY"}}</h2>
-                    {{#each groupedMeeting.meetings as |newsInfo|}}
+                  {{#each sessions as |session|}}
+                    <h2 class="h2 u-spacer">Ministerraad van {{moment-format session.date "DD MMMM YYYY"}}</h2>
+                    {{#each session.news as |newsInfo|}}
                       {{news-info-view newsInfo=newsInfo}}
                     {{/each}}
+
+                    {{#if session.announcements.length}}
+                      <h3 class="h3">Mededelingen</h3>
+                      {{#each session.announcements as |newsInfo|}}
+                        {{news-info-view newsInfo=newsInfo}}
+                      {{/each}}
+                    {{/if}}
                   {{/each}}
                 </div>
               </div>
 
-              <ul class="pager pager--infinite-scroll u-align-center">
-                <li class="pager__item">
-                  <button class="button {{if disableLoadMore "vl-button--disabled" ""}}" {{action "loadMore"}} disabled={{disableLoadMore}}>
-                    Laad meer
-                  </button>
-                </li>
-              </ul>
+              {{#if hasMoreResults}}
+                <ul class="pager pager--infinite-scroll u-align-center">
+                  <li class="pager__item">
+                    <button class="button" {{action "loadMore"}} disabled={{disableLoadMore}}>
+                      Laad meer
+                    </button>
+                  </li>
+                </ul>
+              {{/if}}
             </div>
           </div>
         {{/if}}
