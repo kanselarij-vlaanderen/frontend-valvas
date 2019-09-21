@@ -17,15 +17,13 @@ export default Component.extend({
   },
 
   fetchRecord: task(function * () {
-    // TODO first try to peek record
     const id = this.model.uuid;
-    const record = yield this.store.findRecord('newsletter-info', id);
-    const queryParams = {
-      'filter[news-items][id]': record.id,
-      page: { size: 50 }
-    };
-    const documentVersions = yield this.store.query('document-version', queryParams);
-    this.set('documentVersions', documentVersions);
-
+    let record = this.store.peekRecord('newsletter-info', id);
+    if (!record) {
+      record = yield this.store.findRecord('newsletter-info', id, {
+        include: 'document-versions' // using include we won't run into page limits
+      });
+    }
+    this.set('documentVersions', record.documentVersions);
   }).keepLatest()
 });
