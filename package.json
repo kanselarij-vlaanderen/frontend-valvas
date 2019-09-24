@@ -24,6 +24,7 @@
     "@ember/jquery": "^0.6.0",
     "@ember/optional-features": "^0.7.0",
     "@lblod/ember-vo-webuniversum": "^0.22.2",
+    "@lblod/ember-vo-webuniversum-widget": "^0.1.5",
     "broccoli-asset-rev": "^3.0.0",
     "ember-ajax": "^5.0.0",
     "ember-awesome-macros": "^5.0.1",
@@ -60,6 +61,7 @@
     "eslint-plugin-node": "^9.0.1",
     "kaleidos-viewer": "git+https://github.com/kanselarij-vlaanderen/kaleidos-viewer.git",
     "loader.js": "^4.7.0",
+    "postscribe": "^2.0.8",
     "qunit-dom": "^0.8.4",
     "sass": "^1.22.10"
   },
