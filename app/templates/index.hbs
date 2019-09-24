@@ -26,12 +26,14 @@
 <div class="main-content">
   <div class="region region--no-space-bottom">
     <div class="layout layout--wide">
-      <h1 class="h1">{{count}} beslissingen gevonden</h1>
-      {{#if showBackLink}}
-        <a role="button" onclick={{action "clearParams"}} class="listing-link active">
-          <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
-        </a>
-      {{/if}}
+      <div class="h1-sublink">
+        <h1 class="h1">{{count}} beslissingen gevonden</h1>
+        {{#if showBackLink}}
+          <a role="button" onclick={{action "clearParams"}} class="listing-link active">
+            <i class="vi vi-u-link vi-arrow vi-u-180deg"></i> Toon alle beslissingen
+          </a>
+        {{/if}}
+      </div>
     </div>
   </div>
   <div class="region">
