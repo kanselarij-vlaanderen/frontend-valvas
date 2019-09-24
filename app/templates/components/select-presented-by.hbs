@@ -1,7 +1,7 @@
 {{#power-select
-    selected=selectedPresentedBy
-    options=options
-    onChange=(action "onChange")
-    as |presentedBy|}}
-  {{presentedBy.label}} {{#if presentedBy.isSpecific}}({{presentedBy.councilNumber}}){{/if}}
+     selected=selected
+     options=options
+     onChange=(action "onChange")
+     as |option|}}
+  {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
 {{/power-select}}

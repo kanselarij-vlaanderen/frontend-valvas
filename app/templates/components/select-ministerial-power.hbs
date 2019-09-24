@@ -1,7 +1,7 @@
 {{#power-select
-    selected=selectedMinisterialPower
+    selected=selected
     options=options
     onChange=(action "onChange")
-    as |ministerialPower|}}
-  {{ministerialPower.label}} {{#if ministerialPower.isSpecific}}({{ministerialPower.councilNumber}}){{/if}}
+    as |option|}}
+  {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
 {{/power-select}}

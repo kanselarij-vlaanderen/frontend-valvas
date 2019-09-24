@@ -13,7 +13,17 @@
     <div class="layout layout--wide">
       <div class="grid">
         <div class="col--4-12">
-          <!-- {{search-box searchNews=(action "searchNews") search=search dateChoiceId=dateChoiceId startDate=startDate endDate=endDate presentedById=presentedById ministerialPowerId=ministerialPowerId}} -->
+          {{search-box
+              searchParams=(hash
+                  search=search
+                  dateOption=dateOption
+                  startDate=startDate
+                  endDate=endDate
+                  presentedById=presentedById
+                  ministerialPowerId=ministerialPowerId
+              )
+              onSearch=(action "search")
+          }}
           <!-- <ul class="link-list link-list--small u-spacer--small">
                <li>
                <a href="https://www.vlaanderen.be/vlaamse-regering/beslissingenvlaamseregering.rss" class="link--icon--caret link--block external-link">abonneren op rss feeds</a>

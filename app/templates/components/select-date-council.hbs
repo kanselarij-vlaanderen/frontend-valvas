@@ -4,32 +4,32 @@
   </label>
   <div class="">
     {{#power-select
-        selected=selectedDateChoice
-        options=options
-        onChange=(action "onChange")
-        as |selectDateOption|}}
-      {{selectDateOption.label}} {{#if selectDateOption.monthsNumber}}({{selectDateOption.councilNumber}}){{/if}}
+         selected=selected
+         options=options
+         onChange=(action "onChange")
+         as |option|}}
+      {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
     {{/power-select}}
   </div>
 </div>
-{{#if showDateInputs}}
+{{#if enableSelectDateInput}}
   <div class="filter__field form-item">
     <div class="grid">
       <div class="col--6-12">
         <div class="form-item form__row">
           {{web-components/vl-datepicker
-            selectedDate=startDate
-            dateChanged=(action "onChangeStart")
-            dateFormat="d-m-Y"
+              selectedDate=selectOption.start
+              dateChanged=(action "onChangeSelectedStart")
+              dateFormat="d-m-Y"
           }}
         </div>
       </div>
       <div class="col--6-12">
         <div class="form-item form__row">
           {{web-components/vl-datepicker
-            selectedDate=endDate
-            dateChanged=(action "onChangeEnd")
-            dateFormat="d-m-Y"
+              selectedDate=selectOption.end
+              dateChanged=(action "onChangeSelectedEnd")
+              dateFormat="d-m-Y"
           }}
         </div>
       </div>

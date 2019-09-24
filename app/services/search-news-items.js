@@ -1,4 +1,5 @@
 import Service from '@ember/service';
+import { warn } from '@ember/debug';
 import { A } from '@ember/array';
 import moment from 'moment';
 import fetch from 'fetch';
@@ -35,19 +36,27 @@ export default Service.extend({
       if (search)
         endpoint += `&filter[htmlContent]=${search}`;
       if (startDate)
-        endpoint += `&filter[:gte:sessionDate]=${moment(startDate, 'DD-MM-YYYY').toDate().toISOString()}`;
+        endpoint += `&filter[:gte:sessionDate]=${startDate}`;
       if (endDate)
-        endpoint += `&filter[:lte:sessionDate]=${moment(endDate, 'DD-MM-YYYY').toDate().toISOString()}`;
-      if (presentedById)
-        endpoint += `&filter[mandateeIds]=${presentedById}`;
-      if (ministerialPowerId)
+        endpoint += `&filter[:lte:sessionDate]=${endDate}`;
+      if (presentedById) {
+        if (presentedById == -1) // previous ministers
+          endpoint += `&filter[mandateeActiveStatus]=inactive`;
+        else
+          endpoint += `&filter[mandateeIds]=${presentedById}`;
+      } if (ministerialPowerId)
         endpoint += `&filter[themeId]=${ministerialPowerId}`;
     } else {
       endpoint += `&filter[:sqs:title]=*`;
     }
 
-    const json = yield (yield fetch(endpoint)).json();
-    this.set('count', json.count);
-    return json.data.map(item => item.attributes);
+    try {
+      const json = yield (yield fetch(endpoint)).json();
+      this.set('count', json.count);
+      return json.data.map(item => item.attributes);
+    } catch (e) {
+      warn(`Something went wrong while querying mu-search: ${e.message}`, { id: 'mu-search.failure' });
+      return A();
+    }
   }).keepLatest()
 });

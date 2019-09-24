@@ -1,20 +1,33 @@
 <div class="filter u-spacer--small">
   <p class="filter__intro">Verfijn uw zoekresultaat</p>
-  <form class="form filter__form">
+  <form class="form filter__form" {{action onSearch searchParams on="submit"}}>
     <div>
       <div class="filter__field form-item">
         {{web-components/vl-form-label value="Zoek naar"}}
-        {{web-components/vl-form-input width="4" value=(mut searchInput) placeholder="Zoek naar"}}
+        {{web-components/vl-form-input
+            width="4"
+            value=searchParams.search
+            onChange=(action (mut searchParams.search))
+            placeholder="Zoek naar"
+        }}
       </div>
 
-      {{select-date-council setStartDate=(action (mut startDateInput)) setEndDate=(action (mut endDateInput)) setDateChoiceId=(action (mut dateChoiceIdInput)) startDateInput=startDate endDateInput=endDate dateChoiceId=dateChoiceId}}
+      {{select-date-council
+          selectedId=searchParams.dateOption
+          startDate=searchParams.startDate
+          endDate=searchParams.endDate
+          onChange=(action "selectSessionDate")
+      }}
       <div class="filter__field form-item">
         <label class="filter__field filter__field__label">
           Ministeriële bevoegdheden
         </label>
         <div class="form-element">
           <div class="form__input">
-            {{select-ministerial-power setMinisterialPower=(action (mut ministerialPowerIdInput)) ministerialPowerId=ministerialPowerId}}
+            {{select-ministerial-power
+                selectedId=searchParams.ministerialPowerId
+                onChange=(action (mut searchParams.ministerialPowerId))
+            }}
           </div>
         </div>
       </div>
@@ -24,12 +37,15 @@
         </label>
         <div class="form-element">
           <div class="form__input">
-            {{select-presented-by setPresentedBy=(action (mut presentedByIdInput)) presentedById=presentedById}}
+            {{select-presented-by
+                selectedId=searchParams.presentedById
+                onChange=(action (mut searchParams.presentedById))
+            }}
           </div>
         </div>
       </div>
       <div class="filter__field form-item">
-        <input class="form-submit button" onclick={{action "search"}} value="Zoek">
+        <button class="form-submit button">Zoek</button>
       </div>
     </div>
   </form>

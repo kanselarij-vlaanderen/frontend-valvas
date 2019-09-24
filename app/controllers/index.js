@@ -7,11 +7,22 @@ import { A } from '@ember/array';
 import EmberObject from '@ember/object';
 
 export default Controller.extend({
+  queryParams: ['search', 'dateOption', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'],
+
   searchNewsItems: service(),
+
+  search: null,
+  dateChoiceId: null,
+  startDate: null,
+  endDate: null,
+  presentedById: null,
+  ministerialPowerId: null,
+  pageNumber: null,
+
   data: alias('searchNewsItems.cache'),
   count: alias('searchNewsItems.count'),
-
   hasMoreResults: lt('data.length', 'count'),
+  showBackLink: or('search', 'dateOption', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'),
 
   sessions: computed('searchNewsItems.cache{,.[]}', function() {
     let sessions = A();
@@ -36,25 +47,16 @@ export default Controller.extend({
      return sessions;
   }),
 
-  queryParams: ['search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'],
-  search: null,
-  dateChoiceId: null,
-  startDate: null,
-  endDate: null,
-  presentedById: null,
-  ministerialPowerId: null,
-  pageNumber: null,
-
-  showBackLink: or('search', 'dateChoiceId', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'),
-
   actions: {
-    searchNews(search, dateChoiceId, startDate, endDate, presentedById, ministerialPowerId) {
+    search(params) {
+      const { search, dateOption, startDate, endDate, presentedById, ministerialPowerId } = params;
       this.set('search', search);
-      this.set('dateChoiceId', dateChoiceId);
+      this.set('dateOption', dateOption);
       this.set('startDate', startDate);
       this.set('endDate', endDate);
       this.set('presentedById', presentedById);
       this.set('ministerialPowerId', ministerialPowerId);
+      this.searchNewsItems.search(params);
     },
 
     loadMore() {
@@ -63,7 +65,7 @@ export default Controller.extend({
 
     clearParams() {
       this.set('search', null);
-      this.set('dateChoiceId', null);
+      this.set('dateOption', null);
       this.set('startDate', null);
       this.set('endDate', null);
       this.set('presentedById', null);
@@ -71,10 +73,3 @@ export default Controller.extend({
     }
   }
 });
-
-
-/*
-
-  { sessionDate, news: [], announcements: []
-
-*/

@@ -1,128 +1,111 @@
 import Component from '@ember/component';
-import { task, all } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 import moment from 'moment';
-import { computed } from '@ember/object';
-import fetch from 'fetch';
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
+import { equal } from '@ember/object/computed';
 
 export default Component.extend({
-  startDate: null,
-  endDate: null,
+  store: service(),
 
-  selectedDateChoice: computed('options.[]', 'dateChoiceId', {
-    get() {
-      if (this.options && !this.dateChoiceId) { // When we clear the query params, select default option
-        return this.options.findBy('id', 0);
-      } else if (this.options && this.dateChoiceId) {
-        return this.options.findBy('id', parseInt(this.dateChoiceId));
-      } else {
-        return null;
-      }
-    },
-    set(key, value) {
-      return this._selectedDateChoice = value;
-    }
-  }),
+  tagName: '',
 
-  showDateInputs: computed('selectedDateChoice', function() {
-    if (this.selectedDateChoice) {
-      return this.selectedDateChoice.id == 5;
-    }
-  }),
+  startDate: null, // Date ISO string
+  endDate: null, // Date ISO string
+  selectedId: null,
 
-  updateCouncilNumber: task(function*(option) {
-    const endpoint = `news-items/search?filter[:gte:sessionDate]=${moment().subtract(option.monthsNumber, 'months').toDate().toISOString()}&sort[priority]=asc&page[number]=0`;
-    const newsItems = yield (yield fetch(endpoint)).json();
-    if (newsItems.count != undefined) {
-      option.councilNumber = newsItems.count;
-    } else {
-      option.councilNumber = 0;
-    }
-  }),
-
-  updateCouncilNumbers: task(function*(options) {
-    yield all(options.map(option => this.updateCouncilNumber.perform(option)));
-  }),
+  enableSelectDateInput: equal('selectedId', 'select'),
 
   async init() {
     this._super(...arguments);
-    let options = [{
-        id: 0,
-        label: 'Alle ministerraden',
-        monthsNumber: null,
-        councilNumber: null
-      },
-      {
-        id: 1,
-        label: 'Laatste ministerraad',
-        monthsNumber: 1,
-        councilNumber: null
-      },
-      {
-        id: 2,
-        label: 'Afgelopen 3 maanden',
-        monthsNumber: 3,
-        councilNumber: null
-      },
-      {
-        id: 3,
-        label: 'Afgelopen 6 maanden',
-        monthsNumber: 6,
-        councilNumber: null
-      },
-      {
-        id: 4,
-        label: 'Afgelopen 12 maanden',
-        monthsNumber: 12,
-        councilNumber: null
-      },
-      {
-        id: 5,
-        label: 'Kies een datum',
-        monthsNumber: null,
-        councilNumber: null
-      }
-    ];
-    await this.updateCouncilNumbers.perform(options);
+
+    const now = new Date();
+
+    const defaultOption = EmberObject.create({
+      id: null,
+      label: 'Alle ministerraden',
+      start: null,
+      end: null
+    });
+    const latestOption = EmberObject.create({
+      id: 'latest',
+      label: 'Laatste ministerraad',
+      start: null,
+      end: null,
+    });
+    const latestXMonthsOption = function(months) {
+      return EmberObject.create({
+        id: `last-${months}-months`,
+        label: `Afgelopen ${months} maanden`,
+        start: moment(now).subtract(months, 'months').toDate(),
+        end: null
+      });
+    };
+    const selectOption = EmberObject.create({
+      id: 'select',
+      label: 'Kies een datum',
+      start: null,
+      end: null
+    });
+    const options = A([
+      defaultOption,
+      latestOption,
+      latestXMonthsOption(1),
+      latestXMonthsOption(2),
+      latestXMonthsOption(3),
+      selectOption
+    ]);
     this.set('options', options);
 
-    if (this.startDateInput) {
-      this.set('startDate', moment(this.startDateInput, 'DD-MM-YYYY').toDate());
+    // Preselect correct option
+    const selected = this.selectedId ? this.options.find(o => o.id == this.selectedId) : defaultOption;
+    this.set('selected', selected);
+
+    this.set('latestOption', latestOption);
+    this.set('selectOption', selectOption);
+
+    if (this.selectedId == 'select') {
+      if (this.startDate)
+        this.selectOption.set('start', new Date(this.startDate));
+      if (this.endDate)
+        this.selectOption.set('end', new Date(this.endDate));
+    } else { // start and end date are configured by the selected option
+      this.selectOption.set('start', null);
+      this.selectOption.set('end', null);
     }
 
-    if (this.endDateInput) {
-      this.set('endDate', moment(this.endDateInput, 'DD-MM-YYYY').toDate());
+    await this.initLatestSessionDate();
+  },
+
+  async initLatestSessionDate() {
+    const meetings = await this.store.query('meeting', {
+      page: { size: 1 },
+      sort: '-planned-start'
+    });
+    if (meetings.length) {
+      const latestMeeting = meetings.firstObject;
+      this.latestOption.set('start', latestMeeting.plannedStart);
+      const end = moment(latestMeeting.plannedStart).add(1, 'days').toDate();
+      this.latestOption.set('end', end);
     }
   },
 
   actions: {
     onChange(selected) {
-      this.set('selectedDateChoice', selected);
-      if (selected.id == 0) {
-        this.set('startDate', null);
-        this.set('endDate', null);
-        this.setStartDate(this.startDate);
-        this.setEndDate(this.endDate);
-        this.setDateChoiceId(null);
-      } else {
-        this.setDateChoiceId(selected.id);
-        if (selected.id != 5) {
-          const months = selected.monthsNumber;
-          this.set('startDate', moment().subtract(months, 'months').toDate());
-          this.set('endDate', new Date());
-          this.setStartDate(moment(this.startDate).format('DD-MM-YYYY'));
-          this.setEndDate(moment(this.endDate).format('DD-MM-YYYY'));
-        }
+      this.set('selected', selected);
+      this.onChange(this.selected.id, this.selected.start, this.selected.end);
+    },
+    onChangeSelectedStart(date) {
+      if (this.selected.id == 'select') {
+        this.selected.set('start', date);
+        this.onChange(this.selected.id, this.selected.start, this.selected.end);
       }
     },
-
-    onChangeStart(startDate) {
-      this.set('startDate', startDate);
-      this.setStartDate(moment(startDate).format('DD-MM-YYYY'));
-    },
-
-    onChangeEnd(endDate) {
-      this.set('endDate', endDate);
-      this.setEndDate(moment(endDate).format('DD-MM-YYYY'));
+    onChangeSelectedEnd(date) {
+      if (this.selected.id == 'select') {
+        this.selected.set('end', date);
+        this.onChange(this.selected.id, this.selected.start, this.selected.end);
+      }
     }
   }
 });
