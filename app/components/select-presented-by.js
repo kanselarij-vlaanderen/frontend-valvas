@@ -1,8 +1,5 @@
 import Component from '@ember/component';
-import { task, all } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import fetch from 'fetch';
 
 const defaultOption = { label: 'Alle ministers' };
 const historicOption = { id: -1, label: 'Vorige ministers' };

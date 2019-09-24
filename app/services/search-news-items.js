@@ -1,7 +1,6 @@
 import Service from '@ember/service';
 import { warn } from '@ember/debug';
 import { A } from '@ember/array';
-import moment from 'moment';
 import fetch from 'fetch';
 import { task } from 'ember-concurrency';
 
