@@ -28,8 +28,7 @@ export default Service.extend({
 
   searchTask: task(function * () {
     const { search, startDate, endDate, presentedById, ministerialPowerId, pageNumber, pageSize } = this.searchParams;
-    const rootURL = '/vlaamse-regering/beslissingenvlaamseregering/'; // TODO retrieve rootURL from config/environment.js
-    let endpoint = `${rootURL}news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=asc`;
+    let endpoint = `/news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=asc`;
 
     if (search || startDate || endDate || presentedById || ministerialPowerId ) {
       if (search)

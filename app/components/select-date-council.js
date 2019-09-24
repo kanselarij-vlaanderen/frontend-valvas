@@ -50,9 +50,9 @@ export default Component.extend({
     const options = A([
       defaultOption,
       latestOption,
-      latestXMonthsOption(1),
-      latestXMonthsOption(2),
       latestXMonthsOption(3),
+      latestXMonthsOption(6),
+      latestXMonthsOption(12),
       selectOption
     ]);
     this.set('options', options);

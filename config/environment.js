@@ -4,7 +4,7 @@ module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'frontend-publieksontsluiting',
     environment,
-    rootURL: '/vlaamse-regering/beslissingenvlaamseregering/',
+    rootURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
