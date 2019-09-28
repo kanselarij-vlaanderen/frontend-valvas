@@ -25,8 +25,20 @@ export default Component.extend({
       };
     }))).sortBy('lastName');
     this.set('options', [ defaultOption, ...options, historicOption ]);
-    const selected = this.selectedId ? this.options.find(o => o.id == this.selectedId) : defaultOption;
-    this.set('selected', selected);
+    this.setSelectedOptionForSelectedId();
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.setSelectedOptionForSelectedId();
+  },
+
+  /* Select correct option for ember-power-select if selectedId is changed by external component */
+  setSelectedOptionForSelectedId() {
+    if (this.options) {
+      const selected = this.selectedId ? this.options.find(o => o.id == this.selectedId) : defaultOption;
+      this.set('selected', selected);
+    }
   },
 
   actions: {

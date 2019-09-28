@@ -56,25 +56,36 @@ export default Component.extend({
       selectOption
     ]);
     this.set('options', options);
-
-    // Preselect correct option
-    const selected = this.selectedId ? this.options.find(o => o.id == this.selectedId) : defaultOption;
-    this.set('selected', selected);
-
+    this.set('defaultOption', defaultOption);
     this.set('latestOption', latestOption);
     this.set('selectOption', selectOption);
 
-    if (this.selectedId == 'select') {
-      if (this.startDate)
-        this.selectOption.set('start', new Date(this.startDate));
-      if (this.endDate)
-        this.selectOption.set('end', new Date(this.endDate));
-    } else { // start and end date are configured by the selected option
-      this.selectOption.set('start', null);
-      this.selectOption.set('end', null);
-    }
+    this.setSelectedOptionForSelectedId();
 
     await this.initLatestSessionDate();
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.setSelectedOptionForSelectedId();
+  },
+
+  /* Select correct option for ember-power-select if selectedId is changed by external component */
+  setSelectedOptionForSelectedId() {
+    if (this.options) {
+      const selected = this.selectedId ? this.options.find(o => o.id == this.selectedId) : this.defaultOption;
+      this.set('selected', selected);
+
+      if (this.selectedId == 'select') {
+        if (this.startDate)
+          this.selectOption.set('start', new Date(this.startDate));
+        if (this.endDate)
+          this.selectOption.set('end', new Date(this.endDate));
+      } else { // start and end date are precconfigured by the selected option and not entered by user
+        this.selectOption.set('start', null);
+        this.selectOption.set('end', null);
+      }
+    }
   },
 
   async initLatestSessionDate() {

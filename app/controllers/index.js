@@ -64,12 +64,13 @@ export default Controller.extend({
     },
 
     clearParams() {
-      this.set('search', null);
-      this.set('dateOption', null);
-      this.set('startDate', null);
-      this.set('endDate', null);
-      this.set('presentedById', null);
-      this.set('ministerialPowerId', null);
+      ['search',
+       'dateOption',
+       'startDate',
+       'endDate',
+       'presentedById',
+       'ministerialPowerId'].forEach(key => this.set(key, null));
+      this.searchNewsItems.search({});
     }
   }
 });
