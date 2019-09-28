@@ -1,14 +1,18 @@
 <i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
 {{#unless fetchRecord.isRunning}}
   {{#if documentVersions}}
-    <button class="link" {{action (mut filesAreExpanded) true}}>
-      {{documentVersions.length}} documenten
+    <button class="link" {{action (mut isExpanded) true}}>
+      {{#if (eq documentVersions.length 1)}}
+        1 document
+      {{else}}
+        {{documentVersions.length}} documenten
+      {{/if}}
     </button>
 
-    {{#if filesAreExpanded}}
-      <div class="filter__form">
+    {{#if isExpanded}}
+      <div class="filter__form document-drawer">
         <div class="u-align-right">
-          <button class="link link--icon--close" title="Venster sluiten" {{action (mut filesAreExpanded) false}}>
+          <button class="link link--icon--close" title="Venster sluiten" {{action (mut isExpanded) false}}>
             <span class="u-visually-hidden">Venster sluiten</span>
           </button>
         </div>

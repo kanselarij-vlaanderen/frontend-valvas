@@ -9,7 +9,6 @@ export default Component.extend({
 
   model: null,
   isExpanded: false,
-  filesAreExpanded: false,
 
   didReceiveAttrs() {
     if (this.model)

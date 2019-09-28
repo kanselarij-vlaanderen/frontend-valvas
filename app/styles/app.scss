@@ -1,3 +1,5 @@
+@import "ember-power-select";
+
 /* Official code
    ========================================================================== */
 
@@ -116,10 +118,39 @@
 @import 'govflanders/additions/_background';
 @import 'govflanders/additions/_typography';
 
+// Custom components
+@import "custom-components/vlc-box";
+@import "custom-components/vlc-scroll-wrapper";
+
 // Imports utilities (loaded from node_modules)
 // @import "node_modules/@govflanders/vl-ui-util/src/scss/util";
 
 // Utilities (loaded locally to easily read source)
 @import 'govflanders/util/_util';
 
-@import "ember-power-select";
+// Custom utilities
+@import "custom-utilities/_reset";
+@import "custom-utilities/_extended-spacer";
+@import "custom-utilities/_scroll";
+@import "custom-utilities/_box-model";
+
+.vlc-scroll-wrapper {
+  height: 100% !important;
+}
+
+.vlc-scroll-wrapper__body.full-height {
+  > .ember-view {
+    height: 100% !important;
+  }
+}
+
+body > .ember-view {
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+}
+
+.document-drawer {
+  margin-top: 2.5rem;
+}
