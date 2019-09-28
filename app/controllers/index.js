@@ -7,7 +7,10 @@ import { A } from '@ember/array';
 import EmberObject from '@ember/object';
 
 export default Controller.extend({
-  queryParams: ['search', 'dateOption', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'],
+  queryParams: ['search',
+                'dateOption', 'startDate', 'endDate',
+                'ministerId', 'ministerFirstName', 'ministerLastName',
+                'ministerialPowerId'],
 
   searchNewsItems: service(),
 
@@ -22,7 +25,10 @@ export default Controller.extend({
   data: alias('searchNewsItems.cache'),
   count: alias('searchNewsItems.count'),
   hasMoreResults: lt('data.length', 'count'),
-  showBackLink: or('search', 'dateOption', 'startDate', 'endDate', 'presentedById', 'ministerialPowerId'),
+  showBackLink: or('search',
+                   'dateOption', 'startDate', 'endDate',
+                   'ministerId', 'ministerFirstName', 'ministerLastName',
+                   'ministerialPowerId'),
 
   sessions: computed('searchNewsItems.cache{,.[]}', function() {
     let sessions = A();
@@ -49,12 +55,14 @@ export default Controller.extend({
 
   actions: {
     search(params) {
-      const { search, dateOption, startDate, endDate, presentedById, ministerialPowerId } = params;
+      const { search, dateOption, startDate, endDate, ministerId, ministerFirstName, ministerLastName, ministerialPowerId } = params;
       this.set('search', search);
       this.set('dateOption', dateOption);
       this.set('startDate', startDate);
       this.set('endDate', endDate);
-      this.set('presentedById', presentedById);
+      this.set('ministerId', ministerId);
+      this.set('ministerFirstName', ministerFirstName);
+      this.set('ministerLastName', ministerLastName);
       this.set('ministerialPowerId', ministerialPowerId);
       this.searchNewsItems.search(params);
     },
@@ -68,7 +76,9 @@ export default Controller.extend({
        'dateOption',
        'startDate',
        'endDate',
-       'presentedById',
+       'ministerId',
+       'ministerFirstName',
+       'ministerLastName',
        'ministerialPowerId'].forEach(key => this.set(key, null));
       this.searchNewsItems.search({});
     }

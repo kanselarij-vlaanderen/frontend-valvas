@@ -42,13 +42,14 @@
         <div class="col--4-12">
           {{search-box
               searchParams=(hash
-                  search=search
-                  dateOption=dateOption
-                  startDate=startDate
-                  endDate=endDate
-                  presentedById=presentedById
-                  ministerialPowerId=ministerialPowerId
-              )
+              search=search
+              dateOption=dateOption
+              startDate=startDate
+              endDate=endDate
+              ministerId=ministerId
+              ministerFirstName=ministerFirstName
+              ministerLastName=ministerLastName
+              ministerialPowerId=ministerialPowerId)
               onSearch=(action "search")
           }}
           <!-- <ul class="link-list link-list--small u-spacer--small">

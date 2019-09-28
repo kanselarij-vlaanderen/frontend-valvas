@@ -19,6 +19,7 @@ export default Component.extend({
       const person = await m.person;
       return {
         id: m.id,
+        firstName: person.firstName,
         lastName: person.lastName,
         label: `${person.firstName} ${person.lastName}`,
         count: null
@@ -42,10 +43,11 @@ export default Component.extend({
   },
 
   actions: {
-    onChange(selected) {
+    async onChange(selected) {
       this.set('selected', selected);
-      if (this.selectedId != selected.id)
-        this.onChange(selected.id);
+      if (this.selectedId != selected.id) {
+        this.onChange(selected.id, selected.firstName, selected.lastName);
+      }
     }
   }
 });

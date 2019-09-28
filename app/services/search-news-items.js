@@ -27,21 +27,22 @@ export default Service.extend({
   },
 
   searchTask: task(function * () {
-    const { search, startDate, endDate, presentedById, ministerialPowerId, pageNumber, pageSize } = this.searchParams;
+    const { search, startDate, endDate, ministerId, ministerFirstName, ministerLastName, ministerialPowerId, pageNumber, pageSize } = this.searchParams;
     let endpoint = `/news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=asc`;
 
-    if (search || startDate || endDate || presentedById || ministerialPowerId ) {
+    if (search || startDate || endDate || ministerId || ministerialPowerId ) {
       if (search)
         endpoint += `&filter[htmlContent]=${search}`;
       if (startDate)
         endpoint += `&filter[:gte:sessionDate]=${startDate}`;
       if (endDate)
         endpoint += `&filter[:lte:sessionDate]=${endDate}`;
-      if (presentedById) {
-        if (presentedById == -1) // previous ministers
+      if (ministerId) {
+        if (ministerId == -1) {// previous ministers
           endpoint += `&filter[mandateeActiveStatus]=inactive`;
-        else
-          endpoint += `&filter[mandateeIds]=${presentedById}`;
+        } else {
+          endpoint += `&filter[mandateeFirstNames]=${ministerFirstName}&filter[mandateeFamilyNames]=${ministerLastName}`;
+        }
       } if (ministerialPowerId)
         endpoint += `&filter[themeId]=${ministerialPowerId}`;
     } else {

@@ -37,8 +37,8 @@
         <div class="form-element">
           <div class="form__input">
             {{select-presented-by
-                selectedId=searchParams.presentedById
-                onChange=(action (mut searchParams.presentedById))
+                selectedId=searchParams.ministerId
+                onChange=(action "selectMinister")
             }}
           </div>
         </div>
