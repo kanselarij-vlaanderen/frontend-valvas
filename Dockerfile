@@ -10,4 +10,6 @@ RUN ember build -prod
 
 FROM semtech/ember-proxy-service:1.4.0
 
+ENV STATIC_FOLDERS_REGEX "^/(assets|fonts|files|ember-pdfjs-wrapper)/"
+
 COPY --from=builder /app/dist /app
