@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   let ENV = {
-    modulePrefix: 'frontend-publieksontsluiting',
+    modulePrefix: 'frontend-valvas',
     environment,
     rootURL: '/',
     locationType: 'auto',

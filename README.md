@@ -1,6 +1,6 @@
-# frontend-publieksontsluiting
+# frontend-valvas
 
-Frontend of the publieksontsluiting application.
+Frontend of the Valvas application. See also [app-valvas](https://github.com/kanselarij-vlaanderen/app-valvas).
 
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
@@ -16,7 +16,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone https://github.com/kanselarij-vlaanderen/frontend-publieksontsluiting.git` this repository
+* `git clone https://github.com/kanselarij-vlaanderen/frontend-valvas.git` this repository
 * `cd frontend-publieksontsluiting`
 * `npm install`
 
