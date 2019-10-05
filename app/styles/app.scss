@@ -154,3 +154,7 @@ body > .ember-view {
 .document-drawer {
   margin-top: 2.5rem;
 }
+
+.bevoegde-minister-item:not(:last-of-type):after {
+    content: ',';
+}

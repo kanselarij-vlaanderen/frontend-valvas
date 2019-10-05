@@ -8,7 +8,6 @@ export default Component.extend({
   store: service(),
 
   isLongText: false,
-  showGeenDocumenten: false,
   isArrayMandatee: false,
 
   createMandatee: task(function*(options, mandateeId) {
