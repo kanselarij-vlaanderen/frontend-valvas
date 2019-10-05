@@ -30,14 +30,14 @@ export default Service.extend({
     const { search, startDate, endDate, ministerId, ministerFirstName, ministerLastName, ministerialPowerId, pageNumber, pageSize } = this.searchParams;
     let endpoint = `/news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=asc`;
 
-    if (search || startDate || endDate || ministerId || ministerialPowerId ) {
+    if (search || startDate || endDate || ministerId || ministerialPowerId || ministerFirstName || ministerLastName) {
       if (search)
         endpoint += `&filter[htmlContent]=${search}`;
       if (startDate)
         endpoint += `&filter[:gte:sessionDate]=${startDate}`;
       if (endDate)
         endpoint += `&filter[:lte:sessionDate]=${endDate}`;
-      if (ministerId) {
+      if (ministerId || ministerFirstName || ministerLastName) {
         if (ministerId == -1) {// previous ministers
           endpoint += `&filter[mandateeActiveStatus]=inactive`;
         } else {

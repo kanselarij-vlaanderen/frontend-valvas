@@ -38,6 +38,8 @@
           <div class="form__input">
             {{select-presented-by
                 selectedId=searchParams.ministerId
+                selectedFirstName=searchParams.ministerFirstName
+                selectedLastName=searchParams.ministerLastName
                 onChange=(action "selectMinister")
             }}
           </div>

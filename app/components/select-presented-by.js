@@ -37,7 +37,20 @@ export default Component.extend({
   /* Select correct option for ember-power-select if selectedId is changed by external component */
   setSelectedOptionForSelectedId() {
     if (this.options) {
-      const selected = this.selectedId ? this.options.find(o => o.id == this.selectedId) : defaultOption;
+      let selected = null;
+      if (this.selectedId) {
+        selected = this.options.find(o => o.id == this.selectedId);
+      } else if (this.selectedFirstName || this.selectedLastName) {
+        selected = {
+          id: 'placeholder',
+          firstName: this.selectedFirstName,
+          lastName: this.selectedLastName,
+          label: `${this.selectedFirstName} ${this.selectedLastName}`,
+          count: null
+        };
+      } else {
+        selected = defaultOption;
+      }
       this.set('selected', selected);
     }
   },
