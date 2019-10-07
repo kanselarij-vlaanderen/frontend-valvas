@@ -6,7 +6,11 @@ module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     flatpickr: {
       locales: ['nl']
+    },
+    'ember-cli-babel': {
+      includePolyfill: true
     }
+    // Add options here
   });
 
   // Use `app.import` to add additional libraries to the generated
