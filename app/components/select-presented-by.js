@@ -19,12 +19,13 @@ export default Component.extend({
       const person = await m.person;
       return {
         id: m.id,
+        priority: m.priority,
         firstName: person.firstName,
         lastName: person.lastName,
         label: `${person.firstName} ${person.lastName}`,
         count: null
       };
-    }))).sortBy('lastName');
+    }))).sortBy('priority');
     this.set('options', [ defaultOption, ...options, historicOption ]);
     this.setSelectedOptionForSelectedId();
   },
