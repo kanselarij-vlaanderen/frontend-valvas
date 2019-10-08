@@ -1,7 +1,33 @@
-{{#power-select
-     selected=selected
-     options=options
-     onChange=(action "onChange")
-     as |option|}}
-  {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
-{{/power-select}}
+<div class="filter__field form-item">
+  <label class="filter__field filter__field__label">
+    Voorgesteld door
+  </label>
+
+  <div class="form-element">
+    <div class="form__input">
+      {{#power-select
+           selected=selected
+           options=options
+           onChange=(action "onChange")
+           as |option|}}
+        {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
+      {{/power-select}}
+    </div>
+  </div>
+</div>
+
+{{#if isEnabledHistoricOption}}
+  <div class="filter__field form-item">
+    <div class="form-element">
+      <div class="form__input">
+        {{#power-select
+             selected=selectedHistoric
+             options=historicOptions
+             onChange=(action "onChangeHistoric")
+             as |option|}}
+          {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
+        {{/power-select}}
+      </div>
+    </div>
+  </div>
+{{/if}}

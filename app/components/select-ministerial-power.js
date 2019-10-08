@@ -6,6 +6,8 @@ const defaultOption = { label: 'Alle bevoegdheden' };
 export default Component.extend({
   store: service(),
 
+  tagName: '',
+
   async init() {
     this._super(...arguments);
     const ministerialPowers = await this.store.query('theme', {

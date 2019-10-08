@@ -17,34 +17,16 @@
           endDate=searchParams.endDate
           onChange=(action "selectSessionDate")
       }}
-      <div class="filter__field form-item">
-        <label class="filter__field filter__field__label">
-          Ministeriële bevoegdheden
-        </label>
-        <div class="form-element">
-          <div class="form__input">
-            {{select-ministerial-power
-                selectedId=searchParams.ministerialPowerId
-                onChange=(action (mut searchParams.ministerialPowerId))
-            }}
-          </div>
-        </div>
-      </div>
-      <div class="filter__field form-item">
-        <label class="filter__field filter__field__label">
-          Voorgesteld door
-        </label>
-        <div class="form-element">
-          <div class="form__input">
-            {{select-presented-by
-                selectedId=searchParams.ministerId
-                selectedFirstName=searchParams.ministerFirstName
-                selectedLastName=searchParams.ministerLastName
-                onChange=(action "selectMinister")
-            }}
-          </div>
-        </div>
-      </div>
+      {{select-ministerial-power
+          selectedId=searchParams.ministerialPowerId
+          onChange=(action (mut searchParams.ministerialPowerId))
+      }}
+      {{select-presented-by
+          selectedId=searchParams.ministerId
+          selectedFirstName=searchParams.ministerFirstName
+          selectedLastName=searchParams.ministerLastName
+          onChange=(action "selectMinister")
+      }}
       <div class="filter__field form-item">
         <button class="form-submit button">Zoek</button>
       </div>
