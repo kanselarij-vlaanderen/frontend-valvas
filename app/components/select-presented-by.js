@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
 const defaultOption = { label: 'Alle ministers' };
+const mededelingOption = { id: 'vr', label: 'de Vlaamse Regering' };
 const historicOption = { id: -1, label: 'Vorige ministers' };
 
 export default Component.extend({
@@ -26,7 +27,7 @@ export default Component.extend({
         count: null
       };
     }))).sortBy('priority');
-    this.set('options', [ defaultOption, ...options, historicOption ]);
+    this.set('options', [ defaultOption, ...options, mededelingOption, historicOption ]);
     this.setSelectedOptionForSelectedId();
   },
 

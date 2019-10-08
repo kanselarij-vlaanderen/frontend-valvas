@@ -38,10 +38,12 @@ export default Service.extend({
       if (endDate)
         endpoint += `&filter[:lte:sessionDate]=${endDate}`;
       if (ministerId || ministerFirstName || ministerLastName) {
-        if (ministerId == -1) {// previous ministers
-          endpoint += `&filter[mandateeActiveStatus]=inactive`;
+        if (ministerId == 'vr') { // mededelingen
+          endpoint += `&&filter[category]=mededeling`;
+        } else if (ministerId == -1) {// previous ministers
+          endpoint += `&filter[mandateeActiveStatus]=inactive&filter[category]=nieuws`;
         } else {
-          endpoint += `&filter[mandateeFirstNames]=${ministerFirstName}&filter[mandateeFamilyNames]=${ministerLastName}`;
+          endpoint += `&filter[mandateeFirstNames]=${ministerFirstName}&filter[mandateeFamilyNames]=${ministerLastName}&filter[category]=nieuws`;
         }
       } if (ministerialPowerId)
         endpoint += `&filter[themeId]=${ministerialPowerId}`;
