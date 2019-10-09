@@ -23,17 +23,21 @@ export default Component.extend({
     const titles = this.searchResult.mandateeTitles;
     return isArray(titles) ? titles : [titles];
   }),
-  names: computed('searchResult.mandateeNames', function() {
-    const names = this.searchResult.mandateeNames;
+  firstNames: computed('searchResult.mandateeFirstNames', function() {
+    const names = this.searchResult.mandateeFirstNames;
     return isArray(names) ? names : [names];
   }),
-  mandatees: computed('titles', 'names', function() {
+  familyNames: computed('searchResult.mandateeFamilyNames', function() {
+    const names = this.searchResult.mandateeFamilyNames;
+    return isArray(names) ? names : [names];
+  }),
+  mandatees: computed('titles', 'firstNames', 'familyNames', function() {
     const mandatees = A();
-    for (let i = 0; i < this.names.length; i++) {
+    for (let i = 0; i < this.familyNames.length; i++) {
       const title = formatMinisterTitle(this.titles[i]);
       const mandatee = EmberObject.create({
         title,
-        name: this.names[i],
+        name: `${this.firstNames[i]} ${this.familyNames[i]}`,
         priority: title == 'minister-president' ? 2 : 1
       });
       mandatees.pushObject(mandatee);

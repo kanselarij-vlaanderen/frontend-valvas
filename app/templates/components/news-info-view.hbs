@@ -5,11 +5,13 @@
     </div>
     <h4 class="h4">{{newsInfo.title}}</h4>
     <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
-      {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}},
+      {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}}
       {{#if (eq newsInfo.category "mededeling")}}
-        mededeling aan de Vlaamse Regering
+        , mededeling aan de Vlaamse Regering
       {{else}}
-        op voorstel van {{format-ministers searchResult=newsInfo}}
+        {{#if newsInfo.mandateeFamilyNames}}
+          , op voorstel van {{format-ministers searchResult=newsInfo}}
+        {{/if}}
       {{/if}}
     </div>
     <div class="decision__text typography">
