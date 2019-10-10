@@ -5,12 +5,13 @@
     </div>
     <h4 class="h4">{{newsInfo.title}}</h4>
     <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
-      {{moment-format newsInfo.sessionDate "DD MMMM YYYY"}}
+      <time datetime={{moment-format newsInfo.sessionDate "YYYY-MM-DD"}}>{{moment-format newsInfo.sessionDate "D MMMM YYYY"}}</time>
+
       {{#if (eq newsInfo.category "mededeling")}}
-        , mededeling aan de Vlaamse Regering
+        <span>mededeling aan de Vlaamse Regering</span>
       {{else}}
         {{#if newsInfo.mandateeFamilyNames}}
-          , op voorstel van {{format-ministers searchResult=newsInfo}}
+          op voorstel van {{format-ministers searchResult=newsInfo}}
         {{/if}}
       {{/if}}
     </div>

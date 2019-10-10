@@ -156,5 +156,13 @@ body > .ember-view {
 }
 
 .bevoegde-minister-item:not(:last-of-type):after {
-    content: ',';
+    content: ', ';
+}
+
+.bevoegde-minister-item:nth-last-of-type(2):after {
+    content: ' en ';
+}
+
+.decision__subtitle > time:not(:last-child):after {
+  content: ', ';
 }
