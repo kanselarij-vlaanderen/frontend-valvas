@@ -27,8 +27,11 @@ module.exports = function(environment) {
       includeTimezone: 'all'
     },
     'vo-webuniversum': {
-      header: '//tni.widgets.burgerprofiel.dev-vlaanderen.be/api/v1/widget/252b8537-c7d4-4795-b5b9-172a8041c839/embed',
-      footer: '//tni.widgets.burgerprofiel.dev-vlaanderen.be/api/v1/widget/50e798c1-2fb1-42e3-93d7-a99c0be2e6bc/embed'
+      header: '//widgets.vlaanderen.be/widget/live/57c7ff10148d450184b6f3a387dc0602',
+      footer: '//widgets.vlaanderen.be/widget/live/11ecf02ff8084d72bff3be4f47bfca4c'
+      // TODO we should use the new burgerprofiel headers
+      // header: '//tni.widgets.burgerprofiel.dev-vlaanderen.be/api/v1/widget/252b8537-c7d4-4795-b5b9-172a8041c839/embed',
+      // footer: '//tni.widgets.burgerprofiel.dev-vlaanderen.be/api/v1/widget/50e798c1-2fb1-42e3-93d7-a99c0be2e6bc/embed'
     }
   };
 
