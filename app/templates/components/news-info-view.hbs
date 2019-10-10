@@ -11,7 +11,7 @@
         <span>mededeling aan de Vlaamse Regering</span>
       {{else}}
         {{#if newsInfo.mandateeFamilyNames}}
-          op voorstel van {{format-ministers searchResult=newsInfo}}
+          op voorstel van {{format-ministers mandatees=(await mandatees)}}
         {{/if}}
       {{/if}}
     </div>
