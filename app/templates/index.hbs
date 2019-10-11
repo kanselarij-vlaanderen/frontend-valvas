@@ -89,9 +89,11 @@
             <div class="view-ip-decisions-search">
               <div class="view-content">
                 <div class="item-list">
-                  {{wu-alert title="Documenten ministerraad 14 oktober 2019" isWarning="true" message="De documenten van deze ministerraad zullen beschikbaar zijn vanaf 14 oktober 2019 om 14:00."}}
-                  {{#each sessions as |session|}}
+                  {{#each sessions as |session index|}}
                     <h2 class="h2 u-spacer">Ministerraad van {{moment-format session.date "DD MMMM YYYY"}}</h2>
+                    {{#if (eq index 0)}}
+                      {{wu-alert title="Documenten ministerraad 11 oktober 2019" isWarning="true" message="De documenten van deze ministerraad zullen beschikbaar zijn vanaf 14 oktober 2019 om 14:00."}}
+                    {{/if}}
                     {{#each session.news as |newsInfo|}}
                       {{news-info-view newsInfo=newsInfo}}
                     {{/each}}
