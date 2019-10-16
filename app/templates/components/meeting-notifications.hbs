@@ -1,0 +1,7 @@
+{{#each meeting.notifications as |notification|}}
+  {{wu-alert
+      isWarning="true"
+      title=notification.title
+      message=notification.description
+  }}
+{{/each}}

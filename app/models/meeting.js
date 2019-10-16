@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-let { Model, attr } = DS;
+let { Model, attr, hasMany } = DS;
 
 export default Model.extend({
   plannedStart: attr('date'),
@@ -9,5 +9,7 @@ export default Model.extend({
   number: attr('number'),
   isFinal: attr('boolean'),
   extraInfo: attr('string'),
-  kind: attr('string')
+  kind: attr('string'),
+
+  notifications: hasMany('notification')
 });
