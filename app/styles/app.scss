@@ -166,3 +166,17 @@ body > .ember-view {
 .decision__subtitle > time:not(:last-child):after {
   content: ', ';
 }
+
+.content-header:not(.content-header--large):not(.content-header--small) .content-header__content {
+  position: absolute;
+  left: 5%;
+  bottom: 25%;
+}
+
+@media only screen and (max-width: 1040px) {
+  .content-header__content .content-header__title__content {
+    font-size: 3.2rem !important;
+    padding-top: .5rem !important;
+    padding-bottom: .5rem !important;
+  }
+}

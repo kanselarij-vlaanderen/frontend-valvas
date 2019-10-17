@@ -9,7 +9,7 @@
     <img src="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&amp;c=b252082df120bfb638a67fd8b1d1446b" srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&amp;c=b252082df120bfb638a67fd8b1d1446b 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_2x/public/images/23959.jpg?itok=XUFABJ1V&amp;c=b252082df120bfb638a67fd8b1d1446b 2x"
       alt="">
   </picture>
-  <div class="layout layout--wide">
+  {{!-- <div class="layout layout--wide"> --}}
     <hgroup class="content-header__content">
       <h2 class="content-header__context content-header__context--has-link">
         <a href="/vlaamse-regering" class="content-header__context__link">
@@ -20,7 +20,7 @@
         <span class="content-header__title__content">Beslissingen van de Vlaamse Regering</span>
       </h1>
     </hgroup>
-  </div>
+  {{!-- </div> --}}
 </header>
 
 <div class="main-content">
@@ -39,7 +39,7 @@
   <div class="region">
     <div class="layout layout--wide">
       <div class="grid grid--is-stacked">
-        <div class="col--4-12 col--12-12--xs">
+        <div class="col--4-12 col--12-12--s">
           {{search-box
               searchParams=(hash
               search=search
@@ -85,7 +85,7 @@
         </div>
 
         {{#if sessions.length}}
-          <div class="col--8-12 col--12-12--xs">
+          <div class="col--8-12 col--12-12--s">
             <div class="view-ip-decisions-search">
               <div class="view-content">
                 <div class="item-list">
