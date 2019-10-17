@@ -180,3 +180,10 @@ body > .ember-view {
     padding-bottom: .5rem !important;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .filter__form {
+      margin: 0;
+      padding: 1.5rem;
+  }
+}
