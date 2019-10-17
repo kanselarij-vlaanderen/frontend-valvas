@@ -186,4 +186,31 @@ body > .ember-view {
       margin: 0;
       padding: 1.5rem;
   }
+
+  .vl-u-spacer-extended-left-l {
+    margin-left: 0 !important;
+  }
+}
+
+.layout--wide {
+  max-width: 85%;
+  min-width: auto;
+  padding: 0;
+}
+
+.spotlight__title-wrapper {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: .5rem;
+  background: white;
+}
+
+.h1-sublink {
+  margin-bottom: 2.5rem;
+}
+
+.vi {
+  top: 2px;
+  position: relative;
 }
