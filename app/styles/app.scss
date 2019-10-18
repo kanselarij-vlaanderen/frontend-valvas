@@ -219,3 +219,12 @@ body > .ember-view {
   display: inline-block;
   vertical-align: bottom;
 }
+
+.document-drawer {
+  padding: 2rem;
+  background-color: $porcelain;
+
+  div:last-child {
+    margin-bottom: 0 !important;
+  }
+}

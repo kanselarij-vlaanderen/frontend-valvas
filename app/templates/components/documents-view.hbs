@@ -11,7 +11,7 @@
       {{/if}}
     </button>
     {{#if isExpanded}}
-      <div class="filter__form document-drawer">
+      <div class="document-drawer">
         <div class="u-align-right">
           <button class="link link--icon--close" title="Venster sluiten" {{action (mut isExpanded) false}}>
             <span class="u-visually-hidden">Venster sluiten</span>
@@ -19,7 +19,7 @@
         </div>
         <div class="grid">
           {{#each documentVersions as |documentVersion|}}
-            <div class="col--6-12 col--12-12--s">
+            <div class="col--5-12 col--12-12--m vl-u-spacer-extended-bottom">
               <div class="document-miniature">
                 <div class="document-miniature__type">
                   <span class="document-miniature__type__text">{{documentVersion.file.extension}}</span>
