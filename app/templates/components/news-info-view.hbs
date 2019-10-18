@@ -25,10 +25,15 @@
       </p>
     </div>
     <div class="decision__links">
-      <div class="link-group link-group--bordered">
+      <div class="link-group link-group--bordered vl-u-spacer-extended-top-s">
         {{#if isLongText}}
-          <button class="link" {{action "readMore"}}>Lees meer</button>
+          {{#if longTextHidden}}
+            <button class="link" {{action "readMore"}}>Lees meer</button>
+          {{/if}}
         {{/if}}
+        {{#unless longTextHidden}}
+          <button class="link" {{action "readMore"}}>Lees minder</button>
+        {{/unless}}
         {{documents-view model=newsInfo}}
       </div>
     </div>
