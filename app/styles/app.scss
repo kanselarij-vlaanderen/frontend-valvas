@@ -214,3 +214,8 @@ body > .ember-view {
   top: 2px;
   position: relative;
 }
+
+.link-group .vl-badge {
+  display: inline-block;
+  vertical-align: bottom;
+}

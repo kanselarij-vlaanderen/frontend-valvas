@@ -1,4 +1,6 @@
-<i class="vi vi-document-small vi-u-xl vi-u-color-grey"></i>
+<div class="vl-badge vl-badge--icon vl-badge--icon-light vl-badge--alt vl-badge--small vl-icon-wrapper vl-u-spacer-extended-right-s">
+  <i class="vl-badge__icon vi vi-document-small"></i>
+</div>
 {{#unless fetchRecord.isRunning}}
   {{#if documentVersions}}
     <button class="link" {{action (mut isExpanded) true}}>
@@ -8,7 +10,6 @@
         {{documentVersions.length}} documenten
       {{/if}}
     </button>
-
     {{#if isExpanded}}
       <div class="filter__form document-drawer">
         <div class="u-align-right">
