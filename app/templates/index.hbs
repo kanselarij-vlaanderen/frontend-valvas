@@ -1,5 +1,5 @@
-<header class="content-header content-header--has-picture content-header--has-context content-header--has-title content-header--has-buttons">
-  <picture>
+<header class="vlc-content-header vl-grid">
+  <picture class="vl-col--12-12 vlc-content-header__image">
     <source srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&c=b252082df120bfb638a67fd8b1d1446b 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_2x/public/images/23959.jpg?itok=XUFABJ1V&c=b252082df120bfb638a67fd8b1d1446b 2x"
       media="(min-width: 1024px)">
     <source srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_mobile_large_1x/public/images/23959.jpg?itok=GUYQahBx&c=41f3822faec001b6639c04b988cca332 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_mobile_large_2x/public/images/23959.jpg?itok=pzNRU06U&c=41f3822faec001b6639c04b988cca332 2x"
@@ -9,23 +9,23 @@
     <img src="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&amp;c=b252082df120bfb638a67fd8b1d1446b" srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&amp;c=b252082df120bfb638a67fd8b1d1446b 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_2x/public/images/23959.jpg?itok=XUFABJ1V&amp;c=b252082df120bfb638a67fd8b1d1446b 2x"
       alt="">
   </picture>
-  <hgroup class="content-header__content">
-    <h2 class="content-header__context content-header__context--has-link">
-      <a href="/vlaamse-regering" class="content-header__context__link">
+  <hgroup class="vlc-content-header__content">
+    <h2 class="vl-title vl-title--h3 vlc-content-header__link">
+      <a href="/vlaamse-regering" class="vlc-content-header__link-content">
         Vlaamse Regering
       </a>
     </h2>
-    <h1 class="content-header__title">
-      <span class="content-header__title__content">Beslissingen van de Vlaamse Regering</span>
+    <h1 class="vl-title vl-title--h1 vlc-content-header__title">
+      <span class="vlc-content-header__title-content">Beslissingen van de Vlaamse Regering</span>
     </h1>
   </hgroup>
 </header>
 
 <div class="main-content">
   <div class="region">
-    <div class="layout layout--wide">
-      <div class="grid grid--is-stacked">
-        <div class="col--4-12 col--12-12--s">
+    <div class="vl-layout">
+      <div class="vl-grid vl-grid--is-stacked">
+        <div class="vl-col--4-12 vl-col--12-12--s">
           {{search-box
               searchParams=(hash
               search=search
@@ -70,9 +70,9 @@
           </div>
         </div>
         {{#if sessions.length}}
-          <div class="col--8-12 col--12-12--s">
+          <div class="vl-col--8-12 vl-col--12-12--s">
             <div class="h1-sublink vl-u-spacer-extended-left-l">
-              <h1 class="vl-title vl-title--h2">{{format-number count}} resultaten</h1>
+              <h2 class="vl-title vl-title--h2">{{format-number count}} resultaten</h2>
               {{#if showBackLink}}
                 <a role="button" onclick={{action "clearParams"}} class="vl-link">
                   <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
@@ -83,14 +83,14 @@
               <div class="view-content vl-u-spacer-extended-left-l">
                 <div class="item-list">
                   {{#each sessions as |session|}}
-                    <h2 class="h2 u-spacer">Ministerraad van {{moment-format session.date "DD MMMM YYYY"}}</h2>
+                    <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">Ministerraad van {{moment-format session.date "DD MMMM YYYY"}}</h2>
                     {{meeting-notifications meetingId=session.id}}
                     {{#each session.news as |newsInfo|}}
                       {{news-info-view newsInfo=newsInfo}}
                     {{/each}}
 
                     {{#if session.announcements.length}}
-                      <h3 class="h3">Mededelingen</h3>
+                      <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">Mededelingen</h2>
                       {{#each session.announcements as |newsInfo|}}
                         {{news-info-view newsInfo=newsInfo}}
                       {{/each}}
@@ -100,9 +100,9 @@
               </div>
 
               {{#if hasMoreResults}}
-                <ul class="pager pager--infinite-scroll u-align-center">
+                <ul class="pager pager--infinite-scroll vl-u-align-center">
                   <li class="pager__item">
-                    <button class="button" {{action "loadMore"}}>
+                    <button class="vl-button" {{action "loadMore"}}>
                       Laad meer
                     </button>
                   </li>

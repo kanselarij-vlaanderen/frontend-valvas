@@ -1,35 +1,33 @@
-<div class="filter u-spacer--small">
-  <p class="filter__intro">Verfijn uw zoekresultaat</p>
-  <form class="form filter__form" {{action onSearch searchParams on="submit"}}>
-    <div>
-      <div class="filter__field form-item">
-        {{web-components/vl-form-label value="Zoek naar"}}
-        {{web-components/vl-form-input
-            width="4"
-            value=searchParams.search
-            onChange=(action (mut searchParams.search))
-            placeholder="Zoek naar"
-        }}
-      </div>
-      {{select-date-council
-          selectedId=searchParams.dateOption
-          startDate=searchParams.startDate
-          endDate=searchParams.endDate
-          onChange=(action "selectSessionDate")
+<h2 class="vl-title vl-title--alt">Verfijn uw zoekresultaten</h2>
+<form class="vl-form vl-u-bg-porcelain" {{action onSearch searchParams on="submit"}}>
+  <div class="vlc-box">
+    <div class="vlc-input-field-block">
+      {{web-components/vl-form-label value="Zoek naar"}}
+      {{web-components/vl-form-input
+        width="4"
+        value=searchParams.search
+        onChange=(action (mut searchParams.search))
+        placeholder="Zoek naar"
       }}
-      {{select-ministerial-power
-          selectedId=searchParams.ministerialPowerId
-          onChange=(action (mut searchParams.ministerialPowerId))
-      }}
-      {{select-presented-by
-          selectedId=searchParams.ministerId
-          selectedFirstName=searchParams.ministerFirstName
-          selectedLastName=searchParams.ministerLastName
-          onChange=(action "selectMinister")
-      }}
-      <div class="filter__field form-item">
-        <button class="form-submit button">Zoek</button>
-      </div>
     </div>
-  </form>
-</div>
+    {{select-date-council
+      selectedId=searchParams.dateOption
+      startDate=searchParams.startDate
+      endDate=searchParams.endDate
+      onChange=(action "selectSessionDate")
+    }}
+    {{select-ministerial-power
+      selectedId=searchParams.ministerialPowerId
+      onChange=(action (mut searchParams.ministerialPowerId))
+    }}
+    {{select-presented-by
+      selectedId=searchParams.ministerId
+      selectedFirstName=searchParams.ministerFirstName
+      selectedLastName=searchParams.ministerLastName
+      onChange=(action "selectMinister")
+    }}
+    <div class="vl-u-spacer-extended-top">
+      <button class="form-submit vl-button">Zoek</button>
+    </div>
+  </div>
+</form>

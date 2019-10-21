@@ -1,16 +1,15 @@
-<div class="filter__field form-item">
-  <label class="filter__field filter__field__label">
+<div class="vlc-input-field-block">
+  <label class="vl-form__label">
     Datum ministerraad
   </label>
-  <div class="">
-    {{#power-select
-         selected=selected
-         options=options
-         onChange=(action "onChange")
-         as |option|}}
-      {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
-    {{/power-select}}
-  </div>
+  {{#power-select
+    selected=selected
+    options=options
+    onChange=(action "onChange")
+    as |option|
+  }}
+    {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
+  {{/power-select}}
 </div>
 {{#if enableSelectDateInput}}
   <div class="filter__field form-item">
