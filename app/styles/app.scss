@@ -57,40 +57,26 @@ $icon-font-location: '/fonts/';
 // @import "node_modules/@govflanders/vl-ui-input-group/src/scss/_input-group";
 
 // Components (loaded locally to easily read source)
-@import 'govflanders/components/_accordion';
 @import 'govflanders/components/_action-group';
 @import 'govflanders/components/_alert';
 @import 'govflanders/components/_autocomplete';
 @import 'govflanders/components/_badge';
 @import 'govflanders/components/_button';
 @import 'govflanders/components/_checkbox';
-@import 'govflanders/components/_data-table';
-@import 'govflanders/components/_datepicker';
-@import 'govflanders/components/_description-data';
 @import 'govflanders/components/_document';
 @import 'govflanders/components/_form-message';
 @import 'govflanders/components/_form-structure';
 @import 'govflanders/components/_icon';
-@import 'govflanders/components/_info-tile';
 @import 'govflanders/components/_input-addon';
 @import 'govflanders/components/_input-field';
 @import 'govflanders/components/_input-group';
 @import 'govflanders/components/_link-list';
 @import 'govflanders/components/_link';
 @import 'govflanders/components/_loader';
-@import 'govflanders/components/_modal';
-@import 'govflanders/components/_pager';
-@import 'govflanders/components/_pill-input';
-@import 'govflanders/components/_pill';
-@import 'govflanders/components/_popover';
-@import 'govflanders/components/_radio';
 @import 'govflanders/components/_search';
-@import 'govflanders/components/_side-navigation';
-@import 'govflanders/components/_tabs';
-@import 'govflanders/components/_textarea';
 @import 'govflanders/components/_titles';
 @import 'govflanders/components/_typography';
-@import 'govflanders/components/_upload';
+
 
 // Interdependent components (loaded from node_modules)
 // @import "node_modules/@govflanders/vl-ui-select/src/scss/_select";
@@ -107,13 +93,8 @@ $icon-font-location: '/fonts/';
 @import 'govflanders/additions/_badge';
 @import 'govflanders/additions/_button';
 @import 'govflanders/additions/_checkbox';
-@import 'govflanders/additions/_data-table';
-@import 'govflanders/additions/_icon-list';
 @import 'govflanders/additions/_link-list';
-@import 'govflanders/additions/_modal';
-@import 'govflanders/additions/_pill-input';
-@import 'govflanders/additions/_popover';
-@import 'govflanders/additions/_tabs';
+
 
 // Additions to existing utilities
 @import 'govflanders/additions/_background';
