@@ -5,32 +5,43 @@
 
 .vlc-content-header__content {
   position: absolute;
-  left: 10%;
-  bottom: 20%;
+  left: 8%;
+  bottom: 25%;
 }
 
-.vlc-content-header__title-content {
-  padding: .5rem 2rem 1.1rem;
+.vlc-content-header__title {
+  margin-bottom: 0;
+  margin-top: .5rem;
+  padding: 1rem 2rem;
   background-color: #fff;
 }
 
-.vlc-content-header__link-content {
-  color: #333;
+.vlc-content-header__link {
+  display:block;
+  width: 25rem;
   padding: 1rem 3.5rem 1rem 2rem;
   background: #fff;
   background: linear-gradient(200deg,transparent 20px,#fff 21px);
   background: -webkit-linear-gradient(200deg,transparent 20px,#fff 21px);
+  color: #333;
+  text-decoration: none;
+  margin-bottom: 0;
 
   &:hover {
-    text-decoration: none !important;
     color: $science-blue;
   }
 }
 
 @media only screen and (max-width: $bp-medium) {
-  .vlc-content-header__content .vlc-content-header__title-content {
+  .vlc-content-header__content .vlc-content-header__title {
     font-size: 3.2rem !important;
     padding-top: .5rem !important;
     padding-bottom: .5rem !important;
+  }
+}
+
+@media only screen and (max-width: $bp-small) {
+  .vlc-content-header {
+    display: none;
   }
 }
