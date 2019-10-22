@@ -1,0 +1,30 @@
+.vlc-spotlight {
+  position: relative;
+}
+
+.vlc-spotlight a {
+  text-decoration: none;
+}
+
+.vlc-spotlight__image-container {
+  border-top: 2px solid $science-blue;
+  overflow: hidden;
+  height: 14.5rem;
+}
+
+.vlc-spotlight__image {
+  transform: scale(1.2);
+  transition: transform .5s ease;
+  display: block;
+}
+
+.vlc-spotlight__image-container:hover .vlc-spotlight__image {
+  transform: scale(1.1);
+}
+
+.vlc-spotlight__title {
+  padding: .2rem 1rem;
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+}
