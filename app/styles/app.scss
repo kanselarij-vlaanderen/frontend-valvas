@@ -139,21 +139,16 @@ $icon-font-location: '/fonts/';
 @import "custom-utilities/_scroll";
 @import "custom-utilities/_box-model";
 
-.vlc-scroll-wrapper {
-  height: 100% !important;
-}
-
-.vlc-scroll-wrapper__body.full-height {
-  > .ember-view {
-    height: 100% !important;
-  }
-}
 
 body > .ember-view {
   height: 100% !important;
   display: flex;
   flex-direction: column;
   overflow: hidden !important;
+}
+
+.main-content {
+  margin: 5rem 0;
 }
 
 .bevoegde-minister-item:not(:last-of-type):after {
@@ -179,27 +174,8 @@ body > .ember-view {
   }
 }
 
-.layout--wide {
-  max-width: 85%;
-  min-width: auto;
-  padding: 0;
-}
-
-.spotlight__title-wrapper {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding: .5rem;
-  background: white;
-}
-
 .h1-sublink {
   margin-bottom: 2.5rem;
-}
-
-.vi {
-  top: 2px;
-  position: relative;
 }
 
 .vl-badge {
