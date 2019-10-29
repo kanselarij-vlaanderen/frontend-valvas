@@ -90,7 +90,7 @@
               <div class="view-content">
                 <div class="item-list">
                   {{#each sessions as |session|}}
-                    <h2 class="h2 u-spacer">Ministerraad van {{moment-format session.date "DD MMMM YYYY"}}</h2>
+                    <h2 class="h2 u-spacer">Ministerraad{{#if session.record.isElectronic}} via elektronische procedure{{/if}} van {{moment-format session.date "DD MMMM YYYY"}}</h2>
                     {{meeting-notifications meetingId=session.id}}
                     {{#each session.news as |newsInfo|}}
                       {{news-info-view newsInfo=newsInfo}}
