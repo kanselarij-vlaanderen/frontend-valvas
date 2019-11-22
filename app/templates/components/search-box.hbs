@@ -2,13 +2,14 @@
   <p class="filter__intro">Verfijn uw zoekresultaat</p>
   <form class="form filter__form" {{action onSearch searchParams on="submit"}}>
     <div>
-      <div class="filter__field form-item">
+      <div class="filter__field form-item" role="search">
         {{web-components/vl-form-label value="Zoek naar"}}
         {{web-components/vl-form-input
             width="4"
             value=searchParams.search
             onChange=(action (mut searchParams.search))
             placeholder="Zoek naar"
+            title="Zoeken"
         }}
       </div>
       {{select-date-council
