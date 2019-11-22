@@ -17,10 +17,10 @@
     </div>
     <div class="decision__text typography">
       <p>
-        {{#if isLongText}}
-          {{shortenText}}
+        {{#if longTextHidden}}
+          {{shortText}}
         {{else}}
-          {{textToDisplay}}
+          {{fullText}}
         {{/if}}
       </p>
     </div>
@@ -28,12 +28,11 @@
       <div class="link-group link-group--bordered vl-u-spacer-extended-top-s">
         {{#if isLongText}}
           {{#if longTextHidden}}
-            <button class="vl-link vl-u-spacer-extended-right" {{action "readMore"}}>Lees meer</button>
+            <button class="vl-link vl-u-spacer-extended-right" {{action "toggleReadMore"}}>Lees meer</button>
+          {{else}}
+            <button class="vl-link vl-u-spacer-extended-right" {{action "toggleReadMore"}}>Lees minder</button>
           {{/if}}
         {{/if}}
-        {{#unless longTextHidden}}
-          <button class="vl-link vl-u-spacer-extended-right" {{action "readMore"}}>Lees minder</button>
-        {{/unless}}
         {{documents-view model=newsInfo}}
       </div>
     </div>

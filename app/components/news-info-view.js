@@ -1,19 +1,34 @@
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/template';
 import { isArray } from '@ember/array';
-// import { task, all } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-// import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-// import ArrayProxy from '@ember/array/proxy';
+import { computed } from '@ember/object';
+import { gt } from '@ember/object/computed';
 
 export default Component.extend({
   store: service(),
 
-  isLongText: false,
   longTextHidden: true,
 
+  htmlContent: computed('newsInfo.htmlContent', function() {
+    return this.newsInfo.htmlContent || '';
+  }),
+  rawText: computed('htmlContent', function() {
+    const node = window.document.createElement('div');
+    node.innerHTML = this.htmlContent;
+    const text = node.textContent;
+    return text.trim().length;
+  }),
+  isLongText: gt('rawText', 500),
+  fullText: computed('htmlContent', function() {
+    return htmlSafe(this.htmlContent);
+  }),
+  shortText: computed('htmlContent', function() {
+    return this.isLongText ? htmlSafe(this.htmlContent.substr(0, 500) + '...') : this.fullText;
+  }),
+
   fetchMandatee: function(mandateeId) {
-    return this.store.findRecord('mandatee', mandateeId, {include: 'person'});
+    return this.store.findRecord('mandatee', mandateeId, { include: 'person' });
   },
 
   fetchMandatees: function(mandateeIds) {
@@ -21,12 +36,8 @@ export default Component.extend({
   },
 
   async didReceiveAttrs() {
-    const htmlContent = this.newsInfo.htmlContent;
-    this.set('textToDisplay', htmlSafe(htmlContent));
-    if (htmlContent.length > 500) {
-      this.set('shortenText', htmlSafe(htmlContent.substr(0, 501) + "..."));
-      this.set('isLongText', true);
-    }
+    if (this.isLongText)
+      this.set('longTextHidden', true);
 
     let mandatees;
     if (this.newsInfo.mandateeIds) {
@@ -38,12 +49,11 @@ export default Component.extend({
     } else {
       mandatees = [];
     }
-    this.set('mandatees', mandatees)
+    this.set('mandatees', mandatees);
   },
 
   actions: {
-    readMore() {
-      this.toggleProperty('isLongText');
+    toggleReadMore() {
       this.toggleProperty('longTextHidden');
     }
   }
