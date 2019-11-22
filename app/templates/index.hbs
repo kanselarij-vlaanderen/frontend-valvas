@@ -49,16 +49,16 @@
           </a>
         </div>
       </div>
-      {{#if sessions.length}}
-        <div class="vl-col--8-12 vl-col--12-12--s">
-          <div class="h1-sublink vl-u-spacer-extended-left-l">
-            <h2 class="vl-title vl-title--h2">{{format-number count}} resultaten</h2>
-            {{#if showBackLink}}
-              <a role="button" onclick={{action "clearParams"}} class="vl-link">
-                <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
-              </a>
-            {{/if}}
-          </div>
+      <div class="vl-col--8-12 vl-col--12-12--s">
+        <div class="h1-sublink vl-u-spacer-extended-left-l">
+          <h2 class="vl-title vl-title--h2">{{format-number count}} resultaten</h2>
+          {{#if showBackLink}}
+            <a role="button" onclick={{action "clearParams"}} class="vl-link">
+              <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
+            </a>
+          {{/if}}
+        </div>
+        {{#if sessions.length}}
           <div class="view-ip-decisions-search">
             <div class="view-content vl-u-spacer-extended-left-l">
               <div class="item-list">
@@ -89,8 +89,8 @@
               </ul>
             {{/if}}
           </div>
-        </div>
-      {{/if}}
+        {{/if}}
+      </div>
     </div>
   </div>
 </div>
