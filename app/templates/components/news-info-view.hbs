@@ -1,10 +1,10 @@
 <ul>
-  <li class="decision u-spacer">
+  <li class="decision vl-u-spacer">
     <div class="u-named-target-wrapper">
       <div class="u-named-target-dummy"></div>
     </div>
-    <h4 class="h4">{{newsInfo.title}}</h4>
-    <div class="decision__subtitle u-small-text u-textcolor-sub u-spacer--tiny">
+    <h4 class="vl-title vl-title--h4">{{newsInfo.title}}</h4>
+    <div class="vl-u-text--muted vl-u-spacer-extended-bottom-s">
       <time datetime={{moment-format newsInfo.sessionDate "YYYY-MM-DD"}}>{{moment-format newsInfo.sessionDate "D MMMM YYYY"}}</time>
 
       {{#if (eq newsInfo.category "mededeling")}}
@@ -25,10 +25,15 @@
       </p>
     </div>
     <div class="decision__links">
-      <div class="link-group link-group--bordered">
+      <div class="link-group link-group--bordered vl-u-spacer-extended-top-s">
         {{#if isLongText}}
-          <button class="link" {{action "readMore"}}>Lees meer</button>
+          {{#if longTextHidden}}
+            <button class="vl-link vl-u-spacer-extended-right" {{action "readMore"}}>Lees meer</button>
+          {{/if}}
         {{/if}}
+        {{#unless longTextHidden}}
+          <button class="vl-link vl-u-spacer-extended-right" {{action "readMore"}}>Lees minder</button>
+        {{/unless}}
         {{documents-view model=newsInfo}}
       </div>
     </div>

@@ -1,5 +1,5 @@
-<header class="content-header content-header--has-picture content-header--has-context content-header--has-title content-header--has-buttons">
-  <picture>
+<header class="vlc-content-header vl-grid">
+  <picture class="vl-col--12-12 vlc-content-header__image">
     <source srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&c=b252082df120bfb638a67fd8b1d1446b 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_2x/public/images/23959.jpg?itok=XUFABJ1V&c=b252082df120bfb638a67fd8b1d1446b 2x"
       media="(min-width: 1024px)">
     <source srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_mobile_large_1x/public/images/23959.jpg?itok=GUYQahBx&c=41f3822faec001b6639c04b988cca332 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_mobile_large_2x/public/images/23959.jpg?itok=pzNRU06U&c=41f3822faec001b6639c04b988cca332 2x"
@@ -9,117 +9,88 @@
     <img src="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&amp;c=b252082df120bfb638a67fd8b1d1446b" srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&amp;c=b252082df120bfb638a67fd8b1d1446b 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_2x/public/images/23959.jpg?itok=XUFABJ1V&amp;c=b252082df120bfb638a67fd8b1d1446b 2x"
       alt="header afbeelding standbeeld Brussel">
   </picture>
-  <div class="layout layout--wide">
-    <hgroup class="content-header__content">
-      <h2 class="content-header__context content-header__context--has-link">
-        <a href="/vlaamse-regering" class="content-header__context__link">
-          Vlaamse Regering
-        </a>
-      </h2>
-      <h1 class="content-header__title">
-        <span class="content-header__title__content">Beslissingen van de Vlaamse Regering</span>
-      </h1>
-    </hgroup>
-  </div>
+  <hgroup class="vlc-content-header__content">
+    <a href="/vlaamse-regering" class="vl-title vl-title--h3 vlc-content-header__link">
+      Vlaamse Regering
+    </a>
+    <h1 class="vl-title vl-title--h1 vlc-content-header__title">
+      Beslissingen van de Vlaamse Regering
+    </h1>
+  </hgroup>
 </header>
 
 <div class="main-content">
-  <div class="region region--no-space-bottom">
-    <div class="layout layout--wide">
-      <div class="h1-sublink">
-        <h1 class="h1">{{format-number count}} gevonden</h1>
-        {{#if showBackLink}}
-          <a role="button" onclick={{action "clearParams"}} class="listing-link active">
-            <i class="vi vi-u-link vi-arrow vi-u-180deg"></i> Toon alle beslissingen
-          </a>
-        {{/if}}
-      </div>
-    </div>
-  </div>
-  <div class="region">
-    <div class="layout layout--wide">
-      <div class="grid grid--is-stacked">
-        <div class="col--4-12 col--12-12--xs">
-          {{search-box
-              searchParams=(hash
-              search=search
-              dateOption=dateOption
-              startDate=startDate
-              endDate=endDate
-              ministerId=ministerId
-              ministerFirstName=ministerFirstName
-              ministerLastName=ministerLastName
-              ministerialPowerId=ministerialPowerId)
-              onSearch=(action "search")
-          }}
-          <ul class="link-list link-list--small u-spacer--small">
-            <!-- <li>
-                 <a href="https://www.vlaanderen.be/vlaamse-regering/beslissingenvlaamseregering.rss" class="link--icon--caret link--block external-link">abonneren op rss feeds</a>
-                 </li> -->
-            <li>
-              <a href="https://www.vlaanderen.be/ontvang-nieuwe-persberichten-en-beslissingen-via-e-mail" class="link--icon--caret link--block external-link">abonneren op de beslissingen van de Vlaamse Regering</a>
-            </li>
-          </ul>
+  <div class="vl-layout">
+    <div class="vl-grid vl-grid--is-stacked">
+      <div class="vl-col--4-12 vl-col--12-12--s">
+        {{search-box
+            searchParams=(hash
+            search=search
+            dateOption=dateOption
+            startDate=startDate
+            endDate=endDate
+            ministerId=ministerId
+            ministerFirstName=ministerFirstName
+            ministerLastName=ministerLastName
+            ministerialPowerId=ministerialPowerId)
+            onSearch=(action "search")
+        }}
 
+        <a href="https://www.vlaanderen.be/ontvang-nieuwe-persberichten-en-beslissingen-via-e-mail" class="vl-link vl-u-spacer-extended-bottom vl-u-text--bold">
+          Abonneren op de beslissingen van de Vlaamse Regering
+        </a>
 
-          <div class="view-ip-decisions-spotlight view-display-id-ip_decisions_spotlight">
-            <div class="item-list">
-              <ul>
-                <li class="views-row views-row-1 views-row-odd views-row-first views-row-last">
-                  <a href="https://www.vlaanderen.be/vlaamse-regering" class="spotlight external-link" role="link">
-                    <span class="assitive-text">Link voor informatie over de vlaamse regering</span>
-                    <article>
-                      <header class="spotlight__header">
-                        <div class="spotlight__image">
-                          <img class="spotlight__image__img" srcset="//www.vlaanderen.be/sites/default/files/styles/spotlight_large_1x/public/images/vlaamsregering_201910.jpg?itok=_7UTt7t8&amp;c=4d97b6ec4aebc8004897f1bfde6fec12 1x, //www.vlaanderen.be/sites/default/files/styles/spotlight_large_2x/public/images/vlaamsregering_201910.jpg?itok=AGiBmNoL&amp;c=4d97b6ec4aebc8004897f1bfde6fec12 2x" src="//www.vlaanderen.be/sites/default/files/styles/spotlight_large_1x/public/images/vlaamsregering_201910.jpg?itok=_7UTt7t8&amp;c=4d97b6ec4aebc8004897f1bfde6fec12" alt="Regering Jambon">
-                        </div>
-                        <div class="spotlight__title-wrapper">
-                          <h1 class="spotlight__title" data-clamp="0">Regering Jambon I</h1>
-                        </div>
-                      </header>
-                    </article>
-                  </a>
-                </li>
-              </ul>
+        <div class="vlc-spotlight">
+          <a href="https://www.vlaanderen.be/vlaamse-regering" class="spotlight external-link">
+            <div class="vlc-spotlight__image-container">
+              <img class="vlc-spotlight__image" srcset="//www.vlaanderen.be/sites/default/files/styles/spotlight_large_1x/public/images/vlaamsregering_201910.jpg?itok=_7UTt7t8&amp;c=4d97b6ec4aebc8004897f1bfde6fec12 1x, //www.vlaanderen.be/sites/default/files/styles/spotlight_large_2x/public/images/vlaamsregering_201910.jpg?itok=AGiBmNoL&amp;c=4d97b6ec4aebc8004897f1bfde6fec12 2x" src="//www.vlaanderen.be/sites/default/files/styles/spotlight_large_1x/public/images/vlaamsregering_201910.jpg?itok=_7UTt7t8&amp;c=4d97b6ec4aebc8004897f1bfde6fec12" alt="">
             </div>
-          </div>
+            <h4 class="vlc-spotlight__title vl-title vl-title--h4" data-clamp="0">Regering Jambon I</h4>
+          </a>
         </div>
+      </div>
+      {{#if sessions.length}}
+        <div class="vl-col--8-12 vl-col--12-12--s">
+          <div class="h1-sublink vl-u-spacer-extended-left-l">
+            <h2 class="vl-title vl-title--h2">{{format-number count}} resultaten</h2>
+            {{#if showBackLink}}
+              <a role="button" onclick={{action "clearParams"}} class="vl-link">
+                <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
+              </a>
+            {{/if}}
+          </div>
+          <div class="view-ip-decisions-search">
+            <div class="view-content vl-u-spacer-extended-left-l">
+              <div class="item-list">
+                {{#each sessions as |session|}}
+                  <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">Ministerraad{{#if session.record.isElectronic}} via elektronische procedure{{/if}} van {{moment-format session.date "DD MMMM YYYY"}}</h2>
+                  {{meeting-notifications meetingId=session.id}}
+                  {{#each session.news as |newsInfo|}}
+                    {{news-info-view newsInfo=newsInfo}}
+                  {{/each}}
 
-        {{#if sessions.length}}
-          <div class="col--8-12 col--12-12--xs" role="region">
-            <div class="view-ip-decisions-search">
-              <div class="view-content">
-                <div class="item-list">
-                  {{#each sessions as |session|}}
-                    <h2 class="h2 u-spacer">Ministerraad{{#if session.record.isElectronic}} via elektronische procedure{{/if}} van {{moment-format session.date "DD MMMM YYYY"}}</h2>
-                    {{meeting-notifications meetingId=session.id}}
-                    {{#each session.news as |newsInfo|}}
+                  {{#if session.announcements.length}}
+                    <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">Mededelingen</h2>
+                    {{#each session.announcements as |newsInfo|}}
                       {{news-info-view newsInfo=newsInfo}}
                     {{/each}}
-
-                    {{#if session.announcements.length}}
-                      <h3 class="h3">Mededelingen</h3>
-                      {{#each session.announcements as |newsInfo|}}
-                        {{news-info-view newsInfo=newsInfo}}
-                      {{/each}}
-                    {{/if}}
-                  {{/each}}
-                </div>
+                  {{/if}}
+                {{/each}}
               </div>
-
-              {{#if hasMoreResults}}
-                <ul class="pager pager--infinite-scroll u-align-center">
-                  <li class="pager__item">
-                    <button class="button" {{action "loadMore"}}>
-                      Laad meer
-                    </button>
-                  </li>
-                </ul>
-              {{/if}}
             </div>
+
+            {{#if hasMoreResults}}
+              <ul class="pager pager--infinite-scroll vl-u-align-center">
+                <li class="pager__item">
+                  <button class="vl-button" {{action "loadMore"}}>
+                    Laad meer
+                  </button>
+                </li>
+              </ul>
+            {{/if}}
           </div>
-        {{/if}}
-      </div>
+        </div>
+      {{/if}}
     </div>
   </div>
 </div>

@@ -23,7 +23,6 @@
   "devDependencies": {
     "@ember/jquery": "^0.6.1",
     "@ember/optional-features": "^0.7.0",
-    "@lblod/ember-vo-webuniversum": "^0.22.2",
     "@lblod/ember-vo-webuniversum-widget": "^0.1.5",
     "broccoli-asset-rev": "^3.0.0",
     "ember-ajax": "^5.0.0",
@@ -68,5 +67,6 @@
   },
   "engines": {
     "node": "8.* || >= 10.*"
-  }
+  },
+  "dependencies": {}
 }

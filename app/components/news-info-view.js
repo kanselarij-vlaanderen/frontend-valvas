@@ -10,6 +10,7 @@ export default Component.extend({
   store: service(),
 
   isLongText: false,
+  longTextHidden: true,
 
   fetchMandatee: function(mandateeId) {
     return this.store.findRecord('mandatee', mandateeId, {include: 'person'});
@@ -42,7 +43,8 @@ export default Component.extend({
 
   actions: {
     readMore() {
-      this.set('isLongText', false);
+      this.toggleProperty('isLongText');
+      this.toggleProperty('longTextHidden');
     }
   }
 });

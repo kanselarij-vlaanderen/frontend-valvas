@@ -1,0 +1,205 @@
+.ember-basic-dropdown-content--left.ember-basic-dropdown-content--below.ember-basic-dropdown--transitioned-in {
+  display: block;
+  top: 100%;
+  width: 100%;
+  transform: translateY(-1px);
+  border: 1px $ghost solid;
+  border-radius: 0;
+  background-color: $white;
+}
+
+.ember-power-select-trigger,
+.ember-basic-dropdown-trigger {
+  height: unset !important;
+}
+
+.ember-power-select-option {
+  border-top: 1px solid $ghost;
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0.7rem 0 0.5rem 3.2rem;
+  color: $black;
+  font-size: 1.6rem;
+  font-weight: normal;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    position: relative;
+    background-color: $athens-gray;
+    color: $action-text-color;
+  }
+}
+
+.ember-basic-dropdown-trigger {
+  max-height: 10rem;
+}
+
+.ember-power-select-search-input {
+  width: 100%;
+  display: inline-block;
+  background: $page-bg;
+  font-family: $base-font;
+  font-size: $form-font-size;
+  color: $text-color;
+  max-width: 100%;
+  height: unset !important;
+  line-height: $form-input-height;
+  border-radius: 0;
+  border: 0.1rem solid $border-color;
+  -webkit-appearance: none; // sass-lint:disable-line no-vendor-prefixes
+  padding: 0 1rem;
+
+  @include respond-to(small) {
+    font-size: 1.6rem;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &:focus,
+  &--focus {
+    outline: none;
+    border-color: $outline-color;
+    box-shadow: inset 0 0 0 0.1rem $outline-color;
+  }
+
+  &::placeholder {
+    color: $placeholder-color;
+  }
+
+  &::-webkit-search-cancel-button {
+    // sass-lint:disable-line no-vendor-prefixes
+    -webkit-appearance: none; // sass-lint:disable-line no-vendor-prefixes
+  }
+
+  // Input field block modifier
+  &--block {
+    display: block;
+    width: 100%;
+  }
+
+  // Input field small modifier
+  &--small {
+    max-width: 6rem;
+    padding: 0 0.8rem;
+  }
+  line-height: 3.5rem !important;
+}
+
+.ember-power-select-multiple-option {
+  background: $porcelain;
+  font-weight: 400;
+  color: $text-color;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  border: none;
+  border-radius: 0;
+
+  .ember-power-select-multiple-remove-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.4em;
+    font-size: 2rem;
+    border: none;
+    color: $gray-light;
+  }
+}
+
+.ember-power-select-trigger,
+.ember-basic-dropdown-trigger {
+  @include select-default;
+  display: block;
+  width: 100%;
+  min-height: 3.5rem;
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  &[disabled] {
+    color: $disabled-color;
+    border-color: $disabled-color;
+    background-color: $disabled-bg-color;
+  }
+
+  &:focus,
+  &--focus {
+    outline: none;
+    border-color: $outline-color;
+    box-shadow: inset 0 0 0 0.1rem $outline-color;
+  }
+
+  &[multiple] {
+    height: auto;
+  }
+}
+
+.vl-tab {
+  a {
+    .ember-power-select-trigger,
+    .ember-basic-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $blue-gray-lighter;
+      border: none;
+      background-size: 1.1rem;
+      height: auto !important;
+      line-height: 1em;
+      font-size: 1em;
+      padding-left: 0;
+      &:focus {
+        outline: none;
+        border-color: $blue-gray-lighter;
+        box-shadow: inset 0 0 0 0.1rem $blue-gray-lighter;
+      }
+    }
+  }
+}
+
+.vl-tab__link-header {
+  padding: 0.45rem;
+  .vl-tab__link:hover,
+  .vl-tab__link.active {
+    border-bottom: 0;
+  }
+}
+
+.vl-tab__link-header-dropdown {
+  padding: 1rem;
+
+  .ember-power-select-options[role='listbox'] {
+    overflow: hidden;
+  }
+  .ember-power-select-option {
+    padding: 1rem 0rem;
+    background-color: $page-bg;
+    color: $black;
+    border: none;
+    border-bottom: 1px solid $blue-gray-lighter;
+    text-decoration: none;
+    margin-left: 0.5rem;
+  }
+  .ember-power-select-option:hover {
+    color: #005e95;
+    text-decoration: none;
+    border-bottom: 1px solid #005e95;
+    background-image: url('/assets/right-arrow.svg');
+    background-repeat: no-repeat;
+    background-size: 11px 11px;
+    background-position: calc(100% - 1.5rem) 50%;
+  }
+}
+
+.ember-power-select-clear-btn {
+  margin-right:0.2em;
+  line-height: 1.2em;
+  font-size:2.6rem;
+}

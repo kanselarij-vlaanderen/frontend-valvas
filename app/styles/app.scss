@@ -4,6 +4,7 @@
    ========================================================================== */
 
 @import '_colors';
+$icon-font-location: '/fonts/';
 
 // Core (loaded from node_modules)
 // @import "node_modules/@govflanders/vl-ui-core/src/scss/_setting.scss";
@@ -34,7 +35,7 @@
 // @import "node_modules/@govflanders/vl-ui-document/src/scss/_document.scss";
 // @import "node_modules/@govflanders/vl-ui-form-message/src/scss/_form-message.scss";
 // @import "node_modules/@govflanders/vl-ui-form-structure/src/scss/_form-structure.scss";
-// @import "node_modules/@govflanders/vl-ui-icon/src/scss/_icon.scss";
+//@import "node_modules/@govflanders/vl-ui-icon/src/scss/_icon.scss";
 // @import "node_modules/@govflanders/vl-ui-info-tile/src/scss/_info-tile.scss";
 // @import "node_modules/@govflanders/vl-ui-input-addon/src/scss/_input-addon.scss";
 // @import "node_modules/@govflanders/vl-ui-input-field/src/scss/_input-field.scss";
@@ -56,40 +57,26 @@
 // @import "node_modules/@govflanders/vl-ui-input-group/src/scss/_input-group";
 
 // Components (loaded locally to easily read source)
-@import 'govflanders/components/_accordion';
 @import 'govflanders/components/_action-group';
 @import 'govflanders/components/_alert';
 @import 'govflanders/components/_autocomplete';
 @import 'govflanders/components/_badge';
 @import 'govflanders/components/_button';
 @import 'govflanders/components/_checkbox';
-@import 'govflanders/components/_data-table';
-@import 'govflanders/components/_datepicker';
-@import 'govflanders/components/_description-data';
 @import 'govflanders/components/_document';
 @import 'govflanders/components/_form-message';
 @import 'govflanders/components/_form-structure';
 @import 'govflanders/components/_icon';
-@import 'govflanders/components/_info-tile';
 @import 'govflanders/components/_input-addon';
 @import 'govflanders/components/_input-field';
 @import 'govflanders/components/_input-group';
 @import 'govflanders/components/_link-list';
 @import 'govflanders/components/_link';
 @import 'govflanders/components/_loader';
-@import 'govflanders/components/_modal';
-@import 'govflanders/components/_pager';
-@import 'govflanders/components/_pill-input';
-@import 'govflanders/components/_pill';
-@import 'govflanders/components/_popover';
-@import 'govflanders/components/_radio';
 @import 'govflanders/components/_search';
-@import 'govflanders/components/_side-navigation';
-@import 'govflanders/components/_tabs';
-@import 'govflanders/components/_textarea';
 @import 'govflanders/components/_titles';
 @import 'govflanders/components/_typography';
-@import 'govflanders/components/_upload';
+
 
 // Interdependent components (loaded from node_modules)
 // @import "node_modules/@govflanders/vl-ui-select/src/scss/_select";
@@ -106,13 +93,8 @@
 @import 'govflanders/additions/_badge';
 @import 'govflanders/additions/_button';
 @import 'govflanders/additions/_checkbox';
-@import 'govflanders/additions/_data-table';
-@import 'govflanders/additions/_icon-list';
 @import 'govflanders/additions/_link-list';
-@import 'govflanders/additions/_modal';
-@import 'govflanders/additions/_pill-input';
-@import 'govflanders/additions/_popover';
-@import 'govflanders/additions/_tabs';
+
 
 // Additions to existing utilities
 @import 'govflanders/additions/_background';
@@ -120,7 +102,11 @@
 
 // Custom components
 @import "custom-components/vlc-box";
+@import "custom-components/vlc-container";
 @import "custom-components/vlc-scroll-wrapper";
+@import "custom-components/vlc-input-field-block";
+@import "custom-components/vlc-content-header";
+@import "custom-components/vlc-spotlight";
 
 // Imports utilities (loaded from node_modules)
 // @import "node_modules/@govflanders/vl-ui-util/src/scss/util";
@@ -134,15 +120,6 @@
 @import "custom-utilities/_scroll";
 @import "custom-utilities/_box-model";
 
-.vlc-scroll-wrapper {
-  height: 100% !important;
-}
-
-.vlc-scroll-wrapper__body.full-height {
-  > .ember-view {
-    height: 100% !important;
-  }
-}
 
 body > .ember-view {
   height: 100% !important;
@@ -151,8 +128,8 @@ body > .ember-view {
   overflow: hidden !important;
 }
 
-.document-drawer {
-  margin-top: 2.5rem;
+.main-content {
+  margin: 5rem 0;
 }
 
 .bevoegde-minister-item:not(:last-of-type):after {
@@ -166,6 +143,35 @@ body > .ember-view {
 .decision__subtitle > time:not(:last-child):after {
   content: ', ';
 }
+
+@media screen and (max-width: 767px) {
+  .filter__form {
+      margin: 0;
+      padding: 1.5rem;
+  }
+
+  .vl-u-spacer-extended-left-l {
+    margin-left: 0 !important;
+  }
+}
+
+.h1-sublink {
+  margin-bottom: 2.5rem;
+}
+
+.vl-badge {
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.document-drawer {
+  padding: 2rem;
+  background-color: $porcelain;
+  margin-top: 2.5rem;
+
+  div:last-child {
+    margin-bottom: 0 !important;
+  }
 
 .assitive-text {
   height: 1px;
