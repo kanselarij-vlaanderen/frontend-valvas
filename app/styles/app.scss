@@ -172,4 +172,11 @@ body > .ember-view {
   div:last-child {
     margin-bottom: 0 !important;
   }
+
+.assitive-text {
+  height: 1px;
+  width: 1px;
+  position: absolute;
+  overflow: hidden;
+  top: -10px;
 }

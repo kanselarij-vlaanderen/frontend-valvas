@@ -7,7 +7,7 @@
     <source srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_narrow_1x/public/images/23959.jpg?itok=TiahYVHq&c=fe3f80419ba14d5e06530e394ec4389d 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_narrow_2x/public/images/23959.jpg?itok=Y2KnpQqH&c=fe3f80419ba14d5e06530e394ec4389d 2x"
       media="(max-width: 1023px)">
     <img src="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&amp;c=b252082df120bfb638a67fd8b1d1446b" srcset="//www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_1x/public/images/23959.jpg?itok=HUiy6e_p&amp;c=b252082df120bfb638a67fd8b1d1446b 1x, //www.vlaanderen.be/sites/default/files/styles/content_header_wide_large_2x/public/images/23959.jpg?itok=XUFABJ1V&amp;c=b252082df120bfb638a67fd8b1d1446b 2x"
-      alt="">
+      alt="header afbeelding standbeeld Brussel">
   </picture>
   <hgroup class="vlc-content-header__content">
     <a href="/vlaamse-regering" class="vl-title vl-title--h3 vlc-content-header__link">
@@ -48,7 +48,6 @@
             <h4 class="vlc-spotlight__title vl-title vl-title--h4" data-clamp="0">Regering Jambon I</h4>
           </a>
         </div>
-
       </div>
       {{#if sessions.length}}
         <div class="vl-col--8-12 vl-col--12-12--s">
@@ -64,7 +63,7 @@
             <div class="view-content vl-u-spacer-extended-left-l">
               <div class="item-list">
                 {{#each sessions as |session|}}
-                  <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">Ministerraad van {{moment-format session.date "DD MMMM YYYY"}}</h2>
+                  <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">Ministerraad{{#if session.record.isElectronic}} via elektronische procedure{{/if}} van {{moment-format session.date "DD MMMM YYYY"}}</h2>
                   {{meeting-notifications meetingId=session.id}}
                   {{#each session.news as |newsInfo|}}
                     {{news-info-view newsInfo=newsInfo}}

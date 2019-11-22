@@ -13,6 +13,7 @@ export default Controller.extend({
                 'ministerialPowerId'],
 
   searchNewsItems: service(),
+  store: service(),
 
   search: null,
   dateChoiceId: null,
@@ -32,12 +33,14 @@ export default Controller.extend({
 
   sessions: computed('searchNewsItems.cache{,.[]}', function() {
     let sessions = A();
-    this.data.forEach(function(newsItem) {
+    this.data.forEach((newsItem) => {
       let session = sessions.findBy('id', newsItem.sessionId);
       if (!session) {
+        const sessionRecord = this.store.find('meeting', newsItem.sessionId);
         session = EmberObject.create({
           id: newsItem.sessionId,
           date: newsItem.sessionDate,
+          record: sessionRecord,
           news: A(),
           announcements: A()
         });
