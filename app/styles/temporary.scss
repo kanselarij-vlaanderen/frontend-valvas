@@ -1,0 +1,8 @@
+/* This override may be removed when
+https://github.com/kanselarij-vlaanderen/kaleidos-viewer becomes a
+tagless component.  Also remove this class from the template of
+document-viewer component when that happens. */
+
+.override-full-height-viewer {
+  height: 100%;
+}
