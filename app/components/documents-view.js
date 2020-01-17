@@ -23,6 +23,6 @@ export default Component.extend({
         include: 'documents' // using include we won't run into page limits
       });
     }
-    this.set('documentVersions', record.documentVersions);
+    this.set('documents', record.documents);
   }).keepLatest()
 });

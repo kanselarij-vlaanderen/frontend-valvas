@@ -2,12 +2,12 @@
   <i class="vl-badge__icon vl-icon vl-vi vl-vi-document"></i>
 </div>
 {{#unless fetchRecord.isRunning}}
-  {{#if documentVersions}}
+  {{#if documents}}
     <button class="vl-link" {{action (mut isExpanded) true}}>
-      {{#if (eq documentVersions.length 1)}}
+      {{#if (eq documents.length 1)}}
         Toon document
       {{else}}
-        Toon {{documentVersions.length}} documenten
+        Toon {{documents.length}} documenten
       {{/if}}
     </button>
     {{#if isExpanded}}
@@ -19,24 +19,24 @@
           </button>
         </div>
         <div class="vl-grid">
-          {{#each documentVersions as |documentVersion|}}
+          {{#each documents as |doc|}}
             <div class="vl-col--5-12 vl-col--12-12--m vl-u-spacer-extended-bottom">
               <div class="vl-document">
                 <div class="vl-document__type">
                   <i class="vl-vi vl-vi-document" aria-hidden="true"></i>
-                  <span class="vl-document__type__text">{{documentVersion.file.extension}}</span>
+                  <span class="vl-document__type__text">{{doc.file.extension}}</span>
                 </div>
                 <div class="vl-document__content">
                   <div class="vl-document__title vl-link" data-vl-clamp="2">
-                    {{#link-to "document-view" documentVersion.id target="_blank"}}
-                      {{#if documentVersion.document.title}}
-                        {{documentVersion.document.title}}
+                    {{#link-to "document-view" doc.id target="_blank"}}
+                      {{#if doc.document.title}}
+                        {{doc.document.title}}
                       {{else}}
-                        {{documentVersion.file.filenameWithoutExtension}}
+                        {{doc.file.filenameWithoutExtension}}
                       {{/if}}
                     {{/link-to}}
                   </div>
-                  <div class="vl-document__metadata">{{documentVersion.file.extension}} - {{documentVersion.file.humanReadableSize}}</div>
+                  <div class="vl-document__metadata">{{doc.file.extension}} - {{doc.file.humanReadableSize}}</div>
                 </div>
               </div>
             </div>
