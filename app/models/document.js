@@ -1,7 +1,9 @@
 import DS from 'ember-data';
-const { Model, hasMany, attr } = DS;
+const { Model, hasMany, belongsTo } = DS;
 
 export default Model.extend({
-  title: attr(),
-  documentVersions: hasMany('document-version', { inverse: null }),
+  newsItems: hasMany('newsletter-info', { inverse: null }),
+  document: belongsTo('document-container', { inverse: null }),
+  file: belongsTo('file', { inverse: null }),
+  convertedFile: belongsTo('file', { inverse: null }),
 });

@@ -1,9 +1,14 @@
 import DS from 'ember-data';
 const { Model, attr, belongsTo } = DS;
 import { computed } from '@ember/object';
+import { deprecatingAlias } from '@ember/object/computed';
 
 export default Model.extend({
-  documentVersion: belongsTo('document-version'),
+  document: belongsTo('document'),
+  documentVersion: deprecatingAlias('document', {
+    id: 'model-refactor.documents',
+    until: '?'
+  }),
 
   filename: attr('string'),
   filenameWithoutExtension: computed('filename', {
