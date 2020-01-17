@@ -20,7 +20,7 @@ export default Component.extend({
     let record = this.store.peekRecord('newsletter-info', id);
     if (!record) {
       record = yield this.store.findRecord('newsletter-info', id, {
-        include: 'document-versions' // using include we won't run into page limits
+        include: 'documents' // using include we won't run into page limits
       });
     }
     this.set('documentVersions', record.documentVersions);
