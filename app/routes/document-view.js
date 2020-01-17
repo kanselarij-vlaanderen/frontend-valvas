@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 export default Route.extend({
   async model(params) {
-    return this.store.findRecord('document-version', params.id);
+    return this.store.findRecord('document', params.id);
   },
 
   activate() {
