@@ -9,6 +9,7 @@ export default Model.extend({
   location: attr('string'),
   number: attr('number'),
   isFinal: attr('boolean'),
+  isSpecial: attr('boolean'),
   extraInfo: attr('string'),
   type: attr('string'),
 
