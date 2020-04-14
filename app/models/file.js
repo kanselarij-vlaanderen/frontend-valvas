@@ -30,4 +30,7 @@ export default Model.extend({
   extension: attr('string'),
   created: attr('date'),
   contentType: attr('string'),
+  downloadLink: computed('id', 'filename', function() {
+    return `/files/${this.get('id')}/download?name=${encodeURIComponent(this.get('filename'))}`;
+  }),
 });
