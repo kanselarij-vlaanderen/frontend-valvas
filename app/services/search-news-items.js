@@ -38,7 +38,7 @@ export default Service.extend({
     const filter = {};
     if (search || startDate || endDate || ministerId || ministerialPowerId || ministerFirstName || ministerLastName) {
       if (search) {
-        filter.htmlContent = search;
+        filter[':sqs:title,htmlContent'] = search;
       }
       if (startDate) {
         filter[':gte:sessionDate'] = startDate;
