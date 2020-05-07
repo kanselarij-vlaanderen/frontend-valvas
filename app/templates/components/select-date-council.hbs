@@ -12,31 +12,27 @@
   {{/power-select}}
 </div>
 {{#if enableSelectDateInput}}
-  <div class="filter__field form-item">
-    <div class="grid">
-      <div class="col--6-12">
-        <div class="form-item form__row vlc-inner-input-field-block">
-          <label class="vl-form__label">
-            Van
-          </label>
-          {{web-components/vl-datepicker
-              selectedDate=selectOption.start
-              dateChanged=(action "onChangeSelectedStart")
-              dateFormat="d-m-Y"
-          }}
-        </div>
+  <div class="vlc-input-field-block">
+    <div class="vl-grid">
+      <div class="vl-col--6-12">
+        <label class="vl-form__label">
+          Van
+        </label>
+        {{web-components/vl-datepicker
+            selectedDate=selectOption.start
+            dateChanged=(action "onChangeSelectedStart")
+            dateFormat="d-m-Y"
+        }}
       </div>
-      <div class="col--6-12">
-        <div class="form-item form__row vlc-inner-input-field-block">
-          <label class="vl-form__label">
-            Tot en met
-          </label>
-          {{web-components/vl-datepicker
-              selectedDate=selectOption.end
-              dateChanged=(action "onChangeSelectedEnd")
-              dateFormat="d-m-Y"
-          }}
-        </div>
+      <div class="vl-col--6-12">
+        <label class="vl-form__label">
+          Tot en met
+        </label>
+        {{web-components/vl-datepicker
+            selectedDate=selectOption.end
+            dateChanged=(action "onChangeSelectedEnd")
+            dateFormat="d-m-Y"
+        }}
       </div>
     </div>
   </div>
