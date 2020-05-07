@@ -23,7 +23,7 @@ export default Service.extend({
     this.set('searchParams.pageNumber', 0);
     this.set('searchParams.pageSize', 25);
     const newsItems = await this.searchTask.perform();
-    this.set('cache', A(newsItems));
+    this.set('cache', newsItems);
   },
 
   async loadMore() {
