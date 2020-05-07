@@ -1,11 +1,17 @@
 import Service from '@ember/service';
 import { warn } from '@ember/debug';
 import { A } from '@ember/array';
-import fetch from 'fetch';
 import { task } from 'ember-concurrency';
+import muSearch from '../utils/mu-search';
 
 export default Service.extend({
   count: 0,
+
+  docType: Object.freeze('news-items'),
+  sortKeys: Object.freeze([
+    '-session-date',
+    'priority'
+  ]),
 
   init() {
     this._super(...arguments);
@@ -28,33 +34,44 @@ export default Service.extend({
 
   searchTask: task(function * () {
     const { search, startDate, endDate, ministerId, ministerFirstName, ministerLastName, ministerialPowerId, pageNumber, pageSize } = this.searchParams;
-    let endpoint = `/news-items/search?page[size]=${pageSize}&page[number]=${pageNumber}&sort[sessionDate]=desc&sort[priority]=asc`;
 
+    const filter = {};
     if (search || startDate || endDate || ministerId || ministerialPowerId || ministerFirstName || ministerLastName) {
-      if (search)
-        endpoint += `&filter[htmlContent]=${search}`;
-      if (startDate)
-        endpoint += `&filter[:gte:sessionDate]=${startDate}`;
-      if (endDate)
-        endpoint += `&filter[:lte:sessionDate]=${endDate}`;
+      if (search) {
+        filter.htmlContent = search;
+      }
+      if (startDate) {
+        filter[':gte:sessionDate'] = startDate;
+      }
+      if (endDate) {
+        filter[':lte:sessionDate'] = endDate;
+      }
       if (ministerId || ministerFirstName || ministerLastName) {
         if (ministerId == 'vr') { // mededelingen
-          endpoint += `&&filter[category]=mededeling`;
+          filter.category = 'mededeling';
         } else if (ministerId == -1) {// previous ministers
-          endpoint += `&filter[mandateeActiveStatus]=inactive&filter[category]=nieuws`;
+          filter.mandateeActiveStatus = 'inactive';
+          filter.category = 'nieuws';
         } else {
-          endpoint += `&filter[mandateeFirstNames]=${ministerFirstName}&filter[mandateeFamilyNames]=${ministerLastName}&filter[category]=nieuws`;
+          filter.mandateeFirstNames = ministerFirstName;
+          filter.mandateeFamilyNames = ministerLastName;
+          filter.category = 'nieuws';
         }
-      } if (ministerialPowerId)
-        endpoint += `&filter[themeId]=${ministerialPowerId}`;
+      } if (ministerialPowerId) {
+        filter.themeId = ministerialPowerId;
+      }
     } else {
-      endpoint += `&filter[:sqs:title]=*`;
+      filter[':sqs:title']= '*';
     }
 
     try {
-      const json = yield (yield fetch(endpoint)).json();
-      this.set('count', json.count);
-      return json.data.map(item => item.attributes);
+      const result = yield muSearch(this.docType, pageNumber, pageSize, this.sortKeys, filter, function (item) {
+        const entry = item.attributes;
+        entry.id = item.id;
+        return entry;
+      });
+      this.set('count', result.meta.count);
+      return result;
     } catch (e) {
       warn(`Something went wrong while querying mu-search: ${e.message}`, { id: 'mu-search.failure' });
       return A();
