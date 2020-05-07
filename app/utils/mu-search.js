@@ -49,10 +49,8 @@ async function muSearch(index, page, size, sort, filter, dataMapping) {
   const pagination = getPaginationMetadata(page, size, count);
   const entries = A(data.map(dataMapping));
 
-  return ArrayProxy.create({
-    content: entries,
-    meta: { count, pagination }
-  });
+  entries.meta = { count, pagination };
+  return entries;
 }
 
 export default muSearch;
