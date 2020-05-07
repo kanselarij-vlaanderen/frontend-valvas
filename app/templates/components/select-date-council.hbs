@@ -3,15 +3,15 @@
     Datum ministerraad
   </label>
   {{#power-select
-    selected=selected
-    options=options
+    selected=this.selected
+    options=this.options
     onChange=(action "onChange")
     as |option|
   }}
     {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
   {{/power-select}}
 </div>
-{{#if enableSelectDateInput}}
+{{#if this.enableSelectDateInput}}
   <div class="vlc-input-field-block">
     <div class="vl-grid">
       <div class="vl-col--6-12">
@@ -19,9 +19,9 @@
           Van
         </label>
         {{web-components/vl-datepicker
-            selectedDate=selectOption.start
-            dateChanged=(action "onChangeSelectedStart")
-            dateFormat="d-m-Y"
+          selectedDate=this.selectOption.start
+          dateChanged=(action "onChangeSelectedStart")
+          dateFormat="d-m-Y"
         }}
       </div>
       <div class="vl-col--6-12">
@@ -29,9 +29,9 @@
           Tot en met
         </label>
         {{web-components/vl-datepicker
-            selectedDate=selectOption.end
-            dateChanged=(action "onChangeSelectedEnd")
-            dateFormat="d-m-Y"
+          selectedDate=this.selectOption.end
+          dateChanged=(action "onChangeSelectedEnd")
+          dateFormat="d-m-Y"
         }}
       </div>
     </div>
