@@ -40,10 +40,15 @@ export default Service.extend({
       if (search) {
         filter[':sqs:title,htmlContent'] = search;
       }
-      if (startDate) {
+      /* Below code treats closed date ranges as something different than 2 open ranges combined.
+       * in case of two open ranges combined, an off-by-one result (1 to many) is returned.
+       * (semtech/mu-search:0.6.0-beta.11, semtech/mu-search-elastic-backend:1.0.0)
+       */
+      if (startDate && endDate) {
+        filter[':lte,gte:sessionDate'] = endDate + ',' + startDate;
+      } else if (startDate) {
         filter[':gte:sessionDate'] = startDate;
-      }
-      if (endDate) {
+      } else if (endDate) {
         filter[':lte:sessionDate'] = endDate;
       }
       if (ministerId || ministerFirstName || ministerLastName) {
