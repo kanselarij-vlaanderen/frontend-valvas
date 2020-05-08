@@ -4,7 +4,7 @@ export default Component.extend({
   actions: {
     selectSessionDate(dateOption, startDate, endDate) {
       if(endDate) {
-        endDate.setHours(11,59,59)
+        endDate.setHours(23, 59, 59);
       }
       this.set('searchParams.dateOption', dateOption);
       this.set('searchParams.startDate', startDate ? startDate.toISOString() : null);
