@@ -121,7 +121,7 @@ $icon-font-location: '/fonts/';
 @import "custom-utilities/_box-model";
 
 
-body > .ember-view {
+body > #valvas-inner-body-wrapper {
   height: 100% !important;
   display: flex;
   flex-direction: column;

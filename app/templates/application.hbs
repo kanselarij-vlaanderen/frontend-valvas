@@ -1,5 +1,9 @@
 {{wu-widget src=header}}
 {{head-layout}}
 {{title "Beslissingen van de Vlaamse Regering | Vlaanderen.be"}}
-{{outlet}}
+{{!-- Below wrapper element was introduced to stay compatible with the CSS that depended
+  on pre-octane ember-view wrapping elements --}}
+<div id="valvas-inner-body-wrapper">
+  {{outlet}}
+</div>
 {{wu-widget src=footer}}
