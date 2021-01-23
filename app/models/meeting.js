@@ -1,6 +1,5 @@
 import DS from 'ember-data';
-let { Model, attr, hasMany } = DS;
-import { equal } from '@ember/object/computed';
+let { Model, attr, hasMany, belongsTo } = DS;
 
 export default Model.extend({
   plannedStart: attr('date'),
@@ -9,11 +8,8 @@ export default Model.extend({
   location: attr('string'),
   number: attr('number'),
   isFinal: attr('boolean'),
-  isSpecial: attr('boolean'),
   extraInfo: attr('string'),
-  type: attr('string'),
 
   notifications: hasMany('notification'),
-
-  isElectronic: equal('type', 'http://kanselarij.vo.data.gift/id/concept/ministerraad-type-codes/406F2ECA-524D-47DC-B889-651893135456')
+  type: belongsTo('meeting-type')
 });
