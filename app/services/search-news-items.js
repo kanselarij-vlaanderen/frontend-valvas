@@ -10,6 +10,7 @@ export default Service.extend({
   docType: Object.freeze('news-items'),
   sortKeys: Object.freeze([
     '-session-date',
+    'session-priority',
     'priority'
   ]),
 
@@ -45,7 +46,7 @@ export default Service.extend({
        * (semtech/mu-search:0.6.0-beta.11, semtech/mu-search-elastic-backend:1.0.0)
        */
       if (startDate && endDate) {
-        filter[':lte,gte:sessionDate'] = endDate + ',' + startDate;
+        filter[':gte,lte:sessionDate'] = startDate + ',' + endDate;
       } else if (startDate) {
         filter[':gte:sessionDate'] = startDate;
       } else if (endDate) {
