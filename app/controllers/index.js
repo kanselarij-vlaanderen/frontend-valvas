@@ -36,7 +36,9 @@ export default Controller.extend({
     this.data.forEach((newsItem) => {
       let session = sessions.findBy('id', newsItem.sessionId);
       if (!session) {
-        const sessionRecord = this.store.find('meeting', newsItem.sessionId);
+        const sessionRecord = this.store.findRecord('meeting', newsItem.sessionId, {
+          include: 'type'
+        });
         session = EmberObject.create({
           id: newsItem.sessionId,
           date: newsItem.sessionDate,
