@@ -5,13 +5,16 @@
     </div>
     <h4 class="vl-title vl-title--h4">{{newsInfo.title}}</h4>
     <div class="vl-u-text--muted vl-u-spacer-extended-bottom-s">
-      <time datetime={{moment-format newsInfo.sessionDate "YYYY-MM-DD"}}>{{moment-format newsInfo.sessionDate "D MMMM YYYY"}}</time>
+      <time datetime={{moment-format newsInfo.sessionDate "YYYY-MM-DD" }}>
+        {{moment-format newsInfo.sessionDate "D MMMM YYYY"}}
+      </time>
 
       {{#if (eq newsInfo.category "mededeling")}}
         <span>mededeling aan de Vlaamse Regering</span>
       {{else}}
         {{#if newsInfo.mandateeFamilyNames}}
-          op voorstel van {{format-ministers mandatees=(await mandatees)}}
+          op voorstel van
+          <FormatMinisters @mandatees={{await this.mandatees}} />
         {{/if}}
       {{/if}}
     </div>
@@ -28,12 +31,12 @@
       <div class="link-group link-group--bordered vl-u-spacer-extended-top-s">
         {{#if isLongText}}
           {{#if longTextHidden}}
-            <button class="vl-link vl-u-spacer-extended-right" {{action "toggleReadMore"}}>Lees meer</button>
+            <button class="vl-link vl-u-spacer-extended-right" {{on "click" this.toggleReadMore }}>Lees meer</button>
           {{else}}
-            <button class="vl-link vl-u-spacer-extended-right" {{action "toggleReadMore"}}>Lees minder</button>
+            <button class="vl-link vl-u-spacer-extended-right" {{on "click" this.toggleReadMore}}>Lees minder</button>
           {{/if}}
         {{/if}}
-        {{documents-view model=newsInfo}}
+        <DocumentsView @model={{this.newsInfo}} />
       </div>
     </div>
   </li>

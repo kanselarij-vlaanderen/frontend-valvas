@@ -1,3 +1,6 @@
-{{#each sortedMandatees as |mandatee|}}
-  <span class="bevoegde-minister-item">{{if mandatee.nickName mandatee.nickName mandatee.legacyNickName}}</span>
+{{#each this.sortedMandatees as |mandatee|}}
+  <span class="bevoegde-minister-item">
+    {{if mandatee.title mandatee.title mandatee.legacyTitle}}
+    {{mandatee.person.fullName}}
+  </span>
 {{/each}}

@@ -1,9 +1,19 @@
 import Component from '@ember/component';
-import { sort } from '@ember/object/computed';
+import { computed } from '@ember/object';
 
-export default Component.extend({
-  tagName: '',
+export default class FormatMinistersComponent extends Component {
+  tagName = '';
 
-  mandateeSort: Object.freeze(['priority', 'legacyPriority']),
-  sortedMandatees: sort('mandatees', 'mandateeSort')
-});
+  @computed('mandatees')
+  get sortedMandatees() {
+    if (!!this.mandatees) {
+      return this.mandatees.sort((a, b) => {
+        let pos_a = a.position || a.legacyPosition;
+        let pos_b = b.position || b.legacyPosition;
+        return pos_a - pos_b;
+      });
+    } else {
+      return [];
+    }
+  }
+}
