@@ -1,15 +1,9 @@
-import DS from 'ember-data';
-let { Model, attr, hasMany, belongsTo } = DS;
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
-  plannedStart: attr('date'),
-  startedOn: attr('date'),
-  endedOn: attr('date'),
-  location: attr('string'),
-  number: attr('number'),
-  isFinal: attr('boolean'),
-  extraInfo: attr('string'),
+export default class MeetingModel extends Model {
+  @attr('date') plannedStart;
+  @attr('string') location;
+  @attr('string') identifier;
 
-  notifications: hasMany('notification'),
-  type: belongsTo('meeting-type')
-});
+  @belongsTo('concept') type;
+}

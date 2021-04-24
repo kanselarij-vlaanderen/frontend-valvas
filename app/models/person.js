@@ -1,23 +1,19 @@
-import DS from 'ember-data';
-const { Model, attr, hasMany } = DS;
-import { computed } from '@ember/object';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
-  lastName: attr('string'),
-  alternativeName: attr('string'),
-  firstName: attr('string'),
-  fullName: computed('firstName', 'lastName', 'alternativeName', function() {
-    // We assume to only be sure of 'lastName' to exist.
-    if (this.alternativeName) {
+export default class PersonModel extends Model {
+  @attr('string') lastName;
+  @attr('string') firstName;
+  @attr('string') alternativeName;
+
+  @belongsTo('mandatee') mandatee;
+
+  get fullName() {
+    if (!!this.alternativeName) {
       return this.alternativeName;
+    } else if (!!this.firstName) {
+      return `${this.firstName} ${this.lastName}`;
     } else {
-      if (this.firstName) {
-        return `${this.firstName} ${this.lastName}`;
-      } else {
-        return this.lastName;
-      }
+      return this.lastName;
     }
-  }),
-
-  mandatees: hasMany('mandatee', { inverse: null })
-});
+  }
+}
