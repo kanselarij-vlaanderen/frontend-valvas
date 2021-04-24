@@ -62,7 +62,6 @@ export default class IndexController extends Controller {
 
   @action
   searchNews(params) {
-    console.log("Searching")
     this.queryParams.forEach((key) => this.set(key, params[key]));
     this.searchNewsItems.search(params);
   }
