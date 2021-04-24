@@ -1,39 +1,40 @@
 import Service from '@ember/service';
 import { warn } from '@ember/debug';
 import { A } from '@ember/array';
+import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import muSearch from '../utils/mu-search';
 
-export default Service.extend({
-  count: 0,
+export default class SearchNewsItemsService extends Service {
+  docType = Object.freeze('news-items');
+  sortKeys = Object.freeze([
+    '-meeting-date',
+    'meeting-position',
+    'position'
+  ]);
+  @tracked cache;
+  @tracked count = 0;
 
-  docType: Object.freeze('news-items'),
-  sortKeys: Object.freeze([
-    '-session-date',
-    'session-priority',
-    'priority'
-  ]),
-
-  init() {
-    this._super(...arguments);
-    this.set('cache', A());
-  },
+  constructor() {
+    super(...arguments);
+    this.cache = A();
+  }
 
   async search(params) {
-    this.set('searchParams', params);
-    this.set('searchParams.pageNumber', 0);
-    this.set('searchParams.pageSize', 25);
+    this.searchParams = params;
+    this.searchParams.pageNumber = 0;
+    this.searchParams.pageSize = 25;
     const newsItems = await this.searchTask.perform();
-    this.set('cache', newsItems);
-  },
+    this.cache = newsItems;
+  }
 
   async loadMore() {
-    this.set('searchParams.pageNumber', this.searchParams.pageNumber + 1);
+    this.searchParams.pageNumber += 1;
     const newsItems = await this.searchTask.perform();
-    this.cache.pushObjects(newsItems);
-  },
+    this.cache.push(...newsItems);
+  }
 
-  searchTask: task(function * () {
+  @(task(function* () {
     const { search, startDate, endDate, ministerId, ministerFirstName, ministerLastName, ministerialPowerId, pageNumber, pageSize } = this.searchParams;
 
     const filter = {};
@@ -46,11 +47,11 @@ export default Service.extend({
        * (semtech/mu-search:0.6.0-beta.11, semtech/mu-search-elastic-backend:1.0.0)
        */
       if (startDate && endDate) {
-        filter[':gte,lte:sessionDate'] = startDate + ',' + endDate;
+        filter[':gte,lte:meetingDate'] = startDate + ',' + endDate;
       } else if (startDate) {
-        filter[':gte:sessionDate'] = startDate;
+        filter[':gte:meetingDate'] = startDate;
       } else if (endDate) {
-        filter[':lte:sessionDate'] = endDate;
+        filter[':lte:meetingDate'] = endDate;
       }
       if (ministerId || ministerFirstName || ministerLastName) {
         if (ministerId == 'vr') { // mededelingen
@@ -67,7 +68,7 @@ export default Service.extend({
         filter.themeId = ministerialPowerId;
       }
     } else {
-      filter[':sqs:title']= '*';
+      filter[':sqs:title'] = '*';
     }
 
     try {
@@ -82,5 +83,5 @@ export default Service.extend({
       warn(`Something went wrong while querying mu-search: ${e.message}`, { id: 'mu-search.failure' });
       return A();
     }
-  }).keepLatest()
-});
+  }).keepLatest()) searchTask;
+}

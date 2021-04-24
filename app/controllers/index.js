@@ -1,91 +1,80 @@
 import Controller from '@ember/controller';
-import { or, lt } from 'ember-awesome-macros';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
-import { A } from '@ember/array';
-import EmberObject from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  queryParams: ['search',
-                'dateOption', 'startDate', 'endDate',
-                'ministerId', 'ministerFirstName', 'ministerLastName',
-                'ministerialPowerId'],
+export default class IndexController extends Controller {
+  @service store;
+  @service searchNewsItems;
 
-  searchNewsItems: service(),
-  store: service(),
+  queryParams = ['search', 'dateOption', 'startDate', 'endDate', 'ministerId', 'ministerFirstName', 'ministerLastName', 'ministerialPowerId'];
+  search = null;
+  dateOption = null;
+  startDate = null;
+  endDate = null;
+  ministerId = null;
+  ministerFirstName = null;
+  ministerLastName = null;
+  ministerialPowerId = null;
 
-  search: null,
-  dateChoiceId: null,
-  startDate: null,
-  endDate: null,
-  presentedById: null,
-  ministerialPowerId: null,
-  pageNumber: null,
+  @alias('searchNewsItems.cache') data;
+  @alias('searchNewsItems.count') count;
+  @tracked pageNumber = null;
 
-  data: alias('searchNewsItems.cache'),
-  count: alias('searchNewsItems.count'),
-  hasMoreResults: lt('data.length', 'count'),
-  showBackLink: or('search',
-                   'dateOption', 'startDate', 'endDate',
-                   'ministerId', 'ministerFirstName', 'ministerLastName',
-                   'ministerialPowerId'),
-
-  sessions: computed('searchNewsItems.cache{,.[]}', function() {
-    let sessions = A();
-    this.data.forEach((newsItem) => {
-      let session = sessions.findBy('id', newsItem.sessionId);
-      if (!session) {
-        const sessionRecord = this.store.findRecord('meeting', newsItem.sessionId, {
-          include: 'type'
-        });
-        session = EmberObject.create({
-          id: newsItem.sessionId,
-          date: newsItem.sessionDate,
-          record: sessionRecord,
-          news: A(),
-          announcements: A()
-        });
-        sessions.pushObject(session);
-      }
-
-      if (newsItem.category == "mededeling")
-        session.announcements.pushObject(newsItem);
-      else
-        session.news.pushObject(newsItem);
-     });
-
-     return sessions;
-  }),
-
-  actions: {
-    search(params) {
-      const { search, dateOption, startDate, endDate, ministerId, ministerFirstName, ministerLastName, ministerialPowerId } = params;
-      this.set('search', search);
-      this.set('dateOption', dateOption);
-      this.set('startDate', startDate);
-      this.set('endDate', endDate);
-      this.set('ministerId', ministerId);
-      this.set('ministerFirstName', ministerFirstName);
-      this.set('ministerLastName', ministerLastName);
-      this.set('ministerialPowerId', ministerialPowerId);
-      this.searchNewsItems.search(params);
-    },
-
-    loadMore() {
-      this.searchNewsItems.loadMore();
-    },
-
-    clearParams() {
-      ['search',
-       'dateOption',
-       'startDate',
-       'endDate',
-       'ministerId',
-       'ministerFirstName',
-       'ministerLastName',
-       'ministerialPowerId'].forEach(key => this.set(key, null));
-      this.searchNewsItems.search({});
-    }
+  @computed('search', 'dateOption', 'startDate', 'endDate', 'ministerId', 'ministerFirstName', 'ministerLastName', 'ministerialPowerId')
+  get showBackLink() {
+    return this.search || this.date || this.startDate || this.endDate || this.ministerId || this.ministerFirstName || this.ministerLastName || this.ministerialPowerId;
   }
-});
+
+  @computed('searchNewsItems.cache{,.[]}', 'searchNewsItems.count')
+  get hasMoreResults() {
+    return this.data.length < this.count;
+  }
+
+  @computed('searchNewsItems.cache{,.[]}')
+  get meetings() {
+    // Order all news items by the meeting they belong to
+    let meetings = [];
+    this.data.forEach((newsItem) => {
+      let meeting = meetings.find((meeting) => (meeting.id === newsItem.meetingId));
+      // Add each meeting to the meetings array
+      if (!meeting) {
+        const meetingRecord = this.store.findRecord('meeting', newsItem.meetingId, { include: 'type' });
+        meeting = {
+          id: newsItem.meetingId,
+          date: newsItem.meetingDate,
+          record: meetingRecord,
+          news: [],
+          announcements: [],
+        }
+        meetings.push(meeting);
+      }
+      // Add all news items to their meeting
+      if (newsItem.agendaitemType === 'mededeling') {
+        meeting.announcements.push(newsItem);
+      } else {
+        meeting.news.push(newsItem);
+      }
+    });
+    return meetings;
+  }
+
+  @action
+  searchNews(params) {
+    console.log("Searching")
+    this.queryParams.forEach((key) => this.set(key, params[key]));
+    this.searchNewsItems.search(params);
+  }
+
+  @action
+  loadMore() {
+    this.searchNewsItems.loadMore();
+  }
+
+  @action
+  clearParams() {
+    this.queryParams.forEach((key) => this.set(key, null));
+    this.searchNewsItems.search({});
+  }
+}
