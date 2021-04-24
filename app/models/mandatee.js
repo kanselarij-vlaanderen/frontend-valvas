@@ -1,4 +1,7 @@
-import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
+import { computed } from '@ember/object';
+import mandateTypeFromTitle from 'frontend-valvas/utils/mandate-type-from-title';
+import priorityFromMandateType from 'frontend-valvas/utils/priority-from-mandate-type';
 
 export default class MandateeModel extends Model {
   @attr('number') position;
@@ -7,4 +10,14 @@ export default class MandateeModel extends Model {
   @attr('string') title;
 
   @belongsTo('person') person;
+
+  @computed('title')
+  get legacyTitle() {
+    return mandateTypeFromTitle(this.title);
+  }
+
+  @computed('legacyTitle')
+  get legacyPosition() {
+    return priorityFromMandateType(this.legacyTitle);
+  }
 }

@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { computed } from '@ember/object';
 
 export default class PersonModel extends Model {
   @attr('string') lastName;
@@ -7,6 +8,7 @@ export default class PersonModel extends Model {
 
   @belongsTo('mandatee') mandatee;
 
+  @computed('firstName', 'lastName', 'alternativeName')
   get fullName() {
     if (!!this.alternativeName) {
       return this.alternativeName;
