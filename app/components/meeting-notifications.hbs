@@ -1,13 +1,18 @@
-{{#each meeting.notifications as |notification|}}
+{{#if this.showNotification}}
   <div class="vl-alert vl-alert--warning" role="alert">
     <div class="vl-alert__icon">
       <i class="vl-vi vl-vi-warning" aria-hidden="true"></i>
     </div>
     <div class="vl-alert__content">
-      <p class="vl-alert__title">{{notification.title}}</p>
+      <p class="vl-alert__title">
+        Documenten {{lowercase this.meeting.type.label}} {{moment-format this.meeting.plannedStart "DD MMMM YYYY"}}
+      </p>
       <div class="vl-alert__message">
-        <p>{{notification.description}}</p>
+        <p>
+          De documenten van deze ministerraad zullen beschikbaar zijn vanaf
+          {{moment-format this.meeting.plannedPublicationDate "DD MMMM YYYY - HH:MM"}} uur.
+        </p>
       </div>
     </div>
   </div>
-{{/each}}
+{{/if}}

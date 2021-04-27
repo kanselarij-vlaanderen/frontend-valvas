@@ -1,13 +1,16 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  store: service(),
+export default class MeetingNotificationsComponent extends Component {
+  @service store;
 
-  meetingId: null,
+  @tracked meeting = null;
+  @tracked showNotification = true;
 
   async didReceiveAttrs() {
-    const meeting = this.store.findRecord('meeting', this.meetingId);
-    this.set('meeting', meeting);
+    const meeting = await this.store.findRecord('meeting', this.meetingId);
+    this.showNotification = meeting.plannedPublicationDate > Date.now();
+    this.meeting = meeting;
   }
-});
+}

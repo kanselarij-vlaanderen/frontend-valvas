@@ -66,6 +66,7 @@
                   <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">
                     {{meeting.record.type.label}} van {{moment-format meeting.date "DD MMMM YYYY"}}
                   </h2>
+                  <MeetingNotifications @meetingId={{meeting.id}} />
                   {{#each meeting.news as |newsInfo|}}
                     <NewsInfoView @newsInfo={{newsInfo}} />
                   {{/each}}
