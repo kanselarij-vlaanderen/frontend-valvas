@@ -1,4 +1,4 @@
-import Model, { attr, belongsTo } from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
 
 export default class PersonModel extends Model {
@@ -6,7 +6,7 @@ export default class PersonModel extends Model {
   @attr('string') firstName;
   @attr('string') alternativeName;
 
-  @belongsTo('mandatee') mandatee;
+  @hasMany('mandatee') mandatees;
 
   @computed('firstName', 'lastName', 'alternativeName')
   get fullName() {
