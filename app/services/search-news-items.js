@@ -32,6 +32,7 @@ export default class SearchNewsItemsService extends Service {
     this.searchParams.pageNumber += 1;
     const newsItems = await this.searchTask.perform();
     this.cache.push(...newsItems);
+    this.cache = this.cache; // Trigger a view refresh
   }
 
   @(task(function* () {
