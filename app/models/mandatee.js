@@ -10,6 +10,8 @@ export default class MandateeModel extends Model {
   @attr('string') title;
 
   @belongsTo('person') person;
+  @belongsTo('mandate') mandate;
+  @belongsTo('government-body') governmentBody;
 
   @computed('title')
   get legacyTitle() {
