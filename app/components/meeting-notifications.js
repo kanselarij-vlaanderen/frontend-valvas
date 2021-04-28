@@ -6,7 +6,7 @@ export default class MeetingNotificationsComponent extends Component {
   @service store;
 
   @tracked meeting = null;
-  @tracked showNotification = true;
+  @tracked showNotification = false;
 
   async didReceiveAttrs() {
     const meeting = await this.store.findRecord('meeting', this.meetingId);
