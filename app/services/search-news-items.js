@@ -15,8 +15,8 @@ export default class SearchNewsItemsService extends Service {
   @tracked cache;
   @tracked count = 0;
 
-  constructor() {
-    super(...arguments);
+  init() {
+    super.init(...arguments);
     this.cache = A();
   }
 
