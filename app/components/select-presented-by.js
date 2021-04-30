@@ -24,6 +24,11 @@ export default class SelectPresentedByComponent extends Component {
     this.setSelectedOptionForSelectedId();
   }
 
+  didReceiveAttrs() {
+    super.init(...arguments);
+    this.setSelectedOptionForSelectedId();
+  }
+
   @computed('selected')
   get isEnabledHistoricOption() {
     return !!this.selected ? this.selected.id === 'historic' : false;
@@ -40,7 +45,7 @@ export default class SelectPresentedByComponent extends Component {
       },
       include: 'mandatees.person',
     });
-    const currentGovernmentBody = currentGovernmentBodyArray.find(() => true); // Get element at index 0
+    const currentGovernmentBody = currentGovernmentBodyArray.firstObject;
     const currentMandatees = !!currentGovernmentBody ? await currentGovernmentBody.mandatees : [];
     const currentMandateesAndPersons = await Promise.all(currentMandatees.map(async (mandatee) => ({
       mandatee,

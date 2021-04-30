@@ -19,6 +19,11 @@ export default class SelectMinisterialPowerComponent extends Component {
     this.setSelectedOptionForSelectedId();
   }
 
+  didReceiveAttrs() {
+    super.init(...arguments);
+    this.setSelectedOptionForSelectedId();
+  }
+
   async loadOptions() {
     let themes = await this.store.query('concept', {
       page: { size: 1000 },
@@ -42,7 +47,6 @@ export default class SelectMinisterialPowerComponent extends Component {
 
   @action
   onChangeOption(selected) {
-    console.log(selected)
     this.selected = selected;
     if (this.selectedId !== selected.id) {
       this.onChange(selected.id);
