@@ -8,23 +8,12 @@ export default class IndexController extends Controller {
   @service store;
   @service searchNewsItems;
 
-  queryParams = ['search', 'dateOption', 'startDate', 'endDate', 'ministerId', 'ministerFirstName', 'ministerLastName', 'ministerialPowerId'];
-  search = null;
-  dateOption = null;
-  startDate = null;
-  endDate = null;
-  ministerId = null;
-  ministerFirstName = null;
-  ministerLastName = null;
-  ministerialPowerId = null;
-
   @alias('searchNewsItems.cache') data;
   @alias('searchNewsItems.count') count;
   @tracked pageNumber = null;
 
-  @computed('search', 'dateOption', 'startDate', 'endDate', 'ministerId', 'ministerFirstName', 'ministerLastName', 'ministerialPowerId')
   get showBackLink() {
-    return this.search || this.date || this.startDate || this.endDate || this.ministerId || this.ministerFirstName || this.ministerLastName || this.ministerialPowerId;
+    return this.searchNewsItems.filter;
   }
 
   @computed('searchNewsItems.cache{,.[]}', 'searchNewsItems.count')
@@ -61,9 +50,8 @@ export default class IndexController extends Controller {
   }
 
   @action
-  searchNews(params) {
-    this.queryParams.forEach((key) => this.set(key, params[key]));
-    this.searchNewsItems.search(params);
+  searchNews() {
+    this.searchNewsItems.search();
   }
 
   @action
@@ -73,7 +61,7 @@ export default class IndexController extends Controller {
 
   @action
   clearParams() {
-    this.queryParams.forEach((key) => this.set(key, null));
-    this.searchNewsItems.search({});
+    this.searchNewsItems.clearParams();
+    this.searchNewsItems.search();
   }
 }
