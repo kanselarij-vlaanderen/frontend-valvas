@@ -1,47 +1,51 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 const defaultOption = { label: 'Alle bevoegdheden' };
 
-export default Component.extend({
-  store: service(),
+export default class SelectMinisterialPowerComponent extends Component {
+  @service store;
 
-  tagName: '',
+  @tracked tagName = '';
+  @tracked options = [defaultOption];
+  @tracked selected = null;
 
   async init() {
-    this._super(...arguments);
-    const ministerialPowers = await this.store.query('theme', {
-      page: { size: 1000 }
+    super.init(...arguments);
+    const options = await this.loadOptions();
+    this.options = [defaultOption, ...options];
+    this.setSelectedOptionForSelectedId();
+  }
+
+  async loadOptions() {
+    let themes = await this.store.query('concept', {
+      page: { size: 1000 },
+      filter: {
+        'in-scheme': {
+          ':exact:label': `Thema's`,
+        },
+      },
     });
-    const options = ministerialPowers.map( (m) => {
-      return {
-        id: m.id,
-        label: m.label.charAt(0).toUpperCase() + m.label.slice(1),
-        count: null
-      };
-    }).sortBy('label');
-    this.set('options', [ defaultOption, ...options ]);
-    this.setSelectedOptionForSelectedId();
-  },
+    const options = themes.map((theme) => ({
+      id: theme.id,
+      label: theme.label,
+      count: null,
+    })).sort((a, b) => (a.label > b.label));
+    return options;
+  }
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.setSelectedOptionForSelectedId();
-  },
-
-  /* Select correct option for ember-power-select if selectedId is changed by external component */
   setSelectedOptionForSelectedId() {
-    if (this.options) {
-      const selected = this.selectedId ? this.options.find(o => o.id == this.selectedId) : defaultOption;
-      this.set('selected', selected);
-    }
-  },
+    if (!!this.options) this.selected = this.selectedId ? this.options.find((option) => (option.id === this.selectedId)) : defaultOption;
+  }
 
-  actions: {
-    onChange(selected) {
-      this.set('selected', selected);
-      if (this.selectedId != selected.id)
-        this.onChange(selected.id);
+  @action
+  onChangeOption(selected) {
+    console.log(selected)
+    this.selected = selected;
+    if (this.selectedId !== selected.id) {
+      this.onChange(selected.id);
     }
   }
-});
+}

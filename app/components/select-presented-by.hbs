@@ -5,13 +5,9 @@
 
   <div class="form-element">
     <div class="form__input">
-      {{#power-select
-           selected=selected
-           options=options
-           onChange=(action "onChange")
-           as |option|}}
-        {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
-      {{/power-select}}
+      <PowerSelect @selected={{this.selected}} @options={{this.options}} @onChange={{this.onChangeOption}} as |option|>
+        {{option.label}} {{#if option.count}} ({{option.count}}) {{/if}}
+      </PowerSelect>
     </div>
   </div>
 </div>
@@ -20,13 +16,10 @@
   <div class="filter__field form-item">
     <div class="form-element">
       <div class="form__input">
-        {{#power-select
-             selected=selectedHistoric
-             options=historicOptions
-             onChange=(action "onChangeHistoric")
-             as |option|}}
+        <PowerSelect @selected={{this.selectedHistoric}} @options={{this.historicOptions}}
+          @onChange={{this.onChangeHistoricOption}} as |option|>
           {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
-        {{/power-select}}
+        </PowerSelect>
       </div>
     </div>
   </div>

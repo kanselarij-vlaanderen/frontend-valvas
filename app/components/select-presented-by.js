@@ -1,109 +1,116 @@
 import Component from '@ember/component';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { equal } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
 
 const defaultOption = { label: 'Alle ministers' };
 const mededelingOption = { id: 'vr', label: 'de Vlaamse Regering' };
 const historicOption = { id: 'historic', label: 'Vorige ministers' };
 
-export default Component.extend({
-  store: service(),
+export default class SelectPresentedByComponent extends Component {
+  @service store;
 
-  tagName: '',
-
-  isEnabledHistoricOption: equal('selected.id', 'historic'),
+  @tracked tagName = '';
+  @tracked options = [defaultOption, mededelingOption, historicOption];
+  @tracked historicOptions = [];
+  @tracked selected = null;
+  @tracked selectedHistoric = null;
 
   async init() {
-    this._super(...arguments);
+    super.init(...arguments);
     const { options, historicOptions } = await this.loadOptions();
-    this.set('options', [ defaultOption, ...options, mededelingOption, historicOption ]);
-    this.set('historicOptions', historicOptions);
+    this.options = [defaultOption, ...options, mededelingOption, historicOption];
+    this.historicOptions = historicOptions;
     this.setSelectedOptionForSelectedId();
-  },
+  }
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.setSelectedOptionForSelectedId();
-  },
+  @computed('selected')
+  get isEnabledHistoricOption() {
+    return !!this.selected ? this.selected.id === 'historic' : false;
+  }
 
   async loadOptions() {
-    const mandatees = await this.store.query('mandatee', {
-      page: { size: 100 },
-      sort: '-start',
-      include: 'person',
-      'filter[:exact:active-status]': 'active'
+    // Obtain unique list of current mandatees
+    const currentGovernmentBodyArray = await this.store.query('government-body', {
+      page: { size: 1 },
+      filter: {
+        ':has:start-date': true,
+        ':has-no:end-date': true,
+        ':has:mandatees': true,
+      },
+      include: 'mandatees.person',
     });
-    const options = (await Promise.all(mandatees.map( async (m) => {
-      const person = await m.person;
-      return {
-        id: person.id,
-        priority: m.priority,
-        firstName: person.firstName,
-        lastName: person.lastName,
-        label: `${person.firstName} ${person.lastName}`,
-        count: null
-      };
-    }))).sortBy('priority');
-    const activePersonIds = options.map(o => o.id);
+    const currentGovernmentBody = currentGovernmentBodyArray.find(() => true); // Get element at index 0
+    const currentMandatees = !!currentGovernmentBody ? await currentGovernmentBody.mandatees : [];
+    const currentMandateesAndPersons = await Promise.all(currentMandatees.map(async (mandatee) => ({
+      mandatee,
+      person: await mandatee.person,
+    })));
+    let options = [];
+    for await (const { mandatee, person } of currentMandateesAndPersons) {
+      let option = options.find((option) => (option.id === person.id));
+      if (!option) {
+        options.push({
+          id: person.id,
+          position: mandatee.position,
+          firstName: person.firstName,
+          lastName: person.lastName,
+          label: person.fullName,
+        });
+      }
+    }
+    options = options.sort((a, b) => (a.position - b.position));
 
+    const activePersonIds = options.map((option) => (option.id));
     const allPersons = await this.store.query('person', {
       page: { size: 1000 }
     });
-    const inactivePersons = allPersons.filter(p => !activePersonIds.includes(p.id));
-    const historicOptions = (await Promise.all(inactivePersons.map( async (person) => {
-      return {
-        id: person.id,
-        firstName: person.firstName,
-        lastName: person.lastName,
-        label: `${person.firstName} ${person.lastName}`,
-        count: null
-      };
-    }))).sortBy('lastName');
+    const inactivePersons = allPersons.filter((person) => (!activePersonIds.includes(person.id)));
+    let historicOptions = inactivePersons.map((person) => ({
+      id: person.id,
+      position: null,
+      firstName: person.firstName,
+      lastName: person.lastName,
+      label: person.fullName,
+    })).sort((a, b) => (a.lastName > b.lastName));
 
-    return { options, historicOptions };
-  },
+    return { options, historicOptions }
+  }
 
-  /* Select correct option for ember-power-select if selectedId is changed by external component */
   setSelectedOptionForSelectedId() {
-    if (this.options && this.historicOptions) {
+    if (!!this.options && !!this.historicOptions) {
       let selected = null;
       let selectedHistoric = null;
-      if (this.selectedId) {
-        selected = this.options.find(o => o.id == this.selectedId);
+      let id = this.selectedId;
+      if (!!id) {
+        selected = this.options.find((option) => (option.id === id));
         if (!selected) {
           selected = historicOption;
-          selectedHistoric = this.historicOptions.find(o => o.id == this.selectedId);
+          selectedHistoric = this.historicOptions.find((option) => (option.id === id));
         }
-      } else if (this.selectedFirstName || this.selectedLastName) {
-        selected = {
-          id: 'placeholder',
-          firstName: this.selectedFirstName,
-          lastName: this.selectedLastName,
-          label: `${this.selectedFirstName} ${this.selectedLastName}`,
-          count: null
-        };
       } else {
         selected = defaultOption;
       }
-      this.set('selected', selected);
-      this.set('selectedHistoric', selectedHistoric);
-    }
-  },
-
-  actions: {
-    async onChange(selected) {
-      this.set('selected', selected);
-      if (selected && selected.id != 'historic') {
-        if (this.selectedId != selected.id) {
-          this.onChange(selected.id, selected.firstName, selected.lastName);
-        }
-      }
-    },
-    async onChangeHistoric(selected) {
-      this.set('selectedHistoric', selected);
-      if (this.selectedId != selected.id) {
-        this.onChange(selected.id, selected.firstName, selected.lastName);
-      }
+      this.selected = selected;
+      this.selectedHistoric = selectedHistoric;
     }
   }
-});
+
+  @action
+  async onChangeOption(selected) {
+    this.selected = selected;
+    if (!!selected && selected.id !== 'historic' && this.selectedId !== selected.id) {
+      this.onChange(selected.id, selected.firstName, selected.lastName);
+    }
+    return;
+  }
+
+  @action
+  async onChangeHistoricOption(selected) {
+    this.selectedHistoric = selected;
+    if (!!selected && this.selecteddId !== selected.id) {
+      this.onChange(selected.id, selected.firstName, selected.lastName);
+    }
+    return;
+  }
+}

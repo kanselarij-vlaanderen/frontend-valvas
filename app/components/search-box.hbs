@@ -1,17 +1,16 @@
 <h2 class="vl-title vl-title--alt">Verfijn uw zoekresultaten</h2>
-<form class="vl-form vl-u-bg-porcelain" {{action onSearch searchParams on="submit" }}>
+<form class="vl-form vl-u-bg-porcelain" {{action search on="submit" }}>
   <div class="vlc-box">
     <div class="vlc-input-field-block">
       <WebComponents::VlFormLabel @value="Zoek naar" />
-      <WebComponents::VlFormInput @width="4" @value={{searParams.search}} @onChange={{action (mut searchParams.search)}}
-        @placeholder="Zoek naar" />
+      <WebComponents::VlFormInput @width="4" @value={{this.searchNewsItems.keyword}} @onChange={{action (mut
+        this.searchNewsItems.keyword)}} @placeholder="Zoek naar" />
     </div>
-    <SelectDateCouncil @selectedId={{searchParams.dateOption}} @startDate={{searchParams.startDate}}
-      @endDate={{searchParams.endDate}} @onChange={{this.selectSessionDate}} />
-    <SelectMinisterialPower @selectedId={{searchParams.ministerialPowerId}} @onChange={{action (mut
-      searchParams.ministerialPowerId)}} />
-    <SelectPresentedBy @selectedId={{searchParams.ministerId}} @selectedFirstName={{searchParams.ministerFirstName}}
-      @selectedLastName={{searchParams.ministerLastName}} @onChange={{this.selectMinister}} />
+    <SelectDateCouncil @selectedId={{this.searchNewsItems.dateOption}} @startDate={{this.searchNewsItems.startDate}}
+      @endDate={{this.searchNewsItems.endDate}} @onChange={{this.selectSessionDate}} />
+    <SelectMinisterialPower @selectedId={{this.searchNewsItems.ministerialPowerId}}
+      @onChange={{this.selectMinisterialPowerId}} />
+    <SelectPresentedBy @selectedId={{this.searchNewsItems.ministerId}} @onChange={{this.selectMinister}} />
     <div class="vl-u-spacer-extended-top">
       <button class="form-submit vl-button">Zoek</button>
     </div>
