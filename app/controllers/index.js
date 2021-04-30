@@ -40,7 +40,7 @@ export default class IndexController extends Controller {
         meetings.push(meeting);
       }
       // Add all news items to their meeting
-      if (newsItem.agendaitemType === 'mededeling') {
+      if (newsItem.agendaitemType.toLowerCase() === 'mededeling') {
         meeting.announcements.push(newsItem);
       } else {
         meeting.news.push(newsItem);
