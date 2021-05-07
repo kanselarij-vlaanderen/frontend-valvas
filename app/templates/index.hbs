@@ -60,14 +60,22 @@
                     {{meeting.record.type.label}} van {{moment-format meeting.date "DD MMMM YYYY"}}
                   </h2>
                   <MeetingNotifications @meetingId={{meeting.id}} />
-                  {{#each meeting.news as |newsInfo|}}
+                  {{#each meeting.news as |newsInfo index|}}
                     <NewsInfoView @newsInfo={{newsInfo}} />
+                    {{#if (lt index (sub meeting.news.length 1) )}}
+                      <div class="vl-u-hr" />
+                      <div class="vl-u-spacer--medium" />
+                    {{/if}}
                   {{/each}}
 
                   {{#if meeting.announcements.length}}
                     <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">Mededelingen</h2>
-                    {{#each meeting.announcements as |newsInfo|}}
+                    {{#each meeting.announcements as |newsInfo index|}}
                       <NewsInfoView @newsInfo={{newsInfo}} />
+                      {{#if (lt index (sub meeting.announcements.length 1) )}}
+                        <div class="vl-u-hr" />
+                        <div class="vl-u-spacer--medium" />
+                      {{/if}}
                     {{/each}}
                   {{/if}}
                 {{/each}}

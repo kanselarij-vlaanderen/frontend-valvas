@@ -1,9 +1,12 @@
 <ul>
-  <li class="decision vl-u-spacer">
+  <li class="decision vl-u-spacer--medium">
     <div class="u-named-target-wrapper">
       <div class="u-named-target-dummy"></div>
     </div>
     <h4 class="vl-title vl-title--h4">{{newsInfo.title}}</h4>
+    {{#if newsInfo.alternativeTitle}}
+      <h6 class="vl-title vl-title--h6">{{newsInfo.alternativeTitle}}</h6>
+    {{/if}}
     <div class="vl-u-text--muted vl-u-spacer-extended-bottom-s">
       <time datetime={{moment-format newsInfo.meetingDate "YYYY-MM-DD" }}>
         {{moment-format newsInfo.meetingDate "D MMMM YYYY"}}
