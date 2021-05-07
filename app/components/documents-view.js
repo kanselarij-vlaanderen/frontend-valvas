@@ -1,28 +1,35 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  tagName: '',
+export default class DocumentsViewComponent extends Component {
+  @service store;
 
-  store: service(),
-
-  model: null,
-  isExpanded: false,
+  tagName = '';
+  @tracked isExpanded = false;
+  @tracked attachments = [];
 
   didReceiveAttrs() {
-    if (this.model)
+    if (!!this.model) {
       this.fetchRecord.perform();
-  },
+    }
+  }
 
-  fetchRecord: task(function * () {
+  @action
+  toggleExpanded() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  @(task(function* () {
     const id = this.model.uuid;
-    let record = this.store.peekRecord('newsletter-info', id);
+    let record = this.store.peekRecord('news-item-info', id);
     if (!record) {
-      record = yield this.store.findRecord('newsletter-info', id, {
-        include: 'document-versions' // using include we won't run into page limits
+      record = yield this.store.findRecord('news-item-info', id, {
+        include: 'attachments.file'
       });
     }
-    this.set('documentVersions', record.documentVersions);
-  }).keepLatest()
-});
+    this.attachments = record.attachments.sortBy('title');
+  }).keepLatest()) fetchRecord;
+}
