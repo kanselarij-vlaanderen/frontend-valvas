@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'frontend-valvas',
     environment,
@@ -54,10 +54,6 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-  }
-
-  if (process.env.DEPLOY_ENV === 'production') {
-
   }
 
   return ENV;

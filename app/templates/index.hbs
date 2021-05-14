@@ -1,17 +1,28 @@
 <header class="vlc-content-header vl-grid">
   <picture class="vl-col--12-12 vlc-content-header__image">
-    <source srcset="/assets/images/main-banner1x-wide.jpg 1x, /assets/images/main-banner2x-wide.jpg 2x"
-      media="(min-width: 1024px)">
-    <source srcset="/assets/images/main-banner1x-mobile.jpg 1x, /assets/images/main-banner2x-mobile.jpg 2x"
-      media="(max-device-width: 767px)">
-    <source srcset="/assets/images/main-banner1x-narrow.jpg 1x, /assets/images/main-banner2x-narrow.jpg 2x"
-      media="(max-width: 1023px)">
-    <img src="/assets/images/main-banner1x-wide.jpg"
+    <source
+      srcset="/assets/images/main-banner1x-wide.jpg 1x, /assets/images/main-banner2x-wide.jpg 2x"
+      media="(min-width: 1024px)"
+    />
+    <source
+      srcset="/assets/images/main-banner1x-mobile.jpg 1x, /assets/images/main-banner2x-mobile.jpg 2x"
+      media="(max-device-width: 767px)"
+    />
+    <source
+      srcset="/assets/images/main-banner1x-narrow.jpg 1x, /assets/images/main-banner2x-narrow.jpg 2x"
+      media="(max-width: 1023px)"
+    />
+    <img
+      src="/assets/images/main-banner1x-wide.jpg"
       srcset="/assets/images/main-banner1x-wide.jpg 1x, /assets/images/main-banner1x-wide.jpg 2x"
-      alt="header afbeelding standbeeld Brussel">
+      alt="header afbeelding standbeeld Brussel"
+    />
   </picture>
   <hgroup class="vlc-content-header__content">
-    <a href="http://www.vlaanderen.be/vlaamse-regering" class="vl-title vl-title--h3 vlc-content-header__link">
+    <a
+      href="http://www.vlaanderen.be/vlaamse-regering"
+      class="vl-title vl-title--h3 vlc-content-header__link"
+    >
       Vlaamse Regering
     </a>
     <h1 class="vl-title vl-title--h1 vlc-content-header__title">
@@ -26,55 +37,76 @@
       <div class="vl-col--4-12 vl-col--12-12--s">
         <SearchBox />
 
-        <a href="https://www.vlaanderen.be/ontvang-nieuwe-persberichten-en-beslissingen-via-e-mail"
-          class="vl-link vl-u-spacer-extended-bottom vl-u-text--bold">
+        <a
+          href="https://www.vlaanderen.be/ontvang-nieuwe-persberichten-en-beslissingen-via-e-mail"
+          class="vl-link vl-u-spacer-extended-bottom vl-u-text--bold"
+        >
           Abonneren op de beslissingen van de Vlaamse Regering
         </a>
 
         <div class="vlc-spotlight">
-          <a href="https://www.vlaanderen.be/vlaamse-regering" class="spotlight external-link">
+          <a
+            href="https://www.vlaanderen.be/vlaamse-regering"
+            class="spotlight external-link"
+          >
             <div class="vlc-spotlight__image-container">
-              <img class="vlc-spotlight__image"
+              <img
+                class="vlc-spotlight__image"
+                alt="Vlaamse regering"
                 srcset="/assets/images/vlaamseregering-1x.jpg 1x, /assets/images/vlaamseregering-2x.jpg 2x"
-                src="/assets/images/vlaamseregering-1x.jpg" alt="">
+                src="/assets/images/vlaamseregering-1x.jpg"
+              />
             </div>
-            <h4 class="vlc-spotlight__title vl-title vl-title--h4" data-clamp="0">Regering Jambon I</h4>
+            <h4
+              class="vlc-spotlight__title vl-title vl-title--h4"
+              data-clamp="0"
+            >Regering Jambon I</h4>
           </a>
         </div>
       </div>
       <div class="vl-col--8-12 vl-col--12-12--s">
         <div class="h1-sublink vl-u-spacer-extended-left-l">
-          <h2 class="vl-title vl-title--h2">{{format-number count}} resultaten</h2>
-          {{#if showBackLink}}
-            <a role="button" onclick={{action "clearParams" }} class="vl-link">
-              <i class="vi vi-u-link vi-arrow vi-u-180deg"></i>Toon alle beslissingen
-            </a>
+          <h2 class="vl-title vl-title--h2">{{format-number this.count}}
+            resultaten</h2>
+          {{#if this.showBackLink}}
+            <button
+              type="button"
+              role="button"
+              class="vl-link"
+              {{on "click" this.clearParams}}
+            >
+              Toon alle beslissingen
+            </button>
           {{/if}}
         </div>
-        {{#if meetings.length}}
+        {{#if this.meetings.length}}
           <div class="view-ip-decisions-search">
             <div class="view-content vl-u-spacer-extended-left-l">
               <div class="item-list">
-                {{#each meetings as |meeting|}}
+                {{#each this.meetings as |meeting|}}
                   <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">
-                    {{meeting.record.type.label}} van {{moment-format meeting.date "DD MMMM YYYY"}}
+                    {{meeting.record.type.label}}
+                    van
+                    {{moment-format meeting.date "DD MMMM YYYY"}}
                   </h2>
                   <MeetingNotifications @meetingId={{meeting.id}} />
                   {{#each meeting.news as |newsInfo index|}}
                     <NewsInfoView @newsInfo={{newsInfo}} />
-                    {{#if (lt index (sub meeting.news.length 1) )}}
-                      <div class="vl-u-hr" />
-                      <div class="vl-u-spacer--medium" />
+                    {{#if (lt index (sub meeting.news.length 1))}}
+                      <div class="vl-u-hr"></div>
+                      <div class="vl-u-spacer--medium"></div>
                     {{/if}}
                   {{/each}}
 
                   {{#if meeting.announcements.length}}
-                    <h2 class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer">Mededelingen</h2>
+                    <h2
+                      class="vl-title vl-title--h2 vl-u-text--bold vl-u-spacer"
+                    >Mededelingen</h2>
                     {{#each meeting.announcements as |newsInfo index|}}
                       <NewsInfoView @newsInfo={{newsInfo}} />
-                      {{#if (lt index (sub meeting.announcements.length 1) )}}
-                        <div class="vl-u-hr" />
-                        <div class="vl-u-spacer--medium" />
+                      {{#if (lt index (sub meeting.announcements.length 1))}}
+                        <div class="vl-u-hr"></div>
+                        <div class="vl-u-spacer--medium"></div>
                       {{/if}}
                     {{/each}}
                   {{/if}}
@@ -82,10 +114,14 @@
               </div>
             </div>
 
-            {{#if hasMoreResults}}
+            {{#if this.hasMoreResults}}
               <ul class="pager pager--infinite-scroll vl-u-align-center">
                 <li class="pager__item">
-                  <button class="vl-button" {{action "loadMore" }}>
+                  <button
+                    type="button"
+                    class="vl-button"
+                    {{on "click" this.loadMore}}
+                  >
                     Laad meer
                   </button>
                 </li>

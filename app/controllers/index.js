@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { tracked } from '@glimmer/tracking';
 
@@ -16,12 +16,10 @@ export default class IndexController extends Controller {
     return this.searchNewsItems.filter;
   }
 
-  @computed('searchNewsItems.cache{,.[]}', 'searchNewsItems.count')
   get hasMoreResults() {
     return this.data.length < this.count;
   }
 
-  @computed('searchNewsItems.cache{,.[]}')
   get meetings() {
     // Order all news items by the meeting they belong to
     let meetings = [];

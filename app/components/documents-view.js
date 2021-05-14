@@ -12,7 +12,7 @@ export default class DocumentsViewComponent extends Component {
   @tracked attachments = [];
 
   didReceiveAttrs() {
-    if (!!this.model) {
+    if (this.model) {
       this.fetchRecord.perform();
     }
   }

@@ -8,7 +8,7 @@ const defaultOption = { label: 'Alle bevoegdheden' };
 export default class SelectMinisterialPowerComponent extends Component {
   @service store;
 
-  @tracked tagName = '';
+  tagName = '';
   @tracked options = [defaultOption];
   @tracked selected = null;
 
@@ -42,7 +42,7 @@ export default class SelectMinisterialPowerComponent extends Component {
   }
 
   setSelectedOptionForSelectedId() {
-    if (!!this.options) this.selected = this.selectedId ? this.options.find((option) => (option.id === this.selectedId)) : defaultOption;
+    if (this.options) this.selected = this.selectedId ? this.options.find((option) => (option.id === this.selectedId)) : defaultOption;
   }
 
   @action

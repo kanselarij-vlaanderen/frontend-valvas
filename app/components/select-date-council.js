@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { action, computed, set } from '@ember/object';
+import { action, set } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
@@ -7,14 +7,14 @@ import moment from 'moment';
 export default class SelectDateCouncilComponent extends Component {
   @service store;
 
-  @tracked tagName = '';
+  tagName = '';
   @tracked options = [];
   defaultOption = { id: null, label: 'Alle ministerraden', start: null, end: null };
   latestOption = { id: 'latest', label: 'Laatstse ministerraad', start: null, end: null };
   @tracked selectOption = { id: 'select', label: 'Kies een datum', start: null, end: null };
   @tracked selected = null;
+  @tracked selectedId;
 
-  @computed('selectedId')
   get enableSelectDateInput() {
     return this.selectedId === 'select';
   }
@@ -42,11 +42,11 @@ export default class SelectDateCouncilComponent extends Component {
   }
 
   setSelectedOptionForSelectedId() {
-    if (!!this.options) {
+    if (this.options) {
       this.selected = this.selectedId ? this.options.find((option) => (option.id === this.selectedId)) : this.defaultOption;
       if (this.selectedId === 'select') {
-        if (!!this.startDate) this.selectOption.startDate = new Date(this.startDate);
-        if (!!this.endDate) this.selectOption.endDate = new Date(this.endDate);
+        if (this.startDate) this.selectOption.startDate = new Date(this.startDate);
+        if (this.endDate) this.selectOption.endDate = new Date(this.endDate);
       } else {
         this.selectOption = { id: 'select', label: 'Kies een datum', start: null, end: null };
       }
@@ -58,7 +58,7 @@ export default class SelectDateCouncilComponent extends Component {
       page: { size: 1 },
       sort: '-planned-start',
     });
-    if (!!meetings.length) {
+    if (meetings.length) {
       const latestMeeting = meetings.firstObject;
       this.latestOption.start = latestMeeting.plannedStart;
       this.latestOption.end = moment(latestMeeting.plannedStart).add(1, 'days').toDate();

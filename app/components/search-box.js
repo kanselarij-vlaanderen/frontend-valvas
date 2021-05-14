@@ -7,7 +7,7 @@ export default class SearchBoxComponent extends Component {
 
   @action
   selectSessionDate(dateOption, startDate, endDate) {
-    if (!!endDate) {
+    if (endDate) {
       endDate.setHours(23, 59, 59);
     }
     this.searchNewsItems.dateOption = dateOption;

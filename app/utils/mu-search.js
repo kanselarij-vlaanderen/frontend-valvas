@@ -1,6 +1,5 @@
 import fetch from 'fetch';
 import getPaginationMetadata from './get-pagination-metadata';
-import ArrayProxy from '@ember/array/proxy';
 import { A } from '@ember/array';
 
 function sortOrder(sort) {
@@ -35,7 +34,7 @@ async function muSearch(index, page, size, sort, filter, dataMapping) {
     params.append(`filter[${field}]`, filter[field]);
   }
 
-  if (Array.isArray(sort)){
+  if (Array.isArray(sort)) {
     sort.forEach((key) => {
       params.append(`sort[${snakeToCamel(stripSort(key))}]`, sortOrder(key));
     });

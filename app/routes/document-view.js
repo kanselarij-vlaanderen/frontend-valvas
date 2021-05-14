@@ -7,10 +7,10 @@ export default class DocumentViewRoute extends Route {
   }
 
   activate() {
-    $('body').addClass('vlc-u-box-model-maximize-height vlc-scroll-wrapper vl-u-no-overflow');
+    $('body').addClass('vlc-u-box-model-maximize-height vlc-scroll-wrapper vl-u-no-overflow'); // eslint-disable-line
   }
 
   deactivate() {
-    $('body').removeClass('vlc-u-box-model-maximize-height vlc-scroll-wrapper vl-u-no-overflow');
+    $('body').removeClass('vlc-u-box-model-maximize-height vlc-scroll-wrapper vl-u-no-overflow'); // eslint-disable-line
   }
 }

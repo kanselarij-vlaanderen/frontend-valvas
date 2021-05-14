@@ -41,7 +41,7 @@ export default class SearchNewsItemsService extends Service {
   }
 
   setParams(params) {
-    this.queryParams.forEach((key) => (this[key] = !!params[key] ? params[key] : this[key]));
+    this.queryParams.forEach((key) => (this[key] = params[key] ? params[key] : this[key]));
   }
 
   clearParams() {
@@ -53,7 +53,8 @@ export default class SearchNewsItemsService extends Service {
     this.pageNumber += 1;
     const newsItems = await this.searchTask.perform();
     this.cache.push(...newsItems);
-    this.cache = this.cache; // Trigger a view refresh
+    // Trigger a view refresh
+    this.cache = this.cache; // eslint-disable-line
   }
 
   @(task(function* () {

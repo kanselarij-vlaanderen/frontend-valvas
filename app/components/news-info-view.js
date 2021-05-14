@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { htmlSafe } from '@ember/template';
 import { isArray } from '@ember/array';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
@@ -10,13 +9,12 @@ export default class NewsInfoViewComponent extends Component {
   @service store;
 
   @tracked longTextHidden = true;
+  @tracked mandatees;
 
-  @computed('newsInfo.htmlContent')
   get htmlContent() {
     return this.newsInfo.htmlContent || '';
   }
 
-  @computed('htmlContent')
   get rawText() {
     const node = window.document.createElement('div');
     node.innerHTML = this.htmlContent;
@@ -24,17 +22,14 @@ export default class NewsInfoViewComponent extends Component {
     return text.trim().length;
   }
 
-  @computed('rawText')
   get isLongText() {
     return this.rawText > 500;
   }
 
-  @computed('htmlContent')
   get fullText() {
     return htmlSafe(this.htmlContent);
   }
 
-  @computed('htmlContent')
   get shortText() {
     return this.isLongText ? htmlSafe(this.htmlContent.substr(0, 500) + '...') : this.fullText;
   }

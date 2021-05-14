@@ -1,5 +1,4 @@
 import Model, { attr, hasMany } from '@ember-data/model';
-import { computed } from '@ember/object';
 
 export default class PersonModel extends Model {
   @attr('string') lastName;
@@ -8,11 +7,10 @@ export default class PersonModel extends Model {
 
   @hasMany('mandatee') mandatees;
 
-  @computed('firstName', 'lastName', 'alternativeName')
   get fullName() {
-    if (!!this.alternativeName) {
+    if (this.alternativeName) {
       return this.alternativeName;
-    } else if (!!this.firstName) {
+    } else if (this.firstName) {
       return `${this.firstName} ${this.lastName}`;
     } else {
       return this.lastName;

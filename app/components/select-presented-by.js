@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
@@ -10,7 +10,7 @@ const historicOption = { id: 'historic', label: 'Vorige ministers' };
 export default class SelectPresentedByComponent extends Component {
   @service store;
 
-  @tracked tagName = '';
+  tagName = '';
   @tracked options = [defaultOption, mededelingOption, historicOption];
   @tracked historicOptions = [];
   @tracked selected = null;
@@ -29,9 +29,8 @@ export default class SelectPresentedByComponent extends Component {
     this.setSelectedOptionForSelectedId();
   }
 
-  @computed('selected')
   get isEnabledHistoricOption() {
-    return !!this.selected ? this.selected.id === 'historic' : false;
+    return this.selected ? this.selected.id === 'historic' : false;
   }
 
   async loadOptions() {
@@ -46,7 +45,7 @@ export default class SelectPresentedByComponent extends Component {
       include: 'mandatees.person',
     });
     const currentGovernmentBody = currentGovernmentBodyArray.firstObject;
-    const currentMandatees = !!currentGovernmentBody ? await currentGovernmentBody.mandatees : [];
+    const currentMandatees = currentGovernmentBody ? await currentGovernmentBody.mandatees : [];
     const currentMandateesAndPersons = await Promise.all(currentMandatees.map(async (mandatee) => ({
       mandatee,
       person: await mandatee.person,
@@ -83,11 +82,11 @@ export default class SelectPresentedByComponent extends Component {
   }
 
   setSelectedOptionForSelectedId() {
-    if (!!this.options && !!this.historicOptions) {
+    if (this.options && this.historicOptions) {
       let selected = null;
       let selectedHistoric = null;
       let id = this.selectedId;
-      if (!!id) {
+      if (id) {
         selected = this.options.find((option) => (option.id === id));
         if (!selected) {
           selected = historicOption;
@@ -104,7 +103,7 @@ export default class SelectPresentedByComponent extends Component {
   @action
   async onChangeOption(selected) {
     this.selected = selected;
-    if (!!selected && selected.id !== 'historic' && this.selectedId !== selected.id) {
+    if (selected && selected.id !== 'historic' && this.selectedId !== selected.id) {
       this.onChange(selected.id, selected.firstName, selected.lastName);
     }
     return;
@@ -113,7 +112,7 @@ export default class SelectPresentedByComponent extends Component {
   @action
   async onChangeHistoricOption(selected) {
     this.selectedHistoric = selected;
-    if (!!selected && this.selecteddId !== selected.id) {
+    if (selected && this.selecteddId !== selected.id) {
       this.onChange(selected.id, selected.firstName, selected.lastName);
     }
     return;
