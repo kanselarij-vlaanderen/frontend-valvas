@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
@@ -13,6 +13,10 @@ export default class SearchBoxComponent extends Component {
     this.searchNewsItems.dateOption = dateOption;
     this.searchNewsItems.startDate = startDate ? startDate.toISOString() : null;
     this.searchNewsItems.endDate = endDate ? endDate.toISOString() : null;
+  }
+
+  @action changeKeyword(keyword) {
+    this.searchNewsItems.keyword = keyword;
   }
 
   @action

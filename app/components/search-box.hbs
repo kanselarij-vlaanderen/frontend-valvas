@@ -1,13 +1,13 @@
-<h2 class="vl-title vl-title--alt">Verfijn uw zoekresultaten</h2>
-<form class="vl-form vl-u-bg-porcelain">
-  <div class="vlc-box">
-    <div class="vlc-input-field-block">
-      <WebComponents::VlFormLabel @value="Zoek naar" />
+<h2 class='vl-title vl-title--alt'>Verfijn uw zoekresultaten</h2>
+<form class='vl-form vl-u-bg-porcelain'>
+  <div class='vlc-box'>
+    <div class='vlc-input-field-block'>
+      <WebComponents::VlFormLabel @value='Zoek naar' />
       <WebComponents::VlFormInput
-        @width="4"
+        @width='4'
         @value={{this.searchNewsItems.keyword}}
-        @onChange={{mut this.searchNewsItems.keyword}}
-        @placeholder="Zoek naar"
+        @onChange={{this.changeKeyword}}
+        @placeholder='Zoek naar'
       />
     </div>
     <SelectDateCouncil
@@ -24,12 +24,12 @@
       @selectedId={{this.searchNewsItems.ministerId}}
       @onChange={{this.selectMinister}}
     />
-    <div class="vl-u-spacer-extended-top">
+    <div class='vl-u-spacer-extended-top'>
       <button
-        type="button"
-        role="submit"
-        class="form-submit vl-button"
-        {{on "click" this.search}}
+        type='button'
+        role='submit'
+        class='form-submit vl-button'
+        {{on 'click' this.search}}
       >
         Zoek
       </button>
