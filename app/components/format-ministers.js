@@ -1,13 +1,11 @@
-import Component from '@ember/component';
-import { tracked } from '@glimmer/tracking';
+import Component from '@glimmer/component';
 
 export default class FormatMinistersComponent extends Component {
   tagName = '';
-  @tracked mandatees;
 
   get sortedMandatees() {
-    if (this.mandatees) {
-      return this.mandatees.sort((a, b) => {
+    if (Array.isArray(this.args.mandatees)) {
+      return this.args.mandatees.sort((a, b) => {
         let pos_a = a.position || a.legacyPosition;
         let pos_b = b.position || b.legacyPosition;
         return pos_a - pos_b;

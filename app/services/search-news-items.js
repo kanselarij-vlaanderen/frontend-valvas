@@ -7,15 +7,20 @@ import muSearch from '../utils/mu-search';
 
 export default class SearchNewsItemsService extends Service {
   docType = Object.freeze('news-items');
-  sortKeys = Object.freeze([
-    '-meeting-date',
-    'meeting-position',
-    'position'
-  ]);
+  sortKeys = Object.freeze(['-meeting-date', 'meeting-position', 'position']);
   @tracked cache;
   @tracked count = 0;
   @tracked filter = false;
-  queryParams = ['keyword', 'dateOption', 'startDate', 'endDate', 'ministerId', 'ministerFirstName', 'ministerLastName', 'ministerialPowerId'];
+  queryParams = [
+    'keyword',
+    'dateOption',
+    'startDate',
+    'endDate',
+    'ministerId',
+    'ministerFirstName',
+    'ministerLastName',
+    'ministerialPowerId',
+  ];
   @tracked keyword = null;
   @tracked dateOption = null;
   @tracked startDate = null;
@@ -27,26 +32,28 @@ export default class SearchNewsItemsService extends Service {
   @tracked pageNumber = 0;
   @tracked pageSize = 25;
 
-  init() {
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
     this.cache = A();
   }
 
   async search() {
     this.pageNumber = 0;
     this.pageSize = 25;
-    this.filter = !this.queryParams.every((key) => (!this[key]))
+    this.filter = !this.queryParams.every((key) => !this[key]);
     const newsItems = await this.searchTask.perform();
     this.cache = newsItems;
   }
 
   setParams(params) {
-    this.queryParams.forEach((key) => (this[key] = params[key] ? params[key] : this[key]));
+    this.queryParams.forEach(
+      (key) => (this[key] = params[key] ? params[key] : this[key])
+    );
   }
 
   clearParams() {
     this.filter = false;
-    this.queryParams.forEach((key) => (this[key] = null))
+    this.queryParams.forEach((key) => (this[key] = null));
   }
 
   async loadMore() {
@@ -58,10 +65,28 @@ export default class SearchNewsItemsService extends Service {
   }
 
   @(task(function* () {
-    const { keyword, startDate, endDate, ministerId, ministerFirstName, ministerLastName, ministerialPowerId, pageNumber, pageSize } = this;
+    const {
+      keyword,
+      startDate,
+      endDate,
+      ministerId,
+      ministerFirstName,
+      ministerLastName,
+      ministerialPowerId,
+      pageNumber,
+      pageSize,
+    } = this;
 
     const filter = {};
-    if (keyword || startDate || endDate || ministerId || ministerialPowerId || ministerFirstName || ministerLastName) {
+    if (
+      keyword ||
+      startDate ||
+      endDate ||
+      ministerId ||
+      ministerialPowerId ||
+      ministerFirstName ||
+      ministerLastName
+    ) {
       if (keyword) {
         filter[':sqs:title,htmlContent'] = keyword;
       }
@@ -77,9 +102,11 @@ export default class SearchNewsItemsService extends Service {
         filter[':lte:meetingDate'] = endDate;
       }
       if (ministerId || ministerFirstName || ministerLastName) {
-        if (ministerId == 'vr') { // mededelingen
+        if (ministerId == 'vr') {
+          // mededelingen
           filter.agendaitemType = 'Mededeling';
-        } else if (ministerId == -1) {// previous ministers
+        } else if (ministerId == -1) {
+          // previous ministers
           filter.mandateeActiveStatus = 'inactive';
           filter.agendaitemType = 'Nota';
         } else {
@@ -87,7 +114,8 @@ export default class SearchNewsItemsService extends Service {
           filter.mandateeFamilyNames = ministerLastName;
           filter.agendaitemType = 'Nota';
         }
-      } if (ministerialPowerId) {
+      }
+      if (ministerialPowerId) {
         filter.themeId = ministerialPowerId;
       }
     } else {
@@ -95,16 +123,26 @@ export default class SearchNewsItemsService extends Service {
     }
 
     try {
-      const result = yield muSearch(this.docType, pageNumber, pageSize, this.sortKeys, filter, function (item) {
-        const entry = item.attributes;
-        entry.id = item.id;
-        return entry;
-      });
-      this.set('count', result.meta.count);
+      const result = yield muSearch(
+        this.docType,
+        pageNumber,
+        pageSize,
+        this.sortKeys,
+        filter,
+        function (item) {
+          const entry = item.attributes;
+          entry.id = item.id;
+          return entry;
+        }
+      );
+      this.count = result.meta.count;
       return result;
     } catch (e) {
-      warn(`Something went wrong while querying mu-search: ${e.message}`, { id: 'mu-search.failure' });
+      warn(`Something went wrong while querying mu-search: ${e.message}`, {
+        id: 'mu-search.failure',
+      });
       return A();
     }
-  }).keepLatest()) searchTask;
+  }).keepLatest())
+  searchTask;
 }

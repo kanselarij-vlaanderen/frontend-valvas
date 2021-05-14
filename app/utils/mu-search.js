@@ -24,11 +24,13 @@ function snakeToCamel(s) {
 
 async function muSearch(index, page, size, sort, filter, dataMapping) {
   const endpoint = new URL(`/${index}/search`, window.location.origin);
-  const params = new URLSearchParams(Object.entries({
-    'page[size]': size,
-    'page[number]': page,
-    'collapse_uuids': 't'
-  }));
+  const params = new URLSearchParams(
+    Object.entries({
+      'page[size]': size,
+      'page[number]': page,
+      collapse_uuids: 't',
+    })
+  );
 
   for (let field in filter) {
     params.append(`filter[${field}]`, filter[field]);

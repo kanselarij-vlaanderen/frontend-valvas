@@ -15,7 +15,8 @@ export default class SearchBoxComponent extends Component {
     this.searchNewsItems.endDate = endDate ? endDate.toISOString() : null;
   }
 
-  @action changeKeyword(keyword) {
+  @action
+  changeKeyword(keyword) {
     this.searchNewsItems.keyword = keyword;
   }
 

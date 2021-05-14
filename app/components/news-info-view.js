@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 import { isArray } from '@ember/array';
 import { inject as service } from '@ember/service';
@@ -11,8 +11,30 @@ export default class NewsInfoViewComponent extends Component {
   @tracked longTextHidden = true;
   @tracked mandatees;
 
+  constructor() {
+    super(...arguments);
+    if (this.isLongText) this.longTextHidden = true;
+    if (this.args.newsInfo.mandateeIds) {
+      if (isArray(this.args.newsInfo.mandateeIds)) {
+        this.fetchMandatees(this.args.newsInfo.mandateeIds).then(
+          (mandatees) => {
+            this.mandatees = mandatees;
+          }
+        );
+      } else {
+        this.fetchMandatees([this.args.newsInfo.mandateeIds]).then(
+          (mandatees) => {
+            this.mandatees = mandatees;
+          }
+        );
+      }
+    } else {
+      this.mandatees = [];
+    }
+  }
+
   get htmlContent() {
-    return this.newsInfo.htmlContent || '';
+    return this.args.newsInfo.htmlContent || '';
   }
 
   get rawText() {
@@ -31,31 +53,22 @@ export default class NewsInfoViewComponent extends Component {
   }
 
   get shortText() {
-    return this.isLongText ? htmlSafe(this.htmlContent.substr(0, 500) + '...') : this.fullText;
+    return this.isLongText
+      ? htmlSafe(this.htmlContent.substr(0, 500) + '...')
+      : this.fullText;
   }
 
   async fetchMandatee(mandateeId) {
-    let mandatee = this.store.findRecord('mandatee', mandateeId, { include: 'person' });
+    let mandatee = this.store.findRecord('mandatee', mandateeId, {
+      include: 'person',
+    });
     return mandatee;
   }
 
   async fetchMandatees(mandateeIds) {
-    return Promise.all(mandateeIds.map((mandateeId) => (this.fetchMandatee(mandateeId))));
-  }
-
-  async didReceiveAttrs() {
-    if (this.isLongText) this.longTextHidden = true;
-    let mandatees;
-    if (this.newsInfo.mandateeIds) {
-      if (isArray(this.newsInfo.mandateeIds)) {
-        mandatees = this.fetchMandatees(this.newsInfo.mandateeIds);
-      } else {
-        mandatees = this.fetchMandatees([this.newsInfo.mandateeIds]);
-      }
-    } else {
-      mandatees = [];
-    }
-    this.mandatees = mandatees;
+    return Promise.all(
+      mandateeIds.map((mandateeId) => this.fetchMandatee(mandateeId))
+    );
   }
 
   @action

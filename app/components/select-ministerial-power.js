@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -10,21 +10,22 @@ export default class SelectMinisterialPowerComponent extends Component {
 
   tagName = '';
   @tracked options = [defaultOption];
-  @tracked selected = null;
 
-  async init() {
-    super.init(...arguments);
-    const options = await this.loadOptions();
-    this.options = [defaultOption, ...options];
-    this.setSelectedOptionForSelectedId();
+  constructor() {
+    super(...arguments);
+    this.initOptions();
+    this.args.onChange(defaultOption.id);
   }
 
-  didReceiveAttrs() {
-    super.init(...arguments);
-    this.setSelectedOptionForSelectedId();
+  get selected() {
+    if (this.args.selectedId && this.options) {
+      return this.options.find((option) => option.id === this.args.selectedId);
+    } else {
+      return defaultOption;
+    }
   }
 
-  async loadOptions() {
+  async initOptions() {
     let themes = await this.store.query('concept', {
       page: { size: 1000 },
       filter: {
@@ -33,23 +34,20 @@ export default class SelectMinisterialPowerComponent extends Component {
         },
       },
     });
-    const options = themes.map((theme) => ({
-      id: theme.id,
-      label: theme.label,
-      count: null,
-    })).sort((a, b) => (a.label > b.label));
-    return options;
-  }
-
-  setSelectedOptionForSelectedId() {
-    if (this.options) this.selected = this.selectedId ? this.options.find((option) => (option.id === this.selectedId)) : defaultOption;
+    const options = themes
+      .map((theme) => ({
+        id: theme.id,
+        label: theme.label,
+        count: null,
+      }))
+      .sort((a, b) => a.label > b.label);
+    this.options = [defaultOption, ...options];
   }
 
   @action
   onChangeOption(selected) {
-    this.selected = selected;
-    if (this.selectedId !== selected.id) {
-      this.onChange(selected.id);
+    if (this.args.selectedId !== selected.id) {
+      this.args.onChange(selected.id);
     }
   }
 }

@@ -1,11 +1,11 @@
 <div
-  class="vl-badge vl-badge--icon vl-badge--icon-light vl-badge--alt vl-badge--small vl-icon-wrapper vl-u-spacer-extended-right-s"
+  class='vl-badge vl-badge--icon vl-badge--icon-light vl-badge--alt vl-badge--small vl-icon-wrapper vl-u-spacer-extended-right-s'
 >
-  <i class="vl-badge__icon vl-icon vl-vi vl-vi-document"></i>
+  <i class='vl-badge__icon vl-icon vl-vi vl-vi-document'></i>
 </div>
 {{#unless this.fetchRecord.isRunning}}
   {{#if this.attachments}}
-    <button type="button" class="vl-link" {{on "click" this.toggleExpanded}}>
+    <button type='button' class='vl-link' {{on 'click' this.toggleExpanded}}>
       {{#if (eq this.attachments.length 1)}}
         Toon document
       {{else}}
@@ -15,37 +15,37 @@
       {{/if}}
     </button>
     {{#if this.isExpanded}}
-      <div class="document-drawer">
-        <div class="vl-u-align-right">
+      <div class='document-drawer'>
+        <div class='vl-u-align-right'>
           <button
-            type="button"
-            class="vl-button vl-button--link-muted vl-button--icon"
-            title="Venster sluiten"
-            {{on "click" this.toggleExpanded}}
+            type='button'
+            class='vl-button vl-button--link-muted vl-button--icon'
+            title='Venster sluiten'
+            {{on 'click' this.toggleExpanded}}
           >
-            <i class="vl-button__icon vl-vi vl-vi-close"></i>
-            <span class="vl-u-visually-hidden">Venster sluiten</span>
+            <i class='vl-button__icon vl-vi vl-vi-close'></i>
+            <span class='vl-u-visually-hidden'>Venster sluiten</span>
           </button>
         </div>
-        <div class="vl-grid">
+        <div class='vl-grid'>
           {{#each this.attachments as |attachment|}}
             <div
-              class="vl-col--5-12 vl-col--12-12--m vl-u-spacer-extended-bottom"
+              class='vl-col--5-12 vl-col--12-12--m vl-u-spacer-extended-bottom'
             >
-              <div class="vl-document">
-                <div class="vl-document__type">
-                  <i class="vl-vi vl-vi-document" aria-hidden="true"></i>
+              <div class='vl-document'>
+                <div class='vl-document__type'>
+                  <i class='vl-vi vl-vi-document' aria-hidden='true'></i>
                   <span
-                    class="vl-document__type__text"
+                    class='vl-document__type__text'
                   >{{attachment.file.extension}}</span>
                 </div>
-                <div class="vl-document__content">
-                  <div class="vl-document__title vl-link" data-vl-clamp="2">
+                <div class='vl-document__content'>
+                  <div class='vl-document__title vl-link' data-vl-clamp='2'>
                     {{#if (file-is-viewable attachment.file)}}
                       <LinkTo
-                        @route="document-view"
+                        @route='document-view'
                         @model={{attachment.id}}
-                        @target="_blank"
+                        target='_blank'
                       >
                         {{#if attachment.title}}
                           {{attachment.title}}
@@ -64,7 +64,7 @@
                     {{/if}}
                   </div>
                   <div
-                    class="vl-document__metadata"
+                    class='vl-document__metadata'
                   >{{attachment.file.extension}}
                     -
                     {{readable-file-size attachment.file.size}}
@@ -78,20 +78,20 @@
       </div>
     {{/if}}
   {{else}}
-    <button type="button" class="vl-link" {{on "click" this.toggleExpanded}}>
+    <button type='button' class='vl-link' {{on 'click' this.toggleExpanded}}>
       Geen documenten beschikbaar
     </button>
     {{#if this.isExpanded}}
-      <div class="document-drawer">
-        <div class="vl-u-align-right">
+      <div class='document-drawer'>
+        <div class='vl-u-align-right'>
           <button
-            type="button"
-            class="vl-button vl-button--link-muted vl-button--icon"
-            title="Venster sluiten"
-            {{on "click" this.toggleExpanded}}
+            type='button'
+            class='vl-button vl-button--link-muted vl-button--icon'
+            title='Venster sluiten'
+            {{on 'click' this.toggleExpanded}}
           >
-            <i class="vl-button__icon vl-vi vl-vi-close"></i>
-            <span class="vl-u-visually-hidden">Venster sluiten</span>
+            <i class='vl-button__icon vl-vi vl-vi-close'></i>
+            <span class='vl-u-visually-hidden'>Venster sluiten</span>
           </button>
         </div>
         <p>

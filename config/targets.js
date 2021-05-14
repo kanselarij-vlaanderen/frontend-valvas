@@ -3,7 +3,7 @@
 const browsers = [
   'last 5 Chrome versions',
   'last 5 Firefox versions',
-  'last 3 Safari versions'
+  'last 3 Safari versions',
 ];
 
 const isCI = Boolean(process.env.CI);

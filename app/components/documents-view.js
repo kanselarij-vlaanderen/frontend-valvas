@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
@@ -11,8 +11,9 @@ export default class DocumentsViewComponent extends Component {
   @tracked isExpanded = false;
   @tracked attachments = [];
 
-  didReceiveAttrs() {
-    if (this.model) {
+  constructor() {
+    super(...arguments);
+    if (this.args.model) {
       this.fetchRecord.perform();
     }
   }
@@ -23,13 +24,14 @@ export default class DocumentsViewComponent extends Component {
   }
 
   @(task(function* () {
-    const id = this.model.uuid;
+    const id = this.args.model.uuid;
     let record = this.store.peekRecord('news-item-info', id);
     if (!record) {
       record = yield this.store.findRecord('news-item-info', id, {
-        include: 'attachments.file'
+        include: 'attachments.file',
       });
     }
     this.attachments = record.attachments.sortBy('title');
-  }).keepLatest()) fetchRecord;
+  }).keepLatest())
+  fetchRecord;
 }

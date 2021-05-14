@@ -1,16 +1,22 @@
 {{#if this.showNotification}}
-  <div class="vl-alert vl-alert--warning" role="alert">
-    <div class="vl-alert__icon">
-      <i class="vl-vi vl-vi-warning" aria-hidden="true"></i>
+  <div class='vl-alert vl-alert--warning' role='alert'>
+    <div class='vl-alert__icon'>
+      <i class='vl-vi vl-vi-warning' aria-hidden='true'></i>
     </div>
-    <div class="vl-alert__content">
-      <p class="vl-alert__title">
-        Documenten {{lowercase this.meeting.type.label}} {{moment-format this.meeting.plannedStart "DD MMMM YYYY"}}
+    <div class='vl-alert__content'>
+      <p class='vl-alert__title'>
+        Documenten
+        {{lowercase this.meeting.type.label}}
+        {{moment-format this.meeting.plannedStart 'DD MMMM YYYY'}}
       </p>
-      <div class="vl-alert__message">
+      <div class='vl-alert__message'>
         <p>
           De documenten van deze ministerraad zullen beschikbaar zijn vanaf
-          {{moment-format this.meeting.plannedPublicationDate "DD MMMM YYYY - HH:MM"}} uur.
+          {{moment-format
+            this.meeting.plannedPublicationDate
+            'DD MMMM YYYY - HH:MM'
+          }}
+          uur.
         </p>
       </div>
     </div>

@@ -1,27 +1,38 @@
-<div class="vlc-input-field-block">
-  <label class="vl-form__label">
+<div class='vlc-input-field-block'>
+  <label class='vl-form__label'>
     Datum ministerraad
   </label>
-  <PowerSelect @selected={{this.selected}} @options={{this.options}} @onChange={{this.onChangeOption}} as |option|>
+  <PowerSelect
+    @selected={{this.selected}}
+    @options={{this.options}}
+    @onChange={{this.onChangeOption}}
+    as |option|
+  >
     {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
   </PowerSelect>
 </div>
 {{#if this.enableSelectDateInput}}
-  <div class="vlc-input-field-block">
-    <div class="vl-grid">
-      <div class="vl-col--6-12">
-        <label class="vl-form__label">
+  <div class='vlc-input-field-block'>
+    <div class='vl-grid'>
+      <div class='vl-col--6-12'>
+        <label class='vl-form__label'>
           Van
         </label>
-        <WebComponents::VlDatepicker @selectedDate={{this.selectOption.start}}
-          @dateChanged={{this.onChangeSelectedStart}} @dateFormat="d-m-Y" />
+        <WebComponents::VlDatepicker
+          @selectedDate={{this.selectOption.start}}
+          @dateChanged={{this.onChangeSelectedStart}}
+          @dateFormat='d-m-Y'
+        />
       </div>
-      <div class="vl-col--6-12">
-        <label class="vl-form__label">
+      <div class='vl-col--6-12'>
+        <label class='vl-form__label'>
           Tot en met
         </label>
-        <WebComponents::VlDatepicker @selectedDate={{this.selectOption.end}} @dateChanged={{this.onChangeSelectedEnd}}
-          @dateFormat="d-m-Y" />
+        <WebComponents::VlDatepicker
+          @selectedDate={{this.selectOption.end}}
+          @dateChanged={{this.onChangeSelectedEnd}}
+          @dateFormat='d-m-Y'
+        />
       </div>
     </div>
   </div>

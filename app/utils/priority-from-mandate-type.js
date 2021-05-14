@@ -1,4 +1,4 @@
-export default function(mandateType) {
+export default function (mandateType) {
   if (mandateType === 'minister') {
     return 3;
   } else if (mandateType === 'viceminister-president') {

@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -13,46 +13,65 @@ export default class SelectPresentedByComponent extends Component {
   tagName = '';
   @tracked options = [defaultOption, mededelingOption, historicOption];
   @tracked historicOptions = [];
-  @tracked selected = null;
-  @tracked selectedHistoric = null;
+  @tracked isEnabledHistoricOption = false;
+  // @tracked selected = null;
+  // @tracked selectedHistoric = null;
 
-  async init() {
-    super.init(...arguments);
-    const { options, historicOptions } = await this.loadOptions();
-    this.options = [defaultOption, ...options, mededelingOption, historicOption];
-    this.historicOptions = historicOptions;
-    this.setSelectedOptionForSelectedId();
+  // async init() {
+  //   super.init(...arguments);
+  //   const { options, historicOptions } = await this.loadOptions();
+  //   this.options = [
+  //     defaultOption,
+  //     ...options,
+  //     mededelingOption,
+  //     historicOption,
+  //   ];
+  //   this.historicOptions = historicOptions;
+  //   this.setSelectedOptionForSelectedId();
+  // }
+
+  // didReceiveAttrs() {
+  //   super.init(...arguments);
+  //   this.setSelectedOptionForSelectedId();
+  // }
+
+  constructor() {
+    super(...arguments);
+    this.initOptions();
+    this.args.onChange(defaultOption.id);
   }
 
-  didReceiveAttrs() {
-    super.init(...arguments);
-    this.setSelectedOptionForSelectedId();
-  }
+  // get isEnabledHistoricOption() {
+  //   return this.selected ? this.selected.id === 'historic' : false;
+  // }
 
-  get isEnabledHistoricOption() {
-    return this.selected ? this.selected.id === 'historic' : false;
-  }
-
-  async loadOptions() {
+  async initOptions() {
     // Obtain unique list of current mandatees
-    const currentGovernmentBodyArray = await this.store.query('government-body', {
-      page: { size: 1 },
-      filter: {
-        ':has:start-date': true,
-        ':has-no:end-date': true,
-        ':has:mandatees': true,
-      },
-      include: 'mandatees.person',
-    });
+    const currentGovernmentBodyArray = await this.store.query(
+      'government-body',
+      {
+        page: { size: 1 },
+        filter: {
+          ':has:start-date': true,
+          ':has-no:end-date': true,
+          ':has:mandatees': true,
+        },
+        include: 'mandatees.person',
+      }
+    );
     const currentGovernmentBody = currentGovernmentBodyArray.firstObject;
-    const currentMandatees = currentGovernmentBody ? await currentGovernmentBody.mandatees : [];
-    const currentMandateesAndPersons = await Promise.all(currentMandatees.map(async (mandatee) => ({
-      mandatee,
-      person: await mandatee.person,
-    })));
+    const currentMandatees = currentGovernmentBody
+      ? await currentGovernmentBody.mandatees
+      : [];
+    const currentMandateesAndPersons = await Promise.all(
+      currentMandatees.map(async (mandatee) => ({
+        mandatee,
+        person: await mandatee.person,
+      }))
+    );
     let options = [];
     for await (const { mandatee, person } of currentMandateesAndPersons) {
-      let option = options.find((option) => (option.id === person.id));
+      let option = options.find((option) => option.id === person.id);
       if (!option) {
         options.push({
           id: person.id,
@@ -63,57 +82,101 @@ export default class SelectPresentedByComponent extends Component {
         });
       }
     }
-    options = options.sort((a, b) => (a.position - b.position));
+    options = options.sort((a, b) => a.position - b.position);
 
-    const activePersonIds = options.map((option) => (option.id));
+    const activePersonIds = options.map((option) => option.id);
     const allPersons = await this.store.query('person', {
-      page: { size: 1000 }
+      page: { size: 1000 },
     });
-    const inactivePersons = allPersons.filter((person) => (!activePersonIds.includes(person.id)));
-    let historicOptions = inactivePersons.map((person) => ({
-      id: person.id,
-      position: null,
-      firstName: person.firstName,
-      lastName: person.lastName,
-      label: person.fullName,
-    })).sort((a, b) => (a.lastName > b.lastName));
+    const inactivePersons = allPersons.filter(
+      (person) => !activePersonIds.includes(person.id)
+    );
+    let historicOptions = inactivePersons
+      .map((person) => ({
+        id: person.id,
+        position: null,
+        firstName: person.firstName,
+        lastName: person.lastName,
+        label: person.fullName,
+      }))
+      .sort((a, b) => a.lastName > b.lastName);
 
-    return { options, historicOptions }
+    this.options = [
+      defaultOption,
+      ...options,
+      mededelingOption,
+      historicOption,
+    ];
+    this.historicOptions = historicOptions;
   }
 
-  setSelectedOptionForSelectedId() {
-    if (this.options && this.historicOptions) {
-      let selected = null;
-      let selectedHistoric = null;
-      let id = this.selectedId;
-      if (id) {
-        selected = this.options.find((option) => (option.id === id));
+  get selected() {
+    if (this.isEnabledHistoricOption) {
+      return historicOption;
+    } else {
+      let id = this.args.selectedId;
+      if (id && this.options) {
+        let selected = this.options.find((option) => option.id === id);
         if (!selected) {
-          selected = historicOption;
-          selectedHistoric = this.historicOptions.find((option) => (option.id === id));
+          return historicOption;
+        } else {
+          return selected;
         }
       } else {
-        selected = defaultOption;
+        return defaultOption;
       }
-      this.selected = selected;
-      this.selectedHistoric = selectedHistoric;
     }
   }
 
+  get selectedHistoric() {
+    let id = this.args.selectedId;
+    if (this.historicOptions) {
+      return this.historicOptions.find((option) => option.id === id);
+    } else {
+      return null;
+    }
+  }
+
+  // setSelectedOptionForSelectedId() {
+  //   if (this.options && this.historicOptions) {
+  //     let selected = null;
+  //     let selectedHistoric = null;
+  //     let id = this.selectedId;
+  //     if (id) {
+  //       selected = this.options.find((option) => option.id === id);
+  //       if (!selected) {
+  //         selected = historicOption;
+  //         selectedHistoric = this.historicOptions.find(
+  //           (option) => option.id === id
+  //         );
+  //       }
+  //     } else {
+  //       selected = defaultOption;
+  //     }
+  //     this.selected = selected;
+  //     this.selectedHistoric = selectedHistoric;
+  //   }
+  // }
+
   @action
   async onChangeOption(selected) {
-    this.selected = selected;
-    if (selected && selected.id !== 'historic' && this.selectedId !== selected.id) {
-      this.onChange(selected.id, selected.firstName, selected.lastName);
+    if (
+      selected &&
+      selected.id !== 'historic' &&
+      this.selectedId !== selected.id
+    ) {
+      this.args.onChange(selected.id, selected.firstName, selected.lastName);
+      this.isEnabledHistoricOption = false;
+    } else if (selected && selected.id === 'historic') {
+      this.isEnabledHistoricOption = true;
     }
     return;
   }
 
   @action
   async onChangeHistoricOption(selected) {
-    this.selectedHistoric = selected;
-    if (selected && this.selecteddId !== selected.id) {
-      this.onChange(selected.id, selected.firstName, selected.lastName);
+    if (selected && this.selectedId !== selected.id) {
+      this.args.onChange(selected.id, selected.firstName, selected.lastName);
     }
     return;
   }
