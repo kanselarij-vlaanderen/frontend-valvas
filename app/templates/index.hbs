@@ -87,7 +87,11 @@
               <div class='item-list'>
                 {{#each this.meetings as |meeting|}}
                   <h2 class='vl-title vl-title--h2 vl-u-text--bold vl-u-spacer'>
-                    {{meeting.record.type.label}}
+                    {{if
+                      meeting.record.type.label
+                      meeting.record.type.label
+                      'Ministerraad'
+                    }}
                     van
                     {{moment-format meeting.date 'DD MMMM YYYY'}}
                   </h2>
