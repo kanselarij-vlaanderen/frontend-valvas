@@ -5,15 +5,19 @@
 
   <div class='form-element'>
     <div class='form__input'>
-      <PowerSelect
-        @selected={{this.selected}}
-        @options={{this.options}}
+      <XSelect
+        class='vl-select vl-select--block'
+        @value={{this.selected}}
         @onChange={{this.onChangeOption}}
-        as |option|
+        as |xs|
       >
-        {{option.label}}
-        {{#if option.count}} ({{option.count}}) {{/if}}
-      </PowerSelect>
+        {{#each this.options as |option|}}
+          <xs.option @value={{option}}>
+            {{option.label}}
+            {{#if option.count}} ({{option.count}}){{/if}}
+          </xs.option>
+        {{/each}}
+      </XSelect>
     </div>
   </div>
 </div>
@@ -22,14 +26,19 @@
   <div class='filter__field form-item'>
     <div class='form-element'>
       <div class='form__input'>
-        <PowerSelect
-          @selected={{this.selectedHistoric}}
-          @options={{this.historicOptions}}
+        <XSelect
+          class='vl-select vl-select--block'
+          @value={{this.selectedHistoric}}
           @onChange={{this.onChangeHistoricOption}}
-          as |option|
+          as |xs|
         >
-          {{option.label}}{{#if option.count}} ({{option.count}}){{/if}}
-        </PowerSelect>
+          {{#each this.historicOptions as |option|}}
+            <xs.option @value={{option}}>
+              {{option.label}}
+              {{#if option.count}} ({{option.count}}){{/if}}
+            </xs.option>
+          {{/each}}
+        </XSelect>
       </div>
     </div>
   </div>
