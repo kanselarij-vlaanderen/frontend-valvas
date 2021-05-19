@@ -125,11 +125,11 @@ export default class SelectPresentedByComponent extends Component {
     if (
       selected &&
       selected.id !== 'historic' &&
-      this.selectedId !== selected.id
+      this.args.selectedId !== selected.id
     ) {
       this.args.onChange(selected.id, selected.firstName, selected.lastName);
       this.isEnabledHistoricOption = false;
-    } else {
+    } else if (selected && selected.id === 'historic') {
       this.isEnabledHistoricOption = true;
     }
   }

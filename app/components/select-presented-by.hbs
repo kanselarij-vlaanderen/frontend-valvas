@@ -32,6 +32,7 @@
           @onChange={{this.onChangeHistoricOption}}
           as |xs|
         >
+          <xs.option @value={{null}} />
           {{#each this.historicOptions as |option|}}
             <xs.option @value={{option}}>
               {{option.label}}
