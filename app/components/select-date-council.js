@@ -97,6 +97,14 @@ export default class SelectDateCouncilComponent extends Component {
   }
 
   @action
+  onDidUpdate(element, [id]) {
+    if (!id) {
+      set(this.selectOption, 'start', null);
+      set(this.selectOption, 'end', null);
+    }
+  }
+
+  @action
   onChangeOption(selected) {
     const { id, start, end } = selected;
     this.args.onChange(id, start, end);

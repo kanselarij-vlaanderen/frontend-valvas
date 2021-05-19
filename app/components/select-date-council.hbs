@@ -12,7 +12,10 @@
   </PowerSelect>
 </div>
 {{#if this.enableSelectDateInput}}
-  <div class='vlc-input-field-block'>
+  <div
+    class='vlc-input-field-block'
+    {{will-destroy this.onDidUpdate @selectedId}}
+  >
     <div class='vl-grid'>
       <div class='vl-col--6-12'>
         <label class='vl-form__label'>

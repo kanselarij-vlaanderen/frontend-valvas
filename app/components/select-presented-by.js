@@ -14,36 +14,12 @@ export default class SelectPresentedByComponent extends Component {
   @tracked options = [defaultOption, mededelingOption, historicOption];
   @tracked historicOptions = [];
   @tracked isEnabledHistoricOption = false;
-  // @tracked selected = null;
-  // @tracked selectedHistoric = null;
-
-  // async init() {
-  //   super.init(...arguments);
-  //   const { options, historicOptions } = await this.loadOptions();
-  //   this.options = [
-  //     defaultOption,
-  //     ...options,
-  //     mededelingOption,
-  //     historicOption,
-  //   ];
-  //   this.historicOptions = historicOptions;
-  //   this.setSelectedOptionForSelectedId();
-  // }
-
-  // didReceiveAttrs() {
-  //   super.init(...arguments);
-  //   this.setSelectedOptionForSelectedId();
-  // }
 
   constructor() {
     super(...arguments);
     this.initOptions();
     this.args.onChange(defaultOption.id);
   }
-
-  // get isEnabledHistoricOption() {
-  //   return this.selected ? this.selected.id === 'historic' : false;
-  // }
 
   async initOptions() {
     // Obtain unique list of current mandatees
@@ -137,26 +113,12 @@ export default class SelectPresentedByComponent extends Component {
     }
   }
 
-  // setSelectedOptionForSelectedId() {
-  //   if (this.options && this.historicOptions) {
-  //     let selected = null;
-  //     let selectedHistoric = null;
-  //     let id = this.selectedId;
-  //     if (id) {
-  //       selected = this.options.find((option) => option.id === id);
-  //       if (!selected) {
-  //         selected = historicOption;
-  //         selectedHistoric = this.historicOptions.find(
-  //           (option) => option.id === id
-  //         );
-  //       }
-  //     } else {
-  //       selected = defaultOption;
-  //     }
-  //     this.selected = selected;
-  //     this.selectedHistoric = selectedHistoric;
-  //   }
-  // }
+  @action
+  onDidUpdate(element, [id]) {
+    if (!id) {
+      this.isEnabledHistoricOption = false;
+    }
+  }
 
   @action
   async onChangeOption(selected) {
@@ -167,10 +129,9 @@ export default class SelectPresentedByComponent extends Component {
     ) {
       this.args.onChange(selected.id, selected.firstName, selected.lastName);
       this.isEnabledHistoricOption = false;
-    } else if (selected && selected.id === 'historic') {
+    } else {
       this.isEnabledHistoricOption = true;
     }
-    return;
   }
 
   @action
@@ -178,6 +139,5 @@ export default class SelectPresentedByComponent extends Component {
     if (selected && this.selectedId !== selected.id) {
       this.args.onChange(selected.id, selected.firstName, selected.lastName);
     }
-    return;
   }
 }
