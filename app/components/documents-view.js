@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
+import { task } from 'ember-concurrency-decorators';
 import { tracked } from '@glimmer/tracking';
 
 export default class DocumentsViewComponent extends Component {
@@ -23,7 +23,8 @@ export default class DocumentsViewComponent extends Component {
     this.isExpanded = !this.isExpanded;
   }
 
-  @(task(function* () {
+  @task({ keepLatest: true })
+  *fetchRecord() {
     const id = this.args.model.uuid;
     let record = this.store.peekRecord('news-item-info', id);
     if (!record) {
@@ -32,6 +33,5 @@ export default class DocumentsViewComponent extends Component {
       });
     }
     this.attachments = record.attachments.sortBy('title');
-  }).keepLatest())
-  fetchRecord;
+  }
 }

@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { warn } from '@ember/debug';
 import { A } from '@ember/array';
 import { tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
+import { task } from 'ember-concurrency-decorators';
 import muSearch from '../utils/mu-search';
 
 export default class SearchNewsItemsService extends Service {
@@ -64,7 +64,8 @@ export default class SearchNewsItemsService extends Service {
     this.cache = this.cache; // eslint-disable-line
   }
 
-  @(task(function* () {
+  @task({ keepLatest: true })
+  *searchTask() {
     const {
       keyword,
       startDate,
@@ -143,6 +144,5 @@ export default class SearchNewsItemsService extends Service {
       });
       return A();
     }
-  }).keepLatest())
-  searchTask;
+  }
 }
