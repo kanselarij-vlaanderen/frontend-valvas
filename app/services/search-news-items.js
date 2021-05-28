@@ -6,11 +6,11 @@ import { task } from 'ember-concurrency-decorators';
 import muSearch from '../utils/mu-search';
 
 export default class SearchNewsItemsService extends Service {
-  docType = Object.freeze('news-items');
-  sortKeys = Object.freeze(['-meeting-date', 'meeting-position', 'position']);
+  docType = 'news-items';
+  sortKeys = ['-meeting-date', 'meeting-position', 'position'];
   @tracked cache;
   @tracked count = 0;
-  @tracked filter = false;
+  @tracked hasFilter = false;
   queryParams = [
     'keyword',
     'dateOption',
@@ -40,7 +40,7 @@ export default class SearchNewsItemsService extends Service {
   async search() {
     this.pageNumber = 0;
     this.pageSize = 25;
-    this.filter = !this.queryParams.every((key) => !this[key]);
+    this.hasFilter = !this.queryParams.every((key) => !this[key]);
     const newsItems = await this.searchTask.perform();
     this.cache = newsItems;
   }
@@ -52,7 +52,7 @@ export default class SearchNewsItemsService extends Service {
   }
 
   clearParams() {
-    this.filter = false;
+    this.hasFilter = false;
     this.queryParams.forEach((key) => (this[key] = null));
   }
 

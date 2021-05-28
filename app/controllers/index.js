@@ -10,7 +10,7 @@ export default class IndexController extends Controller {
   @tracked pageNumber = null;
 
   get showBackLink() {
-    return this.searchNewsItems.filter;
+    return this.searchNewsItems.hasFilter;
   }
 
   get hasMoreResults() {
