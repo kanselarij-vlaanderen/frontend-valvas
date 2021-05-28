@@ -1,23 +1,6 @@
 {{! template-lint-disable }}
 {{! Not ocanified }}
 <div class='vl-form__input'>
-  <Input
-    class='vl-input-field vl-input-field--block'
-    @type='text'
-    @id={{@id}}
-    @value={{@value}}
-    @placeholder={{@placeholder}}
-    @title={{this.title}}
-    {{on 'input' @onChange}}
-  />
-
-  {{!-- {{input
-    type="text"
-    id=id
-    class="vl-input-field vl-input-field--block"
-    value=value
-    placeholder=placeholder
-    title=title
-    key-up=onChange
-  }} --}}
+  <Input class='vl-input-field vl-input-field--block' @type='text' @id={{@id}} value={{@value}}
+    @placeholder={{@placeholder}} @title={{this.title}} {{on 'input' @onChange}} />
 </div>

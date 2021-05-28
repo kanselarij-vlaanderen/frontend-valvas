@@ -16,8 +16,8 @@ export default class SearchBoxComponent extends Component {
   }
 
   @action
-  changeKeyword(keyword) {
-    this.searchNewsItems.keyword = keyword;
+  changeKeyword(e) {
+    this.searchNewsItems.keyword = e.target.value;
   }
 
   @action
