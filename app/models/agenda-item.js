@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default class CalendarItemModel extends Model {
+export default class AgendaItemModel extends Model {
   @attr('string') title;
   @attr('string') shortTitle;
   @attr('date') created;
@@ -8,5 +8,5 @@ export default class CalendarItemModel extends Model {
   @attr('number') position;
 
   @belongsTo('concept') type;
-  @belongsTo('calendar') calendar;
+  @belongsTo('agenda') agenda;
 }

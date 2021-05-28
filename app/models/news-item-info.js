@@ -11,5 +11,5 @@ export default class NewsItemInfoModel extends Model {
   @hasMany('mandatee') mandatees;
   @hasMany('attachment') attachments;
 
-  @belongsTo('calendar-item') calendarItem;
+  @belongsTo('agenda-item') agendaItem;
 }

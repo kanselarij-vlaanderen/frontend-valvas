@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default class CalendarModel extends Model {
+export default class AgendaModel extends Model {
   @attr('string') title;
   @attr('date') created;
   @attr('date') modified;

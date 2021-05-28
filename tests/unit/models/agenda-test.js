@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Model | calendar', function (hooks) {
+module('Unit | Model | agenda', function (hooks) {
   setupTest(hooks);
 
   // Replace this with your real tests.
