@@ -7,7 +7,6 @@ import { tracked } from '@glimmer/tracking';
 export default class DocumentsViewComponent extends Component {
   @service store;
 
-  tagName = '';
   @tracked isExpanded = false;
   @tracked attachments = [];
 

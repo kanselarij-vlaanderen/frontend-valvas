@@ -7,7 +7,6 @@ import moment from 'moment';
 export default class SelectDateCouncilComponent extends Component {
   @service store;
 
-  tagName = '';
   @tracked options = [];
   @tracked defaultOption = {
     id: null,

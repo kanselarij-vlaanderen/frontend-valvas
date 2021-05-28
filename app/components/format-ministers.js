@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 
 export default class FormatMinistersComponent extends Component {
-  tagName = '';
-
   get sortedMandatees() {
     if (Array.isArray(this.args.mandatees)) {
       return this.args.mandatees.sort((a, b) => {

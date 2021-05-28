@@ -10,7 +10,6 @@ const historicOption = { id: 'historic', label: 'Vorige ministers' };
 export default class SelectPresentedByComponent extends Component {
   @service store;
 
-  tagName = '';
   @tracked options = [defaultOption, mededelingOption, historicOption];
   @tracked historicOptions = [];
   @tracked isEnabledHistoricOption = false;

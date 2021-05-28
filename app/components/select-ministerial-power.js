@@ -8,7 +8,6 @@ const defaultOption = { label: 'Alle bevoegdheden' };
 export default class SelectMinisterialPowerComponent extends Component {
   @service store;
 
-  tagName = '';
   @tracked options = [defaultOption];
 
   constructor() {
