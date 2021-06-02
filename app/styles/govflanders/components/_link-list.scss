@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .vl-link-list {
   &__item {
     font-size: $base-font-size;
@@ -47,13 +49,13 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 0 #{-$link-list-spacing / 2};
+    margin: 0 #{math.div(-$link-list-spacing, 2)};
   }
 }
 
 .vl-link-list__item {
   .vl-link-list--inline & {
-    padding: 0 #{$link-list-spacing / 2};
+    padding: 0 #{math.div($link-list-spacing, 2)};
     margin-bottom: 1rem;
   }
 }
