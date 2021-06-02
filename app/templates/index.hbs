@@ -99,7 +99,7 @@
                     van
                     {{moment-format meeting.date 'DD MMMM YYYY'}}
                   </h2>
-                  <MeetingNotifications @meetingId={{meeting.id}} />
+                  <MeetingNotifications @meeting={{meeting.record}} />
                   {{#each meeting.news as |newsInfo index|}}
                     <NewsInfoView @newsInfo={{newsInfo}} />
                     {{#if (lt index (sub meeting.news.length 1))}}

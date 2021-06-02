@@ -6,14 +6,16 @@
     <div class='vl-alert__content'>
       <p class='vl-alert__title'>
         Documenten
-        {{lowercase this.meeting.type.label}}
-        {{moment-format this.meeting.plannedStart 'DD MMMM YYYY'}}
+        {{lowercase
+          (if @meeting.type.label @meeting.type.label 'ministerraad')
+        }}
+        {{moment-format @meeting.plannedStart 'DD MMMM YYYY'}}
       </p>
       <div class='vl-alert__message'>
         <p>
           De documenten van deze ministerraad zullen beschikbaar zijn vanaf
           {{moment-format
-            this.meeting.plannedPublicationDate
+            @meeting.plannedPublicationDate
             'DD MMMM YYYY - HH:MM'
           }}
           uur.
