@@ -19,6 +19,7 @@
 {{#if this.enableSelectDateInput}}
   <div
     class='vlc-input-field-block'
+    {{did-update this.onDidUpdate @selectedId @startDate @endDate}}
     {{will-destroy this.onDidUpdate @selectedId}}
   >
     <div class='vl-grid'>

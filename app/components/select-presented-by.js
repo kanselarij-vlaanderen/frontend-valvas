@@ -17,7 +17,6 @@ export default class SelectPresentedByComponent extends Component {
   constructor() {
     super(...arguments);
     this.initOptions();
-    this.args.onChange(defaultOption.id);
   }
 
   async initOptions() {
@@ -83,6 +82,7 @@ export default class SelectPresentedByComponent extends Component {
       historicOption,
     ];
     this.historicOptions = historicOptions;
+    this.onDidUpdate(null, [this.args.selectedId]);
   }
 
   get selected() {
@@ -116,6 +116,8 @@ export default class SelectPresentedByComponent extends Component {
   onDidUpdate(element, [id]) {
     if (!id) {
       this.isEnabledHistoricOption = false;
+    } else if (this.selected.id === historicOption.id) {
+      this.isEnabledHistoricOption = true;
     }
   }
 

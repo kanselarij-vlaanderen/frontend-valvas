@@ -7,15 +7,25 @@ export default class IndexController extends Controller {
   @service store;
   @service searchNewsItems;
 
-  @tracked pageNumber = null;
+  queryParams = [
+    'search',
+    'dateOption',
+    'startDate',
+    'endDate',
+    'ministerId',
+    'ministerFirstName',
+    'ministerLastName',
+    'themeId',
+  ];
 
-  get showBackLink() {
-    return this.searchNewsItems.hasFilter;
-  }
-
-  get hasMoreResults() {
-    return this.searchNewsItems.cache.length < this.searchNewsItems.count;
-  }
+  @tracked search = null;
+  @tracked dateOption = null;
+  @tracked startDate = null;
+  @tracked endDate = null;
+  @tracked ministerId = null;
+  @tracked ministerFirstName = null;
+  @tracked ministerLastName = null;
+  @tracked themeId = null;
 
   get meetings() {
     // Order all news items by the meeting they belong to
@@ -50,19 +60,34 @@ export default class IndexController extends Controller {
     return meetings;
   }
 
+  get searchParams() {
+    let searchParams = {};
+    this.queryParams.forEach((key) => (searchParams[key] = this[key]));
+    return searchParams;
+  }
+
+  @action
+  setParams(params) {
+    this.queryParams.forEach((key) => {
+      this[key] = params[key];
+    });
+  }
+
+  @action
+  resetParams() {
+    this.queryParams.forEach((key) => (this[key] = null));
+    this.searchNewsItems.search({});
+  }
+
   @action
   searchNews() {
-    this.searchNewsItems.search();
+    let searchParams = {};
+    this.queryParams.forEach((key) => (searchParams[key] = this[key]));
+    this.searchNewsItems.search(searchParams);
   }
 
   @action
   loadMore() {
     this.searchNewsItems.loadMore();
-  }
-
-  @action
-  clearParams() {
-    this.searchNewsItems.clearParams();
-    this.searchNewsItems.search();
   }
 }

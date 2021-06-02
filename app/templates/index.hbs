@@ -35,7 +35,11 @@
   <div class='vl-layout'>
     <div class='vl-grid vl-grid--is-stacked'>
       <div class='vl-col--4-12 vl-col--12-12--s'>
-        <SearchBox />
+        <SearchBox
+          @searchParams={{this.searchParams}}
+          @onChange={{this.setParams}}
+          @onSearch={{this.searchNews}}
+        />
 
         <a
           href='https://www.vlaanderen.be/ontvang-nieuwe-persberichten-en-beslissingen-via-e-mail'
@@ -70,12 +74,12 @@
             {{format-number this.searchNewsItems.count}}
             resultaten
           </h2>
-          {{#if this.showBackLink}}
+          {{#if this.searchNewsItems.hasFilter}}
             <button
               type='button'
               role='button'
               class='vl-link'
-              {{on 'click' this.clearParams}}
+              {{on 'click' this.resetParams}}
             >
               Toon alle beslissingen
             </button>
@@ -120,7 +124,7 @@
               </div>
             </div>
 
-            {{#if this.hasMoreResults}}
+            {{#if this.searchNewsItems.hasMoreResults}}
               <ul class='pager pager--infinite-scroll vl-u-align-center'>
                 <li class='pager__item'>
                   <button

@@ -13,7 +13,6 @@ export default class SelectMinisterialPowerComponent extends Component {
   constructor() {
     super(...arguments);
     this.initOptions();
-    this.args.onChange(defaultOption.id);
   }
 
   get selected() {
@@ -45,7 +44,7 @@ export default class SelectMinisterialPowerComponent extends Component {
 
   @action
   onChangeOption(selected) {
-    if (this.args.selectedId !== selected.id) {
+    if (this.options.length > 1 && this.args.selectedId !== selected.id) {
       this.args.onChange(selected.id);
     }
   }

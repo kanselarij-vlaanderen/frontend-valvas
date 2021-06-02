@@ -2,58 +2,34 @@ import Service from '@ember/service';
 import { warn } from '@ember/debug';
 import { A } from '@ember/array';
 import { tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency-decorators';
+import { keepLatestTask } from 'ember-concurrency-decorators';
 import muSearch from '../utils/mu-search';
 
 export default class SearchNewsItemsService extends Service {
   docType = 'news-items';
   sortKeys = ['-meeting-date', 'meeting-position', 'position'];
+  searchParams = {};
   @tracked cache;
   @tracked count = 0;
-  @tracked hasFilter = false;
-  queryParams = [
-    'keyword',
-    'dateOption',
-    'startDate',
-    'endDate',
-    'ministerId',
-    'ministerFirstName',
-    'ministerLastName',
-    'ministerialPowerId',
-  ];
-  @tracked keyword = null;
-  @tracked dateOption = null;
-  @tracked startDate = null;
-  @tracked endDate = null;
-  @tracked ministerId = null;
-  @tracked ministerFirstName = null;
-  @tracked ministerLastName = null;
-  @tracked ministerialPowerId = null;
   @tracked pageNumber = 0;
   @tracked pageSize = 25;
+  @tracked hasFilter = false;
 
   constructor() {
     super(...arguments);
     this.cache = A();
   }
 
-  async search() {
+  get hasMoreResults() {
+    return this.cache.length < this.count;
+  }
+
+  async search(params) {
     this.pageNumber = 0;
     this.pageSize = 25;
-    this.hasFilter = !this.queryParams.every((key) => !this[key]);
+    this.searchParams = params ? params : {};
     const newsItems = await this.searchTask.perform();
     this.cache = newsItems;
-  }
-
-  setParams(params) {
-    this.queryParams.forEach(
-      (key) => (this[key] = params[key] ? params[key] : this[key])
-    );
-  }
-
-  clearParams() {
-    this.hasFilter = false;
-    this.queryParams.forEach((key) => (this[key] = null));
   }
 
   async loadMore() {
@@ -64,32 +40,32 @@ export default class SearchNewsItemsService extends Service {
     this.cache = this.cache; // eslint-disable-line
   }
 
-  @task({ keepLatest: true })
+  @keepLatestTask
   *searchTask() {
     const {
-      keyword,
+      search,
       startDate,
       endDate,
       ministerId,
       ministerFirstName,
       ministerLastName,
-      ministerialPowerId,
-      pageNumber,
-      pageSize,
-    } = this;
+      themeId,
+    } = this.searchParams;
+    const { pageNumber, pageSize } = this;
 
     const filter = {};
     if (
-      keyword ||
+      search ||
       startDate ||
       endDate ||
       ministerId ||
-      ministerialPowerId ||
+      themeId ||
       ministerFirstName ||
       ministerLastName
     ) {
-      if (keyword) {
-        filter[':sqs:title,htmlContent'] = keyword;
+      this.hasFilter = true;
+      if (search) {
+        filter[':sqs:title,htmlContent'] = search;
       }
       /* Below code treats closed date ranges as something different than 2 open ranges combined.
        * in case of two open ranges combined, an off-by-one result (1 to many) is returned.
@@ -116,10 +92,11 @@ export default class SearchNewsItemsService extends Service {
           filter.agendaitemType = 'Nota';
         }
       }
-      if (ministerialPowerId) {
-        filter.themeId = ministerialPowerId;
+      if (themeId) {
+        filter.themeId = themeId;
       }
     } else {
+      this.hasFilter = false;
       filter[':sqs:title'] = '*';
     }
 

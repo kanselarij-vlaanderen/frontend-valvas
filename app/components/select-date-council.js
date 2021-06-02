@@ -38,17 +38,19 @@ export default class SelectDateCouncilComponent extends Component {
       this.latestXMonthsOption(12),
       this.selectOption,
     ];
-    let { id, start, stop } = this.defaultOption;
-    this.args.onChange(id, start, stop);
+    this.onDidUpdate(null, [
+      this.args.selectedId,
+      this.args.startDate,
+      this.args.endDate,
+    ]);
   }
 
   get enableSelectDateInput() {
-    return this.args.selectedId === 'select';
+    return this.args.selectedId === this.selectOption.id;
   }
 
   get selected() {
     if (this.args.selectedId && this.options) {
-      this.setSelectedOptionForSelectedId();
       return this.options.find((option) => option.id === this.args.selectedId);
     } else {
       return this.defaultOption;
@@ -63,22 +65,6 @@ export default class SelectDateCouncilComponent extends Component {
       start: moment(now).subtract(months, 'months').toDate(),
       end: null,
     };
-  }
-
-  setSelectedOptionForSelectedId() {
-    if (this.args.selectedId === 'select') {
-      if (this.args.startDate)
-        this.selectOption.startDate = new Date(this.args.startDate);
-      if (this.args.endDate)
-        this.selectOption.endDate = new Date(this.args.endDate);
-    } else {
-      this.selectOption = {
-        id: 'select',
-        label: 'Kies een datum',
-        start: null,
-        end: null,
-      };
-    }
   }
 
   async initLatestSessionDate() {
@@ -96,8 +82,11 @@ export default class SelectDateCouncilComponent extends Component {
   }
 
   @action
-  onDidUpdate(element, [id]) {
-    if (!id) {
+  onDidUpdate(element, [id, startDate, endDate]) {
+    if (id === this.selectOption.id) {
+      set(this.selectOption, 'start', startDate ? new Date(startDate) : null);
+      set(this.selectOption, 'end', endDate ? new Date(endDate) : null);
+    } else {
       set(this.selectOption, 'start', null);
       set(this.selectOption, 'end', null);
     }
@@ -111,7 +100,7 @@ export default class SelectDateCouncilComponent extends Component {
 
   @action
   onChangeSelectedStart(date) {
-    if (this.selected.id === 'select') {
+    if (this.selected.id === this.selectOption.id) {
       set(this.selectOption, 'start', date);
       this.args.onChange(
         this.selected.id,

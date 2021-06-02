@@ -5,7 +5,6 @@ export default class IndexRoute extends Route {
   @service searchNewsItems;
 
   model(params) {
-    this.searchNewsItems.setParams(params);
-    return this.searchNewsItems.search();
+    return this.searchNewsItems.search(params);
   }
 }
