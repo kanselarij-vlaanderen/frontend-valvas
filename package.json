@@ -81,7 +81,7 @@
     "prettier": "^2.2.1",
     "qunit": "^2.14.1",
     "qunit-dom": "^1.6.0",
-    "sass": "^1.22.10",
+    "sass": "^1.33.0",
     "url-polyfill": "^1.1.9"
   },
   "engines": {
