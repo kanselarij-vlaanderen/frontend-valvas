@@ -38,7 +38,7 @@ export default class SelectMinisterialPowerComponent extends Component {
         label: theme.label,
         count: null,
       }))
-      .sort((a, b) => a.label > b.label);
+      .sortBy('label');
     this.options = [defaultOption, ...options];
   }
 
