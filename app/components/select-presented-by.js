@@ -73,7 +73,7 @@ export default class SelectPresentedByComponent extends Component {
         lastName: person.lastName,
         label: person.fullName,
       }))
-      .sort((a, b) => a.lastName > b.lastName);
+      .sortBy('lastName');
 
     this.options = [
       defaultOption,
