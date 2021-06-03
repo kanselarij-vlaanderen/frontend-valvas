@@ -1,54 +1,56 @@
-<ul>
-  <li class='decision vl-u-spacer--medium'>
-    <div class='u-named-target-wrapper'>
-      <div class='u-named-target-dummy'></div>
-    </div>
-    <h4 class='vl-title vl-title--h4'>{{@newsInfo.title}}</h4>
-    {{#if @newsInfo.alternativeTitle}}
-      <h6 class='vl-title vl-title--h6'>{{@newsInfo.alternativeTitle}}</h6>
-    {{/if}}
-    <div class='vl-u-text--muted vl-u-spacer-extended-bottom-s'>
-      <time datetime={{moment-format @newsInfo.meetingDate 'YYYY-MM-DD'}}>
-        {{moment-format @newsInfo.meetingDate 'D MMMM YYYY'}}
-      </time>
+{{#let (eq (lowercase @newsInfo.agendaitemType) 'mededeling') as |isAnnouncement|}}
+  <ul>
+    <li class='decision vl-u-spacer--medium'>
+      <div class='u-named-target-wrapper'>
+        <div class='u-named-target-dummy'></div>
+      </div>
+      <h4 class='vl-title vl-title--h4'>{{@newsInfo.title}}</h4>
+      <div class='vl-u-text--muted vl-u-spacer-extended-bottom-s'>
+        <time datetime={{moment-format @newsInfo.meetingDate 'YYYY-MM-DD'}}>
+          {{moment-format @newsInfo.meetingDate 'D MMMM YYYY'}}
+        </time>
 
-      {{#if (eq (lowercase @newsInfo.agendaitemType) 'mededeling')}}
-        <span>mededeling aan de Vlaamse Regering</span>
-      {{else}}
-        {{#if @newsInfo.mandateeFamilyNames}}
-          op voorstel van
-          <FormatMinisters @mandatees={{this.mandatees}} />
-        {{/if}}
-      {{/if}}
-    </div>
-    <div class='decision__text typography'>
-      <p>
-        {{#if this.longTextHidden}}
-          {{this.shortText}}
+        {{#if isAnnouncement}}
+          <span>mededeling aan de Vlaamse Regering</span>
         {{else}}
-          {{this.fullText}}
-        {{/if}}
-      </p>
-    </div>
-    <div class='decision__links'>
-      <div class='link-group link-group--bordered vl-u-spacer-extended-top-s'>
-        {{#if this.isLongText}}
-          {{#if this.longTextHidden}}
-            <button
-              type='button'
-              class='vl-link vl-u-spacer-extended-right'
-              {{on 'click' this.toggleReadMore}}
-            >Lees meer</button>
-          {{else}}
-            <button
-              type='button'
-              class='vl-link vl-u-spacer-extended-right'
-              {{on 'click' this.toggleReadMore}}
-            >Lees minder</button>
+          {{#if @newsInfo.mandateeFamilyNames}}
+            op voorstel van
+            <FormatMinisters @mandatees={{this.mandatees}} />
           {{/if}}
         {{/if}}
-        <DocumentsView @model={{@newsInfo}} />
       </div>
-    </div>
-  </li>
-</ul>
+      <div class='decision__text typography'>
+        {{#if (and isAnnouncement @newsInfo.alternativeTitle)}}
+          <h6 class='vl-title vl-title--h6'>{{@newsInfo.alternativeTitle}}</h6>
+        {{/if}}
+        <p>
+          {{#if this.longTextHidden}}
+            {{this.shortText}}
+          {{else}}
+            {{this.fullText}}
+          {{/if}}
+        </p>
+      </div>
+      <div class='decision__links'>
+        <div class='link-group link-group--bordered vl-u-spacer-extended-top-s'>
+          {{#if this.isLongText}}
+            {{#if this.longTextHidden}}
+              <button
+                type='button'
+                class='vl-link vl-u-spacer-extended-right'
+                {{on 'click' this.toggleReadMore}}
+              >Lees meer</button>
+            {{else}}
+              <button
+                type='button'
+                class='vl-link vl-u-spacer-extended-right'
+                {{on 'click' this.toggleReadMore}}
+              >Lees minder</button>
+            {{/if}}
+          {{/if}}
+          <DocumentsView @model={{@newsInfo}} />
+        </div>
+      </div>
+    </li>
+  </ul>
+{{/let}}
