@@ -8,12 +8,11 @@ import muSearch from '../utils/mu-search';
 export default class SearchNewsItemsService extends Service {
   docType = 'news-items';
   sortKeys = ['-meeting-date', 'meeting-position', 'position'];
-  searchParams = {};
+  @tracked searchParams = {};
   @tracked cache;
   @tracked count = 0;
   @tracked pageNumber = 0;
   @tracked pageSize = 25;
-  @tracked hasFilter = false;
 
   constructor() {
     super(...arguments);
@@ -22,6 +21,18 @@ export default class SearchNewsItemsService extends Service {
 
   get hasMoreResults() {
     return this.cache.length < this.count;
+  }
+
+  get hasFilter() {
+    return (
+      this.searchParams.search ||
+      this.searchParams.startDate ||
+      this.searchParams.endDate ||
+      this.searchParams.ministerId ||
+      this.searchParams.themeId ||
+      this.searchParams.ministerFirstName ||
+      this.searchParams.ministerLastName
+    );
   }
 
   async search(params) {
@@ -54,16 +65,7 @@ export default class SearchNewsItemsService extends Service {
     const { pageNumber, pageSize } = this;
 
     const filter = {};
-    if (
-      search ||
-      startDate ||
-      endDate ||
-      ministerId ||
-      themeId ||
-      ministerFirstName ||
-      ministerLastName
-    ) {
-      this.hasFilter = true;
+    if (this.hasFilter) {
       if (search) {
         filter[':sqs:title,htmlContent'] = search;
       }
@@ -96,7 +98,6 @@ export default class SearchNewsItemsService extends Service {
         filter.themeId = themeId;
       }
     } else {
-      this.hasFilter = false;
       filter[':sqs:title'] = '*';
     }
 
