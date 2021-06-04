@@ -26,17 +26,18 @@ export default class IndexController extends Controller {
   @tracked ministerFirstName = null;
   @tracked ministerLastName = null;
   @tracked themeId = null;
+  @tracked meetings = [];
 
-  get meetings() {
+  async groupNewsItemsByMeeting() {
     // Order all news items by the meeting they belong to
     let meetings = [];
-    this.searchNewsItems.cache.forEach((newsItem) => {
+    for (let newsItem of this.searchNewsItems.cache) {
       let meeting = meetings.find(
         (meeting) => meeting.id === newsItem.meetingId
       );
       // Add each meeting to the meetings array
       if (!meeting) {
-        const meetingRecord = this.store.findRecord(
+        const meetingRecord = await this.store.findRecord(
           'meeting',
           newsItem.meetingId,
           { include: 'type' }
@@ -56,8 +57,8 @@ export default class IndexController extends Controller {
       } else {
         meeting.news.push(newsItem);
       }
-    });
-    return meetings;
+    }
+    this.meetings = meetings;
   }
 
   get searchParams() {
@@ -77,6 +78,7 @@ export default class IndexController extends Controller {
   resetParams() {
     this.queryParams.forEach((key) => (this[key] = null));
     this.searchNewsItems.search({});
+    this.groupNewsItemsByMeeting();
   }
 
   @action
@@ -84,10 +86,12 @@ export default class IndexController extends Controller {
     let searchParams = {};
     this.queryParams.forEach((key) => (searchParams[key] = this[key]));
     this.searchNewsItems.search(searchParams);
+    this.groupNewsItemsByMeeting();
   }
 
   @action
-  loadMore() {
-    this.searchNewsItems.loadMore();
+  async loadMore() {
+    await this.searchNewsItems.loadMore();
+    this.groupNewsItemsByMeeting();
   }
 }

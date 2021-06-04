@@ -7,4 +7,8 @@ export default class IndexRoute extends Route {
   model(params) {
     return this.searchNewsItems.search(params);
   }
+
+  setupController(controller) {
+    controller.groupNewsItemsByMeeting();
+  }
 }
