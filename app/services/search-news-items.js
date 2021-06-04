@@ -7,7 +7,7 @@ import muSearch from '../utils/mu-search';
 
 export default class SearchNewsItemsService extends Service {
   docType = 'news-items';
-  sortKeys = ['-meeting-date', 'meeting-position', 'position'];
+  sortKeys = ['-meeting-date', '-agendaitem-type', 'position'];
   @tracked searchParams = {};
   @tracked cache;
   @tracked count = 0;
