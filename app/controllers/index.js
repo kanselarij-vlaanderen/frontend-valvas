@@ -75,17 +75,17 @@ export default class IndexController extends Controller {
   }
 
   @action
-  resetParams() {
+  async resetParams() {
     this.queryParams.forEach((key) => (this[key] = null));
-    this.searchNewsItems.search({});
+    await this.searchNewsItems.search({});
     this.groupNewsItemsByMeeting();
   }
 
   @action
-  searchNews() {
+  async searchNews() {
     let searchParams = {};
     this.queryParams.forEach((key) => (searchParams[key] = this[key]));
-    this.searchNewsItems.search(searchParams);
+    await this.searchNewsItems.search(searchParams);
     this.groupNewsItemsByMeeting();
   }
 
