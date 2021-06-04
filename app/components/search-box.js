@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class SearchBoxComponent extends Component {
-  searchParams = [
+  searchKeys = [
     'search',
     'dateOption',
     'startDate',
@@ -97,8 +97,7 @@ export default class SearchBoxComponent extends Component {
   @action
   searchNews() {
     let searchParams = {};
-    this.searchParams.forEach((key) => (searchParams[key] = this[key]));
-    this.args.onChange(searchParams);
-    this.args.onSearch();
+    this.searchKeys.forEach((key) => (searchParams[key] = this[key]));
+    this.args.onSearch(searchParams);
   }
 }

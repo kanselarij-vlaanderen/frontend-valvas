@@ -67,7 +67,6 @@ export default class IndexController extends Controller {
     return searchParams;
   }
 
-  @action
   setParams(params) {
     this.queryParams.forEach((key) => {
       this[key] = params[key];
@@ -82,10 +81,9 @@ export default class IndexController extends Controller {
   }
 
   @action
-  async searchNews() {
-    let searchParams = {};
-    this.queryParams.forEach((key) => (searchParams[key] = this[key]));
-    await this.searchNewsItems.search(searchParams);
+  async searchNews(searchParams) {
+    this.setParams(searchParams);
+    await this.searchNewsItems.search(this.searchParams);
     this.groupNewsItemsByMeeting();
   }
 
