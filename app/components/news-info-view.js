@@ -27,9 +27,12 @@ export default class NewsInfoViewComponent extends Component {
     const id = this.args.newsInfo.uuid;
     let record = this.store.peekRecord('news-item-info', id);
     if (!record) {
-      record = yield this.store.findRecord('news-item-info', id, {
+      const records = yield this.store.query('news-item-info', {
+        'page[size]': 1,
+        'filter[:id:]': id,
         include: 'attachments.file',
       });
+      record = records.firstObject;
     }
     this.newsItemRecord = record;
 
@@ -48,9 +51,12 @@ export default class NewsInfoViewComponent extends Component {
   *fetchMandatee(id) {
     let record = this.store.peekRecord('mandatee', id);
     if (!record) {
-      record = yield this.store.findRecord('mandatee', id, {
+      const records = yield this.store.query('mandatee', {
+        'page[size]': 1,
+        'filter[:id:]': id,
         include: 'person',
       });
+      record = records.firstObject;
     }
     return record;
   }
