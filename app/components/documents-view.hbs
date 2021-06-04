@@ -3,106 +3,104 @@
 >
   <i class='vl-badge__icon vl-icon vl-vi vl-vi-document'></i>
 </div>
-{{#unless this.fetchRecord.isRunning}}
-  {{#if this.attachments}}
-    <button type='button' class='vl-link' {{on 'click' this.toggleExpanded}}>
-      {{#if (eq this.attachments.length 1)}}
-        Toon document
-      {{else}}
-        Toon
-        {{this.attachments.length}}
-        documenten
-      {{/if}}
-    </button>
-    {{#if this.isExpanded}}
-      <div class='document-drawer'>
-        <div class='vl-u-align-right'>
-          <button
-            type='button'
-            class='vl-button vl-button--link-muted vl-button--icon'
-            title='Venster sluiten'
-            {{on 'click' this.toggleExpanded}}
+{{#if this.sortedAttachments}}
+  <button type='button' class='vl-link' {{on 'click' this.toggleExpanded}}>
+    {{#if (eq this.sortedAttachments.length 1)}}
+      Toon document
+    {{else}}
+      Toon
+      {{this.sortedAttachments.length}}
+      documenten
+    {{/if}}
+  </button>
+  {{#if this.isExpanded}}
+    <div class='document-drawer'>
+      <div class='vl-u-align-right'>
+        <button
+          type='button'
+          class='vl-button vl-button--link-muted vl-button--icon'
+          title='Venster sluiten'
+          {{on 'click' this.toggleExpanded}}
+        >
+          <i class='vl-button__icon vl-vi vl-vi-close'></i>
+          <span class='vl-u-visually-hidden'>Venster sluiten</span>
+        </button>
+      </div>
+      <div class='vl-grid'>
+        {{#each this.sortedAttachments as |attachment|}}
+          <div
+            class='vl-col--5-12 vl-col--12-12--m vl-u-spacer-extended-bottom'
           >
-            <i class='vl-button__icon vl-vi vl-vi-close'></i>
-            <span class='vl-u-visually-hidden'>Venster sluiten</span>
-          </button>
-        </div>
-        <div class='vl-grid'>
-          {{#each this.attachments as |attachment|}}
-            <div
-              class='vl-col--5-12 vl-col--12-12--m vl-u-spacer-extended-bottom'
-            >
-              <div class='vl-document'>
-                <div class='vl-document__type'>
-                  <i class='vl-vi vl-vi-document' aria-hidden='true'></i>
-                  <span
-                    class='vl-document__type__text'
-                  >{{attachment.file.extension}}</span>
+            <div class='vl-document'>
+              <div class='vl-document__type'>
+                <i class='vl-vi vl-vi-document' aria-hidden='true'></i>
+                <span
+                  class='vl-document__type__text'
+                >{{attachment.file.extension}}</span>
+              </div>
+              <div class='vl-document__content'>
+                <div class='vl-document__title vl-link' data-vl-clamp='2'>
+                  {{#if (file-is-viewable attachment.file)}}
+                    <LinkTo
+                      @route='document-view'
+                      @model={{attachment.id}}
+                      target='_blank'
+                    >
+                      {{#if attachment.title}}
+                        {{attachment.title}}
+                      {{else}}
+                        {{strip-file-extension attachment.file.filename}}
+                      {{/if}}
+                    </LinkTo>
+                  {{else}}
+                    <a href={{attachment.file.download}} download>
+                      {{#if attachment.title}}
+                        {{attachment.title}}
+                      {{else}}
+                        {{strip-file-extension attachment.file.filename}}
+                      {{/if}}
+                    </a>
+                  {{/if}}
                 </div>
-                <div class='vl-document__content'>
-                  <div class='vl-document__title vl-link' data-vl-clamp='2'>
-                    {{#if (file-is-viewable attachment.file)}}
-                      <LinkTo
-                        @route='document-view'
-                        @model={{attachment.id}}
-                        target='_blank'
-                      >
-                        {{#if attachment.title}}
-                          {{attachment.title}}
-                        {{else}}
-                          {{strip-file-extension attachment.file.filename}}
-                        {{/if}}
-                      </LinkTo>
-                    {{else}}
-                      <a href={{attachment.file.download}} download>
-                        {{#if attachment.title}}
-                          {{attachment.title}}
-                        {{else}}
-                          {{strip-file-extension attachment.file.filename}}
-                        {{/if}}
-                      </a>
-                    {{/if}}
-                  </div>
-                  <div
-                    class='vl-document__metadata'
-                  >{{attachment.file.extension}}
-                    -
-                    {{readable-file-size attachment.file.size}}
-                  </div>
+                <div
+                  class='vl-document__metadata'
+                >{{attachment.file.extension}}
+                  -
+                  {{readable-file-size attachment.file.size}}
                 </div>
               </div>
             </div>
+          </div>
 
-          {{/each}}
-        </div>
+        {{/each}}
       </div>
-    {{/if}}
-  {{else}}
-    <button type='button' class='vl-link' {{on 'click' this.toggleExpanded}}>
-      Geen documenten beschikbaar
-    </button>
-    {{#if this.isExpanded}}
-      <div class='document-drawer'>
-        <div class='vl-u-align-right'>
-          <button
-            type='button'
-            class='vl-button vl-button--link-muted vl-button--icon'
-            title='Venster sluiten'
-            {{on 'click' this.toggleExpanded}}
-          >
-            <i class='vl-button__icon vl-vi vl-vi-close'></i>
-            <span class='vl-u-visually-hidden'>Venster sluiten</span>
-          </button>
-        </div>
-        <p>
-          Op 29 januari 2016 besliste de Vlaamse Regering om alle nota’s en
-          mededelingen actief openbaar te maken, met uitzondering van de
-          documenten bij individuele beslissingen. Individuele beslissingen
-          regelen een persoonlijke rechtstoestand en gelden voor één geval of
-          voor enkele welbepaalde gevallen, zoals benoemingen, subsidiebesluiten
-          voor projecten of investeringssubsidies voor bedrijven.
-        </p>
-      </div>
-    {{/if}}
+    </div>
   {{/if}}
-{{/unless}}
+{{else}}
+  <button type='button' class='vl-link' {{on 'click' this.toggleExpanded}}>
+    Geen documenten beschikbaar
+  </button>
+  {{#if this.isExpanded}}
+    <div class='document-drawer'>
+      <div class='vl-u-align-right'>
+        <button
+          type='button'
+          class='vl-button vl-button--link-muted vl-button--icon'
+          title='Venster sluiten'
+          {{on 'click' this.toggleExpanded}}
+        >
+          <i class='vl-button__icon vl-vi vl-vi-close'></i>
+          <span class='vl-u-visually-hidden'>Venster sluiten</span>
+        </button>
+      </div>
+      <p>
+        Op 29 januari 2016 besliste de Vlaamse Regering om alle nota’s en
+        mededelingen actief openbaar te maken, met uitzondering van de
+        documenten bij individuele beslissingen. Individuele beslissingen
+        regelen een persoonlijke rechtstoestand en gelden voor één geval of
+        voor enkele welbepaalde gevallen, zoals benoemingen, subsidiebesluiten
+        voor projecten of investeringssubsidies voor bedrijven.
+      </p>
+    </div>
+  {{/if}}
+{{/if}}

@@ -36,8 +36,6 @@ export default class SearchNewsItemsService extends Service {
   }
 
   async search(params) {
-    this.pageNumber = 0;
-    this.pageSize = 25;
     this.searchParams = params ? params : {};
     const newsItems = await this.searchTask.perform();
     this.cache = newsItems;

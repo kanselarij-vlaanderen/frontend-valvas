@@ -4,33 +4,55 @@ import { isArray } from '@ember/array';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { task } from 'ember-concurrency-decorators';
+import { all } from 'ember-concurrency';
 
 export default class NewsInfoViewComponent extends Component {
   @service store;
 
   @tracked longTextHidden = true;
-  @tracked mandatees;
+  @tracked newsItemRecord = null;
+  @tracked mandatees = [];
 
   constructor() {
     super(...arguments);
-    if (this.isLongText) this.longTextHidden = true;
-    if (this.args.newsInfo.mandateeIds) {
-      if (isArray(this.args.newsInfo.mandateeIds)) {
-        this.fetchMandatees(this.args.newsInfo.mandateeIds).then(
-          (mandatees) => {
-            this.mandatees = mandatees;
-          }
-        );
-      } else {
-        this.fetchMandatees([this.args.newsInfo.mandateeIds]).then(
-          (mandatees) => {
-            this.mandatees = mandatees;
-          }
-        );
-      }
-    } else {
-      this.mandatees = [];
+    this.loadData.perform();
+    if (this.isLongText) {
+      this.longTextHidden = true;
     }
+  }
+
+  @task
+  *loadData() {
+    const id = this.args.newsInfo.uuid;
+    let record = this.store.peekRecord('news-item-info', id);
+    if (!record) {
+      record = yield this.store.findRecord('news-item-info', id, {
+        include: 'attachments.file',
+      });
+    }
+    this.newsItemRecord = record;
+
+    if (this.args.newsInfo.mandateeIds) {
+      const mandateeIds = isArray(this.args.newsInfo.mandateeIds)
+        ? this.args.newsInfo.mandateeIds
+        : [this.args.newsInfo.mandateeIds];
+      const mandatees = yield all(
+        mandateeIds.map((id) => this.fetchMandatee.perform(id))
+      );
+      this.mandatees = mandatees;
+    }
+  }
+
+  @task
+  *fetchMandatee(id) {
+    let record = this.store.peekRecord('mandatee', id);
+    if (!record) {
+      record = yield this.store.findRecord('mandatee', id, {
+        include: 'person',
+      });
+    }
+    return record;
   }
 
   get htmlContent() {
@@ -56,13 +78,6 @@ export default class NewsInfoViewComponent extends Component {
     return this.isLongText
       ? htmlSafe(this.htmlContent.substr(0, 500) + '...')
       : this.fullText;
-  }
-
-  async fetchMandatee(mandateeId) {
-    let mandatee = this.store.findRecord('mandatee', mandateeId, {
-      include: 'person',
-    });
-    return mandatee;
   }
 
   async fetchMandatees(mandateeIds) {

@@ -15,7 +15,9 @@
         {{else}}
           {{#if @newsInfo.mandateeFamilyNames}}
             op voorstel van
-            <FormatMinisters @mandatees={{this.mandatees}} />
+            {{#unless this.loadData.isRunning}}
+              <FormatMinisters @mandatees={{this.mandatees}} />
+            {{/unless}}
           {{/if}}
         {{/if}}
       </div>
@@ -48,7 +50,9 @@
               >Lees minder</button>
             {{/if}}
           {{/if}}
-          <DocumentsView @model={{@newsInfo}} />
+          {{#unless this.loadData.isRunning}}
+            <DocumentsView @attachments={{this.newsItemRecord.attachments}} />
+          {{/unless}}
         </div>
       </div>
     </li>
