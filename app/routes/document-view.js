@@ -2,8 +2,8 @@ import Route from '@ember/routing/route';
 import $ from 'jquery';
 
 export default class DocumentViewRoute extends Route {
-  async model(params) {
-    return this.store.findRecord('file', params.id);
+  model(params) {
+    return this.store.findRecord('attachment', params.id);
   }
 
   activate() {
