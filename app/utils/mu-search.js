@@ -1,6 +1,5 @@
 import fetch from 'fetch';
 import getPaginationMetadata from './get-pagination-metadata';
-import ArrayProxy from '@ember/array/proxy';
 import { A } from '@ember/array';
 
 function sortOrder(sort) {
@@ -25,17 +24,19 @@ function snakeToCamel(s) {
 
 async function muSearch(index, page, size, sort, filter, dataMapping) {
   const endpoint = new URL(`/${index}/search`, window.location.origin);
-  const params = new URLSearchParams(Object.entries({
-    'page[size]': size,
-    'page[number]': page,
-    'collapse_uuids': 't'
-  }));
+  const params = new URLSearchParams(
+    Object.entries({
+      'page[size]': size,
+      'page[number]': page,
+      collapse_uuids: 't',
+    })
+  );
 
   for (let field in filter) {
     params.append(`filter[${field}]`, filter[field]);
   }
 
-  if (Array.isArray(sort)){
+  if (Array.isArray(sort)) {
     sort.forEach((key) => {
       params.append(`sort[${snakeToCamel(stripSort(key))}]`, sortOrder(key));
     });
@@ -45,7 +46,12 @@ async function muSearch(index, page, size, sort, filter, dataMapping) {
 
   endpoint.search = params.toString();
 
-  const { count, data } = await (await fetch(endpoint)).json();
+  const response = await fetch(endpoint, {
+    headers: {
+      Accept: 'application/vnd.api+json',
+    },
+  });
+  const { count, data } = await response.json();
   const pagination = getPaginationMetadata(page, size, count);
   const entries = A(data.map(dataMapping));
 

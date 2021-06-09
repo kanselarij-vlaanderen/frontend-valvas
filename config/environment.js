@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'frontend-valvas',
     environment,
@@ -13,8 +13,8 @@ module.exports = function(environment) {
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
     },
 
     APP: {
@@ -24,12 +24,14 @@ module.exports = function(environment) {
     moment: {
       allowEmpty: true,
       includeLocales: ['nl-be'],
-      includeTimezone: 'all'
+      includeTimezone: 'all',
     },
     'vo-webuniversum': {
-      header: '//widgets.vlaanderen.be/widget/live/57c7ff10148d450184b6f3a387dc0602',
-      footer: '//widgets.vlaanderen.be/widget/live/11ecf02ff8084d72bff3be4f47bfca4c'
-    }
+      header:
+        '//widgets.vlaanderen.be/widget/live/57c7ff10148d450184b6f3a387dc0602',
+      footer:
+        '//widgets.vlaanderen.be/widget/live/11ecf02ff8084d72bff3be4f47bfca4c',
+    },
   };
 
   if (environment === 'development') {
@@ -54,10 +56,6 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-  }
-
-  if (process.env.DEPLOY_ENV === 'production') {
-
   }
 
   return ENV;

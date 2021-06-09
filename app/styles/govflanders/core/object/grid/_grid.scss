@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // sass-lint:disable variable-name-format mixin-name-format force-pseudo-nesting no-color-literals max-file-line-count max-line-length
 
 ////
@@ -48,7 +50,7 @@
 //     map-get-z(map, first-child-key, second-child-key);
 ////
 @function item-width($number_of_items, $total_items) {
-  $single_col_width: 100 / $total_items * 1%;
+  $single_col_width: math.div(100, $total_items) * 1%;
   @return $single_col_width * $number_of_items;
 }
 
@@ -259,7 +261,7 @@
   $fractions: ();
   @for $i from -$numerator through -1 {
     @if ($numerator % abs($i) == 0 and $denominator % abs($i) == 0) {
-      $fraction: (abs($i): #{$numerator/abs($i)}-#{$denominator/abs($i)});
+      $fraction: (abs($i): #{math.div($numerator, abs($i))}-#{math.div($denominator, abs($i))});
       $fractions: map-merge($fractions, $fraction);
     }
   }

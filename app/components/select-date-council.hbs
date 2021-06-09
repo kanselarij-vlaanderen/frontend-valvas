@@ -1,0 +1,48 @@
+<div class='vlc-input-field-block'>
+  <label class='vl-form__label'>
+    Datum ministerraad
+  </label>
+  <XSelect
+    class='vl-select vl-select--block'
+    @value={{this.selected}}
+    @onChange={{this.onChangeOption}}
+    as |xs|
+  >
+    {{#each this.options as |option|}}
+      <xs.option @value={{option}}>
+        {{option.label}}
+        {{#if option.count}} ({{option.count}}){{/if}}
+      </xs.option>
+    {{/each}}
+  </XSelect>
+</div>
+{{#if this.enableSelectDateInput}}
+  <div
+    class='vlc-input-field-block'
+    {{did-update this.onDidUpdate @selectedId @startDate @endDate}}
+    {{will-destroy this.onDidUpdate @selectedId}}
+  >
+    <div class='vl-grid'>
+      <div class='vl-col--6-12'>
+        <label class='vl-form__label'>
+          Van
+        </label>
+        <WebComponents::VlDatepicker
+          @selectedDate={{this.selectOption.start}}
+          @dateChanged={{this.onChangeSelectedStart}}
+          @dateFormat='d-m-Y'
+        />
+      </div>
+      <div class='vl-col--6-12'>
+        <label class='vl-form__label'>
+          Tot en met
+        </label>
+        <WebComponents::VlDatepicker
+          @selectedDate={{this.selectOption.end}}
+          @dateChanged={{this.onChangeSelectedEnd}}
+          @dateFormat='d-m-Y'
+        />
+      </div>
+    </div>
+  </div>
+{{/if}}

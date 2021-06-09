@@ -1,3 +1,6 @@
+/* eslint-disable */
+// Not octanified
+
 import Component from '@ember/component';
 
 export default Component.extend({

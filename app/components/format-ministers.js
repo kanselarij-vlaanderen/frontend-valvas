@@ -1,9 +1,15 @@
-import Component from '@ember/component';
-import { sort } from '@ember/object/computed';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: '',
-
-  mandateeSort: Object.freeze(['priority', 'legacyPriority']),
-  sortedMandatees: sort('mandatees', 'mandateeSort')
-});
+export default class FormatMinistersComponent extends Component {
+  get sortedMandatees() {
+    if (Array.isArray(this.args.mandatees)) {
+      return this.args.mandatees.sort((a, b) => {
+        let pos_a = a.position || a.legacyPosition;
+        let pos_b = b.position || b.legacyPosition;
+        return pos_a - pos_b;
+      });
+    } else {
+      return [];
+    }
+  }
+}

@@ -1,3 +1,5 @@
+/* eslint-disable */
+// Not octanified
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject } from '@ember/service';
@@ -9,7 +11,7 @@ export default Component.extend({
   datePropertyToUse: null,
   enableTime: null,
 
-  datesToEnable: computed('dateObjectsToEnable', function() {
+  datesToEnable: computed('dateObjectsToEnable', function () {
     const { dateObjectsToEnable, datePropertyToUse } = this;
     return dateObjectsToEnable.map(object => {
       return this.formatter.formatDate(object.get(datePropertyToUse));

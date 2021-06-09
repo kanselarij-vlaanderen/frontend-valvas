@@ -1,7 +1,9 @@
+@use "sass:math";
+
 @mixin badge-size($size) {
   width: map-get($badge, $size);
   height: map-get($badge, $size);
-  border-radius: map-get($badge, $size) / 2;
+  border-radius: math.div(map-get($badge, $size), 2);
 }
 
 $badge: (

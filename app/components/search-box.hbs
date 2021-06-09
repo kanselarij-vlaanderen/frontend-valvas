@@ -1,0 +1,40 @@
+<h2 class='vl-title vl-title--alt'>Verfijn uw zoekresultaten</h2>
+<form
+  class='vl-form vl-u-bg-porcelain'
+  {{did-update this.onDidUpdate @searchParams}}
+>
+  <div class='vlc-box'>
+    <div class='vlc-input-field-block'>
+      <WebComponents::VlFormLabel @value='Zoek naar' />
+      <WebComponents::VlFormInput
+        @width='4'
+        @value={{this.search}}
+        @onChange={{this.changeSearch}}
+        @placeholder='Zoek naar'
+      />
+    </div>
+    <SelectDateCouncil
+      @selectedId={{this.dateOption}}
+      @startDate={{this.startDate}}
+      @endDate={{this.endDate}}
+      @onChange={{this.selectSessionDate}}
+    />
+    <SelectMinisterialPower
+      @selectedId={{this.themeId}}
+      @onChange={{this.selectThemeId}}
+    />
+    <SelectPresentedBy
+      @selectedId={{this.ministerId}}
+      @onChange={{this.selectMinister}}
+    />
+    <div class='vl-u-spacer-extended-top'>
+      <button
+        type='button'
+        class='form-submit vl-button'
+        {{on 'click' this.searchNews}}
+      >
+        Zoek
+      </button>
+    </div>
+  </div>
+</form>
