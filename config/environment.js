@@ -27,9 +27,9 @@ module.exports = function(environment) {
       includeTimezone: 'all'
     },
     'vo-webuniversum': {
-      header: '//widgets.vlaanderen.be/widget/live/57c7ff10148d450184b6f3a387dc0602',
-      footer: '//widgets.vlaanderen.be/widget/live/11ecf02ff8084d72bff3be4f47bfca4c'
-    }
+      header: '{{VO_HEADER}}',
+      footer: '{{VO_FOOTER}}',
+    },
   };
 
   if (environment === 'development') {

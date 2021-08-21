@@ -8,7 +8,9 @@ RUN npm install
 COPY . .
 RUN ember build -prod
 
-FROM semtech/ember-proxy-service:1.4.0
+FROM semtech/ember-proxy-service:1.5.1
+ENV EMBER_VO_HEADER="//tni.widgets.burgerprofiel.dev-vlaanderen.be/api/v1/widget/3bcc4b26-e216-489c-8f11-cd9299f08199/embed"
+ENV EMBER_VO_FOOTER="//tni.widgets.burgerprofiel.dev-vlaanderen.be/api/v1/widget/3bcc4b26-e216-489c-8f11-cd9299f08199/embed"
 
 ENV STATIC_FOLDERS_REGEX "^/(assets|fonts|files|ember-pdfjs-wrapper)/"
 

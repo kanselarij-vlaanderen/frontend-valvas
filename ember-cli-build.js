@@ -26,6 +26,8 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
   app.import('node_modules/url-polyfill/url-polyfill.min.js');
+  app.import('node_modules/@govflanders/vl-widget-client/dist/index.js');
+  app.import('node_modules/@govflanders/vl-widget-polyfill/dist/index.js');
 
   return app.toTree();
 };

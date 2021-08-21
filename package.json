@@ -76,5 +76,10 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "@govflanders/vl-widget-client": "^1.3.11",
+    "@govflanders/vl-widget-polyfill": "^1.3.11",
+    "ember-modifier": "^2.1.2"
   }
 }
