@@ -1,10 +1,5 @@
 {{#each this.sortedMandatees as |mandatee|}}
   <span class='bevoegde-minister-item'>
-    {{if
-      mandatee.alternativeTitle
-      (lowercase mandatee.alternativeTitle)
-      mandatee.title
-    }}
-    {{mandatee.person.fullName}}
+    {{if mandatee.valvasTitle mandatee.valvasTitle mandatee.title}}
   </span>
 {{/each}}

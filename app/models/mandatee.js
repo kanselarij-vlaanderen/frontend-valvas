@@ -7,7 +7,7 @@ export default class MandateeModel extends Model {
   @attr('date') startDate;
   @attr('date') endDate;
   @attr('string') title;
-  @attr('string') alternativeTitle;
+  @attr('string') valvasTitle;
 
   @belongsTo('person') person;
   @belongsTo('mandate') mandate;
