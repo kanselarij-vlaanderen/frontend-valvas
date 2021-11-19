@@ -1,6 +1,8 @@
+@use "sass:math";
+
 // sass-lint:disable variable-name-format
 $grid-cols: 12;
-$grid-wide-expansion: #{100 * 1 / 24 + "%"};
+$grid-wide-expansion: #{math.div(100 * 1, 24) + "%"};
 
 $grid_args: (
   config: (

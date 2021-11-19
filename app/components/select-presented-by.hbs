@@ -1,0 +1,49 @@
+<div class='vlc-input-field-block' {{did-update this.onDidUpdate @selectedId}}>
+  <label class='vl-form__label'>
+    Voorgesteld door
+  </label>
+
+  <div class='form-element'>
+    <div class='form__input'>
+      <XSelect
+        class='vl-select vl-select--block'
+        @value={{this.selected}}
+        @onChange={{this.onChangeOption}}
+        as |xs|
+      >
+        {{#each this.options as |option|}}
+          <xs.option @value={{option}}>
+            {{option.label}}
+            {{#if option.count}} ({{option.count}}){{/if}}
+          </xs.option>
+        {{/each}}
+      </XSelect>
+    </div>
+  </div>
+</div>
+
+{{#if this.isEnabledHistoricOption}}
+  <div class='vlc-input-field-block filter__field form-item'>
+    <label class='vl-form__label'>
+      Vorige minister
+    </label>
+    <div class='form-element'>
+      <div class='form__input'>
+        <XSelect
+          class='vl-select vl-select--block'
+          @value={{this.selectedHistoric}}
+          @onChange={{this.onChangeHistoricOption}}
+          as |xs|
+        >
+          <xs.option @value={{null}} />
+          {{#each this.historicOptions as |option|}}
+            <xs.option @value={{option}}>
+              {{option.label}}
+              {{#if option.count}} ({{option.count}}){{/if}}
+            </xs.option>
+          {{/each}}
+        </XSelect>
+      </div>
+    </div>
+  </div>
+{{/if}}

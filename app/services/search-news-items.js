@@ -1,43 +1,69 @@
 import Service from '@ember/service';
 import { warn } from '@ember/debug';
 import { A } from '@ember/array';
-import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { keepLatestTask } from 'ember-concurrency-decorators';
 import muSearch from '../utils/mu-search';
 
-export default Service.extend({
-  count: 0,
+export default class SearchNewsItemsService extends Service {
+  docType = 'news-items';
+  sortKeys = ['-meeting-date', '-agendaitem-type', 'position'];
+  @tracked searchParams = {};
+  @tracked cache;
+  @tracked count = 0;
+  @tracked pageNumber = 0;
+  @tracked pageSize = 25;
 
-  docType: Object.freeze('news-items'),
-  sortKeys: Object.freeze([
-    '-session-date',
-    'session-priority',
-    'priority'
-  ]),
+  constructor() {
+    super(...arguments);
+    this.cache = A();
+  }
 
-  init() {
-    this._super(...arguments);
-    this.set('cache', A());
-  },
+  get hasMoreResults() {
+    return this.cache.length < this.count;
+  }
+
+  get hasFilter() {
+    return (
+      this.searchParams.search ||
+      this.searchParams.startDate ||
+      this.searchParams.endDate ||
+      this.searchParams.ministerId ||
+      this.searchParams.themeId ||
+      this.searchParams.ministerFirstName ||
+      this.searchParams.ministerLastName
+    );
+  }
 
   async search(params) {
-    this.set('searchParams', params);
-    this.set('searchParams.pageNumber', 0);
-    this.set('searchParams.pageSize', 25);
+    this.searchParams = params ? params : {};
     const newsItems = await this.searchTask.perform();
-    this.set('cache', newsItems);
-  },
+    this.cache = newsItems;
+  }
 
   async loadMore() {
-    this.set('searchParams.pageNumber', this.searchParams.pageNumber + 1);
+    this.pageNumber += 1;
     const newsItems = await this.searchTask.perform();
-    this.cache.pushObjects(newsItems);
-  },
+    this.cache.push(...newsItems);
+    // Trigger a view refresh
+    this.cache = this.cache; // eslint-disable-line
+  }
 
-  searchTask: task(function * () {
-    const { search, startDate, endDate, ministerId, ministerFirstName, ministerLastName, ministerialPowerId, pageNumber, pageSize } = this.searchParams;
+  @keepLatestTask
+  *searchTask() {
+    const {
+      search,
+      startDate,
+      endDate,
+      ministerId,
+      ministerFirstName,
+      ministerLastName,
+      themeId,
+    } = this.searchParams;
+    const { pageNumber, pageSize } = this;
 
     const filter = {};
-    if (search || startDate || endDate || ministerId || ministerialPowerId || ministerFirstName || ministerLastName) {
+    if (this.hasFilter) {
       if (search) {
         filter[':sqs:title,htmlContent'] = search;
       }
@@ -46,41 +72,53 @@ export default Service.extend({
        * (semtech/mu-search:0.6.0-beta.11, semtech/mu-search-elastic-backend:1.0.0)
        */
       if (startDate && endDate) {
-        filter[':gte,lte:sessionDate'] = startDate + ',' + endDate;
+        filter[':gte,lte:meetingDate'] = startDate + ',' + endDate;
       } else if (startDate) {
-        filter[':gte:sessionDate'] = startDate;
+        filter[':gte:meetingDate'] = startDate;
       } else if (endDate) {
-        filter[':lte:sessionDate'] = endDate;
+        filter[':lte:meetingDate'] = endDate;
       }
       if (ministerId || ministerFirstName || ministerLastName) {
-        if (ministerId == 'vr') { // mededelingen
-          filter.category = 'mededeling';
-        } else if (ministerId == -1) {// previous ministers
+        if (ministerId == 'vr') {
+          // mededelingen
+          filter.agendaitemType = 'Mededeling';
+        } else if (ministerId == -1) {
+          // previous ministers
           filter.mandateeActiveStatus = 'inactive';
-          filter.category = 'nieuws';
+          filter.agendaitemType = 'Nota';
         } else {
           filter.mandateeFirstNames = ministerFirstName;
           filter.mandateeFamilyNames = ministerLastName;
-          filter.category = 'nieuws';
+          filter.agendaitemType = 'Nota';
         }
-      } if (ministerialPowerId) {
-        filter.themeId = ministerialPowerId;
+      }
+      if (themeId) {
+        filter.themeId = themeId;
       }
     } else {
-      filter[':sqs:title']= '*';
+      filter[':sqs:title'] = '*';
     }
 
     try {
-      const result = yield muSearch(this.docType, pageNumber, pageSize, this.sortKeys, filter, function (item) {
-        const entry = item.attributes;
-        entry.id = item.id;
-        return entry;
-      });
-      this.set('count', result.meta.count);
+      const result = yield muSearch(
+        this.docType,
+        pageNumber,
+        pageSize,
+        this.sortKeys,
+        filter,
+        function (item) {
+          const entry = item.attributes;
+          entry.id = item.id;
+          return entry;
+        }
+      );
+      this.count = result.meta.count;
       return result;
     } catch (e) {
-      warn(`Something went wrong while querying mu-search: ${e.message}`, { id: 'mu-search.failure' });
+      warn(`Something went wrong while querying mu-search: ${e.message}`, {
+        id: 'mu-search.failure',
+      });
       return A();
     }
-  }).keepLatest()
-});
+  }
+}

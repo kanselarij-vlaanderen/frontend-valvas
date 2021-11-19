@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'frontend-valvas',
     environment,
@@ -13,8 +13,8 @@ module.exports = function(environment) {
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
     },
 
     APP: {
@@ -24,7 +24,7 @@ module.exports = function(environment) {
     moment: {
       allowEmpty: true,
       includeLocales: ['nl-be'],
-      includeTimezone: 'all'
+      includeTimezone: 'all',
     },
     'vo-webuniversum': {
       header: '{{VO_HEADER}}',
@@ -54,10 +54,6 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-  }
-
-  if (process.env.DEPLOY_ENV === 'production') {
-
   }
 
   return ENV;
