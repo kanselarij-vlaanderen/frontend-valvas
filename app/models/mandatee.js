@@ -1,5 +1,4 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-import mandateTypeFromTitle from 'frontend-valvas/utils/mandate-type-from-title';
 
 export default class MandateeModel extends Model {
   @attr('number') position;
