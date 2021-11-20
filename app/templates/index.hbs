@@ -90,11 +90,19 @@
               <div class='item-list'>
                 {{#each this.meetings as |meeting|}}
                   <h2 class='vl-title vl-title--h2 vl-u-text--bold vl-u-spacer'>
-                    {{if
-                      meeting.record.type.label
-                      meeting.record.type.label
-                      'Ministerraad'
-                    }}
+                    {{#if meeting.record.type.label}}
+                      {{!--
+                      Customize label for EP wrt themis data. To be decided if this is a general
+                      change desired to be in Themis reference data.
+                      --}}
+                      {{#if (eq meeting.record.type.label "Elektronische procedure")}}
+                        Ministerraad via elektronische procedure
+                      {{else}}
+                        {{meeting.record.type.label}}
+                      {{/if}}
+                    {{else}}
+                     Ministerraad
+                    {{/if}}
                     van
                     {{moment-format meeting.date 'DD MMMM YYYY'}}
                   </h2>
