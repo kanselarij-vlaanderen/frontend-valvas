@@ -1,5 +1,7 @@
 {{#each this.sortedMandatees as |mandatee|}}
-  <span class='bevoegde-minister-item'>
-    {{if mandatee.valvasTitle mandatee.valvasTitle mandatee.title}}
-  </span>
+  {{!--
+  Below span and its content should be kept as one line html without whitespace.
+  Spreading the element over multiple lines causes space before comma.
+  --}}
+  <span class='bevoegde-minister-item'>{{if mandatee.valvasTitle mandatee.valvasTitle mandatee.title}}</span>
 {{/each}}
