@@ -2,8 +2,14 @@ import Route from '@ember/routing/route';
 import $ from 'jquery';
 
 export default class DocumentViewRoute extends Route {
-  model(params) {
-    return this.store.findRecord('attachment', params.id);
+  async model(params) {
+    const results = await this.store.query('attachment', {
+      'filter[:id:]': params.id,
+      include: 'file',
+    });
+    if (results.length) {
+      return results.firstObject;
+    }
   }
 
   activate() {
