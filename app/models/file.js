@@ -8,4 +8,8 @@ export default class FileModel extends Model {
 
   @belongsTo('attachment') attachment;
   @belongsTo('file', { inverse: null }) download;
+
+  get downloadLink() {
+    return `/files/${this.id}/download`;
+  }
 }
