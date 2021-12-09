@@ -72,3 +72,8 @@ steps:
 trigger:
   event:
     - tag
+---
+kind: signature
+hmac: 1b1c432919151fbef91f4019c90c653ab4dfcdb4d663a8334b830abb458095d3
+
+...
