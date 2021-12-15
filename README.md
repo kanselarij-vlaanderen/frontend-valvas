@@ -47,7 +47,21 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-Specify what it takes to deploy your app.
+#### VO header/footer widget details
+
+Test environment:
+```
+environment:
+  EMBER_VO_HEADER_WIDGET_URL: "https://tni.widgets.burgerprofiel.dev-vlaanderen.be/api/v1/widget/3bcc4b26-e216-489c-8f11-cd9299f08199"
+  EMBER_VO_FOOTER_WIDGET_URL: "https://tni.widgets.burgerprofiel.dev-vlaanderen.be/api/v1/widget/7eed3599-96aa-435b-bc43-fe13d2fc0531"
+```
+
+Production environment:
+```
+environment:
+  EMBER_VO_HEADER_WIDGET_URL: "https://prod.widgets.burgerprofiel.vlaanderen.be/api/v1/widget/9e21cea6-b1a6-48fe-9322-8296c138b24b"
+  EMBER_VO_FOOTER_WIDGET_URL: "https://prod.widgets.burgerprofiel.vlaanderen.be/api/v1/widget/f2907451-e337-41f2-9740-ab421226fdad"
+```
 
 ## Further Reading / Useful Links
 

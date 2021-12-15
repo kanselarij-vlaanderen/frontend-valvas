@@ -26,10 +26,8 @@ module.exports = function (environment) {
       includeLocales: ['nl-be'],
       includeTimezone: 'all',
     },
-    'vo-webuniversum': {
-      header: '{{VO_HEADER}}',
-      footer: '{{VO_FOOTER}}',
-    },
+    VO_HEADER_WIDGET_URL: '{{VO_HEADER_WIDGET_URL}}',
+    VO_FOOTER_WIDGET_URL: '{{VO_FOOTER_WIDGET_URL}}',
   };
 
   if (environment === 'development') {
