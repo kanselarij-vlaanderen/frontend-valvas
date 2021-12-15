@@ -95,7 +95,8 @@ export default class SearchBoxComponent extends Component {
   }
 
   @action
-  searchNews() {
+  searchNews(e) {
+    e.preventDefault();
     let searchParams = {};
     this.searchKeys.forEach((key) => (searchParams[key] = this[key]));
     this.args.onSearch(searchParams);

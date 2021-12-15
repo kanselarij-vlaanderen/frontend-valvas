@@ -1,8 +1,13 @@
 <div class="vlc-scroll-wrapper">
   <div class="vlc-scroll-wrapper__body full-height">
-    <KaleidosViewer
-      @documentVersion={{this.model}}
-      class="override-full-height-viewer"
-    />
+    <div class="override-full-height-viewer">
+      {{#if this.isPdfDocument}}
+        <PdfView @filePath={{this.model.file.downloadLink}} />
+      {{else}}
+        <div>
+          Document of type <i>{{this.model.file.extension}}</i> currently not supported for viewing.
+        </div>
+      {{/if}}
+    </div>
   </div>
 </div>
