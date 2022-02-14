@@ -3,19 +3,58 @@ Extract adapted from
 https://vlaamseoverheid.atlassian.net/wiki/spaces/IKPubliek/pages/2604728345/Tools+om+de+header+en+branding+te+previewen
 */
 .l-external-header {
+
+  /* LEFT ICON IN HEADER */
+  .vlw .vlw__primary-bar__brand__umbrella--secondary::before,
+  .vlw .vlw__primary-bar__brand__umbrella--secondary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 28px;
+    height: 100%;
+    background: $yellow;
+  }
+
+  .vlw .vlw__primary-bar__brand__umbrella--secondary::after,
+  .vlw .vlw__primary-bar__brand__umbrella--secondary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 28px;
+    width: 0;
+    height: 0;
+    background: none;
+    transform: none;
+    -ms-transform: none;
+    border-top: 43px solid transparent;
+    border-bottom: 0 solid transparent;
+    border-left: 13.5px solid $yellow;
+  }
+
   /* TEKST "HULP NODIG" */
   .vlw .vlw__contact--primary .vlw__contact__toggle::after,
   .vlw .vlw__contact--secondary .vlw__contact__toggle::after,
   .vlw .vlw__contact--tertiary .vlw__contact__toggle::after,
   .vlw .vlw__contact--quaternary .vlw__contact__toggle::after {
-    border-right: $white;
+    border-right: $yellow;
   }
 
   .vlw .vlw__contact--primary .vlw__contact__toggle,
   .vlw .vlw__contact--secondary .vlw__contact__toggle,
   .vlw .vlw__contact--tertiary .vlw__contact__toggle,
-  .vlw .vlw__contact--quaternary .vlw__contact__toggle {
-    background: $white;
+  .vlw .vlw__contact--quaternary .vlw__contact__toggle,
+  .vlw .vlw__contact--primary .vlw__contact__toggle:hover,
+  .vlw .vlw__contact--secondary .vlw__contact__toggle:hover,
+  .vlw .vlw__contact--tertiary .vlw__contact__toggle:hover,
+  .vlw .vlw__contact--quaternary .vlw__contact__toggle:hover,
+  .vlw .vlw__contact--primary .vlw__contact__toggle:focus,
+  .vlw .vlw__contact--secondary .vlw__contact__toggle:focus,
+  .vlw .vlw__contact--tertiary .vlw__contact__toggle:focus,
+  .vlw .vlw__contact--quaternary .vlw__contact__toggle:focus {
+    background: $yellow;
   }
 
   /* PROGRESS BAR */
