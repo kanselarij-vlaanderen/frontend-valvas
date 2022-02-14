@@ -1,9 +1,16 @@
-<HeadLayout />
-<WuWidget @src={{this.header}} />
 {{page-title 'Beslissingen van de Vlaamse Regering | Vlaanderen.be'}}
+{{#if this.hasExternallySourcedHeader}}
+  <div class="l-external-header">
+    <div class="l-external-header__placeholder">
+      <header {{vl-widget this.VO_HEADER_WIDGET_URL}}></header>
+    </div>
+  </div>
+{{/if}}
 {{! Below wrapper element was introduced to stay compatible with the CSS that depended
   on pre-octane ember-view wrapping elements }}
 <div id='valvas-inner-body-wrapper'>
   {{outlet}}
 </div>
-<WuWidget @src={{this.footer}} />
+{{#if this.hasExternallySourcedFooter}}
+  <footer {{vl-widget this.VO_FOOTER_WIDGET_URL}}></footer>
+{{/if}}

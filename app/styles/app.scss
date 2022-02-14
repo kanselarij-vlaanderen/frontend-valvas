@@ -4,55 +4,12 @@
 @import '_colors';
 $icon-font-location: '/fonts/';
 
-// Core (loaded from node_modules)
-// @import "node_modules/@govflanders/vl-ui-core/src/scss/_setting.scss";
-// @import "node_modules/@govflanders/vl-ui-core/src/scss/_tool.scss";
-// @import "node_modules/@govflanders/vl-ui-core/src/scss/_core.scss";
-// @import "node_modules/@govflanders/vl-ui-core/src/scss/_generic.scss";
-// @import "node_modules/@govflanders/vl-ui-core/src/scss/_element.scss";
-// @import "node_modules/@govflanders/vl-ui-core/src/scss/_object.scss";
-
 // Components (loaded locally to easily read source)
 @import 'govflanders/core/_setting.scss';
 @import 'govflanders/core/_tool.scss';
 @import 'govflanders/core/_generic.scss';
 @import 'govflanders/core/_element.scss';
 @import 'govflanders/core/_object.scss';
-
-// Components (loaded from node_modules)
-// @import "node_modules/@govflanders/vl-ui-accordion/src/scss/_accordion";
-// @import "node_modules/@govflanders/vl-ui-action-group/src/scss/_action-group.scss";
-// @import "node_modules/@govflanders/vl-ui-alert/src/scss/_alert";
-// @import "node_modules/@govflanders/vl-ui-autocomplete/src/scss/_autocomplete";
-// @import "node_modules/@govflanders/vl-ui-badge/src/scss/_badge";
-// @import "node_modules/@govflanders/vl-ui-button/src/scss/_button.scss";
-// @import "node_modules/@govflanders/vl-ui-checkbox/src/scss/_checkbox";
-// @import "node_modules/@govflanders/vl-ui-data-table/src/scss/_data-table";
-// @import "node_modules/@govflanders/vl-ui-datepicker/src/scss/_datepicker";
-// @import "node_modules/@govflanders/vl-ui-description-data/src/scss/_description-data";
-// @import "node_modules/@govflanders/vl-ui-document/src/scss/_document.scss";
-// @import "node_modules/@govflanders/vl-ui-form-message/src/scss/_form-message.scss";
-// @import "node_modules/@govflanders/vl-ui-form-structure/src/scss/_form-structure.scss";
-//@import "node_modules/@govflanders/vl-ui-icon/src/scss/_icon.scss";
-// @import "node_modules/@govflanders/vl-ui-info-tile/src/scss/_info-tile.scss";
-// @import "node_modules/@govflanders/vl-ui-input-addon/src/scss/_input-addon.scss";
-// @import "node_modules/@govflanders/vl-ui-input-field/src/scss/_input-field.scss";
-// @import "node_modules/@govflanders/vl-ui-link-list/src/scss/link-list";
-// @import "node_modules/@govflanders/vl-ui-link/src/scss/_link.scss";
-// @import "node_modules/@govflanders/vl-ui-loader/src/scss/_loader.scss";
-// @import "node_modules/@govflanders/vl-ui-modal/src/scss/_modal";
-// @import "node_modules/@govflanders/vl-ui-pager/src/scss/_pager";
-// @import "node_modules/@govflanders/vl-ui-pill-input/src/scss/_pill-input";
-// @import "node_modules/@govflanders/vl-ui-pill/src/scss/_pill";
-// @import "node_modules/@govflanders/vl-ui-popover/src/scss/_popover";
-// @import "node_modules/@govflanders/vl-ui-radio/src/scss/_radio";
-// @import "node_modules/@govflanders/vl-ui-search/src/scss/_search;
-// @import "node_modules/@govflanders/vl-ui-tabs/src/scss/_tabs";
-// @import "node_modules/@govflanders/vl-ui-textarea/src/scss/_textarea";
-// @import "node_modules/@govflanders/vl-ui-titles/src/scss/_titles";
-// @import "node_modules/@govflanders/vl-ui-typography/src/scss/_typography";
-// @import "node_modules/@govflanders/vl-ui-upload/src/scss/_upload";
-// @import "node_modules/@govflanders/vl-ui-input-group/src/scss/_input-group";
 
 // Components (loaded locally to easily read source)
 @import 'govflanders/components/_action-group';
@@ -72,16 +29,9 @@ $icon-font-location: '/fonts/';
 @import 'govflanders/components/_link';
 @import 'govflanders/components/_loader';
 @import 'govflanders/components/_search';
+@import 'govflanders/components/_select';
 @import 'govflanders/components/_titles';
 @import 'govflanders/components/_typography';
-
-// Interdependent components (loaded from node_modules)
-// @import "node_modules/@govflanders/vl-ui-select/src/scss/_select";
-// @import "node_modules/@govflanders/vl-ui-select/src/scss/_js-select";
-
-// Interdependent components - These are source order dependent
-@import 'govflanders/components/_select';
-@import 'govflanders/components/_js-select';
 
 /* Unofficial code
       ========================================================================== */
@@ -104,9 +54,6 @@ $icon-font-location: '/fonts/';
 @import 'custom-components/vlc-content-header';
 @import 'custom-components/vlc-spotlight';
 
-// Imports utilities (loaded from node_modules)
-// @import "node_modules/@govflanders/vl-ui-util/src/scss/util";
-
 // Utilities (loaded locally to easily read source)
 @import 'govflanders/util/_util';
 
@@ -115,6 +62,28 @@ $icon-font-location: '/fonts/';
 @import 'custom-utilities/_extended-spacer';
 @import 'custom-utilities/_scroll';
 @import 'custom-utilities/_box-model';
+
+// SPECIFIC ADDITION (HEADER PLACEHOLDER)
+
+.l-external-header {
+  //
+}
+
+.l-external-header__placeholder {
+  width: 100%;
+  height: 43px;
+  background: #fff;
+
+  // When the supported browsers support the :has selector (https://developer.mozilla.org/en-US/docs/Web/CSS/:has) we can also add a shadow to the placeholder (now, we'll get double shadows otherwise)
+  // &:has(> .vlw) {
+  //   box-shadow: 0 1px 3px rgb(12 13 14 / 10%), 0 4px 20px rgb(12 13 14 / 4%), 0 1px 1px rgb(12 13 14 / 3%);
+  // }
+}
+
+// SPECIFIC ADDITION (AIV HEADER-WIDGET COLOR CUSTOMIZATION)
+@import "vo-widget";
+
+// SPECIFIC ADDITION
 
 body > #valvas-inner-body-wrapper {
   height: 100% !important;
