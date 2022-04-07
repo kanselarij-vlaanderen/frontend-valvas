@@ -1,4 +1,7 @@
-{{#let (eq (lowercase @newsInfo.agendaitemType) 'mededeling') as |isAnnouncement|}}
+{{#let
+  (eq (lowercase @newsInfo.agendaitemType) 'mededeling')
+  as |isAnnouncement|
+}}
   <ul>
     <li class='decision vl-u-spacer--medium'>
       <div class='u-named-target-wrapper'>
