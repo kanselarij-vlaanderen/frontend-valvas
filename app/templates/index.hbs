@@ -108,7 +108,7 @@
                   </h2>
                   <MeetingNotifications @meeting={{meeting.record}} />
                   {{#each meeting.news as |newsInfo index|}}
-                    <NewsInfoView @newsInfo={{newsInfo}} />
+                    <NewsInfoView @meeting={{meeting.record}} @newsInfo={{newsInfo}} />
                     {{#if (lt index (sub meeting.news.length 1))}}
                       <div class='vl-u-hr'></div>
                       <div class='vl-u-spacer--medium'></div>
