@@ -125,7 +125,7 @@
                       class='vl-title vl-title--h2 vl-u-text--bold vl-u-spacer'
                     >Mededelingen</h2>
                     {{#each meeting.announcements as |newsInfo index|}}
-                      <NewsInfoView @newsInfo={{newsInfo}} />
+                      <NewsInfoView @newsInfo={{newsInfo}} @meeting={{meeting.record}}/>
                       {{#if (lt index (sub meeting.announcements.length 1))}}
                         <div class='vl-u-hr'></div>
                         <div class='vl-u-spacer--medium'></div>

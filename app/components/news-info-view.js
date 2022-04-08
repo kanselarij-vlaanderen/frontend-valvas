@@ -93,9 +93,7 @@ export default class NewsInfoViewComponent extends Component {
   }
 
   get showDocuments() {
-    if (this.args.meeting) {
-      return this.args.meeting.plannedPublicationDate < new Date();
-    } else return false;
+    return this.args.meeting.plannedPublicationDate < new Date();
   }
 
   @action
