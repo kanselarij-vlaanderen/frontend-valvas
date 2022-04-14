@@ -91,24 +91,27 @@
                 {{#each this.meetings as |meeting|}}
                   <h2 class='vl-title vl-title--h2 vl-u-text--bold vl-u-spacer'>
                     {{#if meeting.record.type.label}}
-                      {{!--
+                      {{!
                       Customize label for EP wrt themis data. To be decided if this is a general
                       change desired to be in Themis reference data.
-                      --}}
-                      {{#if (eq meeting.record.type.label "Elektronische procedure")}}
+                      }}
+                      {{#if (eq meeting.record.type.label 'Elektronische procedure')}}
                         Ministerraad via elektronische procedure
                       {{else}}
                         {{meeting.record.type.label}}
                       {{/if}}
                     {{else}}
-                     Ministerraad
+                      Ministerraad
                     {{/if}}
                     van
                     {{moment-format meeting.date 'DD MMMM YYYY'}}
                   </h2>
                   <MeetingNotifications @meeting={{meeting.record}} />
                   {{#each meeting.news as |newsInfo index|}}
-                    <NewsInfoView @newsInfo={{newsInfo}} />
+                    <NewsInfoView
+                      @newsInfo={{newsInfo}}
+                      @plannedPublicationDate={{meeting.record.plannedPublicationDate}}
+                    />
                     {{#if (lt index (sub meeting.news.length 1))}}
                       <div class='vl-u-hr'></div>
                       <div class='vl-u-spacer--medium'></div>
@@ -120,7 +123,10 @@
                       class='vl-title vl-title--h2 vl-u-text--bold vl-u-spacer'
                     >Mededelingen</h2>
                     {{#each meeting.announcements as |newsInfo index|}}
-                      <NewsInfoView @newsInfo={{newsInfo}} />
+                      <NewsInfoView
+                        @newsInfo={{newsInfo}}
+                        @plannedPublicationDate={{meeting.record.plannedPublicationDate}}
+                      />
                       {{#if (lt index (sub meeting.announcements.length 1))}}
                         <div class='vl-u-hr'></div>
                         <div class='vl-u-spacer--medium'></div>

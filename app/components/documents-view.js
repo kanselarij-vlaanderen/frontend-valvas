@@ -9,6 +9,10 @@ export default class DocumentsViewComponent extends Component {
     return this.args.attachments.sortBy('title');
   }
 
+  get hasReleasedDocuments() {
+    return this.args.plannedPublicationDate < Date.now() && this.args.attachments.length;
+  }
+
   @action
   toggleExpanded() {
     this.isExpanded = !this.isExpanded;

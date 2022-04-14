@@ -51,7 +51,9 @@
             {{/if}}
           {{/if}}
           {{#unless this.loadData.isRunning}}
-            <DocumentsView @attachments={{this.newsItemRecord.attachments}} />
+            <DocumentsView
+              @plannedPublicationDate={{@plannedPublicationDate}}
+              @attachments={{this.newsItemRecord.attachments}} />
           {{/unless}}
         </div>
       </div>
