@@ -1,7 +1,4 @@
-{{#let
-  (eq (lowercase @newsInfo.agendaitemType) 'mededeling')
-  as |isAnnouncement|
-}}
+{{#let (eq (lowercase @newsInfo.agendaitemType) 'mededeling') as |isAnnouncement|}}
   <ul>
     <li class='decision vl-u-spacer--medium'>
       <div class='u-named-target-wrapper'>
@@ -54,7 +51,9 @@
             {{/if}}
           {{/if}}
           {{#unless this.loadData.isRunning}}
-            <DocumentsView @showDocuments={{this.showDocuments}} @attachments={{this.newsItemRecord.attachments}} />
+            <DocumentsView
+              @plannedPublicationDate={{@plannedPublicationDate}}
+              @attachments={{this.newsItemRecord.attachments}} />
           {{/unless}}
         </div>
       </div>
