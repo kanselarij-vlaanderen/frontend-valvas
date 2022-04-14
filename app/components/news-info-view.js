@@ -92,10 +92,6 @@ export default class NewsInfoViewComponent extends Component {
     );
   }
 
-  get showDocuments() {
-    return this.args.meeting.plannedPublicationDate < new Date();
-  }
-
   @action
   toggleReadMore() {
     this.longTextHidden = !this.longTextHidden;
