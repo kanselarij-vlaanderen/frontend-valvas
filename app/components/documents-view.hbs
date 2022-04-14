@@ -3,7 +3,7 @@
 >
   <i class='vl-badge__icon vl-icon vl-vi vl-vi-document'></i>
 </div>
-{{#if this.sortedAttachments}}
+{{#if (and this.sortedAttachments @showDocuments)}}
   <button type='button' class='vl-link' {{on 'click' this.toggleExpanded}}>
     {{#if (eq this.sortedAttachments.length 1)}}
       Toon document

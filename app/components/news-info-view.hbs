@@ -53,9 +53,9 @@
               >Lees minder</button>
             {{/if}}
           {{/if}}
-          {{#if (and (not this.loadData.isRunning) this.showDocuments)}}
-            <DocumentsView @attachments={{this.newsItemRecord.attachments}} />
-          {{/if}}
+          {{#unless this.loadData.isRunning}}
+            <DocumentsView @showDocuments={{this.showDocuments}} @attachments={{this.newsItemRecord.attachments}} />
+          {{/unless}}
         </div>
       </div>
     </li>
