@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { isEmpty } from '@ember/utils';
 
 const defaultOption = { label: 'Alle ministers' };
 const mededelingOption = { id: 'vr', label: 'de Vlaamse Regering' };
@@ -35,13 +36,15 @@ export default class SelectPresentedByComponent extends Component {
     );
     const currentGovernmentBody = currentGovernmentBodyArray.firstObject;
     const currentMandatees = currentGovernmentBody
-      ? await currentGovernmentBody.mandatees
+      ? await currentGovernmentBody.mandatees // no pagination limit since we included mandataes in the previous request
       : [];
     const currentMandateesAndPersons = await Promise.all(
-      currentMandatees.map(async (mandatee) => ({
-        mandatee,
-        person: await mandatee.person,
-      }))
+      currentMandatees
+        .filter((mandatee) => isEmpty(mandatee.endDate)) // only current active mandatees
+        .map(async (mandatee) => ({
+          mandatee,
+          person: await mandatee.person,
+        }))
     );
     let options = [];
     for await (const { mandatee, person } of currentMandateesAndPersons) {
