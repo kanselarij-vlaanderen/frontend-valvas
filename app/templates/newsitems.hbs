@@ -1,0 +1,38 @@
+<header class='vlc-content-header vl-grid'>
+  <picture class='vl-col--12-12 vlc-content-header__image'>
+    <source
+      srcset='/assets/images/main-banner1x-wide.jpg 1x, /assets/images/main-banner2x-wide.jpg 2x'
+      media='(min-width: 1024px)'
+    />
+    <source
+      srcset='/assets/images/main-banner1x-mobile.jpg 1x, /assets/images/main-banner2x-mobile.jpg 2x'
+      media='(max-device-width: 767px)'
+    />
+    <source
+      srcset='/assets/images/main-banner1x-narrow.jpg 1x, /assets/images/main-banner2x-narrow.jpg 2x'
+      media='(max-width: 1023px)'
+    />
+    <img
+      src='/assets/images/main-banner1x-wide.jpg'
+      srcset='/assets/images/main-banner1x-wide.jpg 1x, /assets/images/main-banner1x-wide.jpg 2x'
+      alt='header afbeelding standbeeld Brussel'
+    />
+  </picture>
+  <hgroup class='vlc-content-header__content'>
+    <a
+      href='http://www.vlaanderen.be/vlaamse-regering'
+      class='vl-title vl-title--h3 vlc-content-header__link'
+    >
+      Vlaamse Regering
+    </a>
+    <h1 class='vl-title vl-title--h1 vlc-content-header__title'>
+      Beslissingen van de Vlaamse Regering
+    </h1>
+  </hgroup>
+</header>
+
+<div class='main-content'>
+  <div class='vl-layout'>
+    {{outlet}}
+  </div>
+</div>

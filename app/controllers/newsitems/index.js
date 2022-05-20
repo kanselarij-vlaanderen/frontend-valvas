@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
-export default class IndexController extends Controller {
+export default class NewsitemsIndexController extends Controller {
   @service store;
   @service searchNewsItems;
 

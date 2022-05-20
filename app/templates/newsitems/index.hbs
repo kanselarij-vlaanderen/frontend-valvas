@@ -1,0 +1,123 @@
+<div class='vl-grid vl-grid--is-stacked'>
+  <div class='vl-col--4-12 vl-col--12-12--s'>
+    <SearchBox
+      @searchParams={{this.searchParams}}
+      @onSearch={{this.searchNews}}
+    />
+
+    <a
+      href='https://www.vlaanderen.be/ontvang-nieuwe-persberichten-en-beslissingen-via-e-mail'
+      class='vl-link vl-u-spacer-extended-bottom vl-u-text--bold'
+    >
+      Abonneren op de beslissingen van de Vlaamse Regering
+    </a>
+
+    <div class='vlc-spotlight'>
+      <a
+        href='https://www.vlaanderen.be/vlaamse-regering'
+        class='spotlight external-link'
+      >
+        <div class='vlc-spotlight__image-container'>
+          <img
+            class='vlc-spotlight__image'
+            alt='Vlaamse regering'
+            srcset='/assets/images/vlaamseregering-1x.jpg 1x, /assets/images/vlaamseregering-2x.jpg 2x'
+            src='/assets/images/vlaamseregering-1x.jpg'
+          />
+        </div>
+        <h4
+          class='vlc-spotlight__title vl-title vl-title--h4'
+          data-clamp='0'
+        >Regering Jambon I</h4>
+      </a>
+    </div>
+  </div>
+  <div class='vl-col--8-12 vl-col--12-12--s'>
+    <div class='h1-sublink vl-u-spacer-extended-left-l'>
+      <h2 class='vl-title vl-title--h2'>
+        {{format-number this.searchNewsItems.count}}
+        resultaten
+      </h2>
+      {{#if this.searchNewsItems.hasFilter}}
+        <button
+          type='button'
+          role='button'
+          class='vl-link'
+          {{on 'click' this.resetParams}}
+        >
+          Toon alle beslissingen
+        </button>
+      {{/if}}
+    </div>
+    {{#if this.meetings.length}}
+      <div class='view-ip-decisions-search'>
+        <div class='view-content vl-u-spacer-extended-left-l'>
+          <div class='item-list'>
+            {{#each this.meetings as |meeting|}}
+              <h2 class='vl-title vl-title--h2 vl-u-text--bold vl-u-spacer'>
+                {{#if meeting.record.type.label}}
+                  {{!
+                         Customize label for EP wrt themis data. To be decided if this is a general
+                         change desired to be in Themis reference data.
+                         }}
+                  {{#if (eq meeting.record.type.label 'Elektronische procedure')}}
+                    Ministerraad via elektronische procedure
+                  {{else}}
+                    {{meeting.record.type.label}}
+                  {{/if}}
+                {{else}}
+                  Ministerraad
+                {{/if}}
+                van
+                {{moment-format meeting.date 'DD MMMM YYYY'}}
+              </h2>
+              <MeetingNotifications @meeting={{meeting.record}} />
+              {{#each meeting.news as |newsInfo index|}}
+                <NewsInfoView
+                  @newsInfo={{newsInfo}}
+                  @plannedPublicationDate={{meeting.record.plannedPublicationDate}}
+                />
+                {{#if (lt index (sub meeting.news.length 1))}}
+                  <div class='vl-u-hr'></div>
+                  <div class='vl-u-spacer--medium'></div>
+                {{/if}}
+              {{/each}}
+
+              {{#if meeting.announcements.length}}
+                <h2
+                  class='vl-title vl-title--h2 vl-u-text--bold vl-u-spacer'
+                >Mededelingen</h2>
+                {{#each meeting.announcements as |newsInfo index|}}
+                  <NewsInfoView
+                    @newsInfo={{newsInfo}}
+                    @plannedPublicationDate={{meeting.record.plannedPublicationDate}}
+                  />
+                  {{#if (lt index (sub meeting.announcements.length 1))}}
+                    <div class='vl-u-hr'></div>
+                    <div class='vl-u-spacer--medium'></div>
+                  {{/if}}
+                {{/each}}
+              {{/if}}
+            {{/each}}
+          </div>
+        </div>
+
+        {{#if this.searchNewsItems.hasMoreResults}}
+          <ul class='pager pager--infinite-scroll vl-u-align-center'>
+            <li class='pager__item'>
+              <button
+                type='button'
+                class='vl-button'
+                {{on 'click' this.loadMore}}
+              >
+                Laad meer
+              </button>
+            </li>
+          </ul>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</div>
+
+{{outlet}}
