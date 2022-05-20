@@ -10,7 +10,12 @@ export default class DocumentsViewComponent extends Component {
   }
 
   get hasReleasedDocuments() {
-    return this.args.plannedPublicationDate < Date.now() && this.args.attachments.length;
+    const hasDocuments = this.args.attachments.length;
+    if (this.args.plannedPublicationDate) {
+      return this.args.plannedPublicationDate < Date.now() && hasDocuments;
+    } else {
+      return hasDocuments;
+    }
   }
 
   @action
