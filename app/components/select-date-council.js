@@ -16,7 +16,7 @@ export default class SelectDateCouncilComponent extends Component {
   };
   @tracked latestOption = {
     id: 'latest',
-    label: 'Laatstse ministerraad',
+    label: 'Laatste ministerraad',
     start: null,
     end: null,
   };
