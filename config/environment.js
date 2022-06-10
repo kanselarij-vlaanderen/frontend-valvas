@@ -28,6 +28,13 @@ module.exports = function (environment) {
     },
     VO_HEADER_WIDGET_URL: '{{VO_HEADER_WIDGET_URL}}',
     VO_FOOTER_WIDGET_URL: '{{VO_FOOTER_WIDGET_URL}}',
+    'ember-plausible': {
+      enabled: false,
+    },
+    plausible: {
+      domain: '{{ANALYTICS_APP_DOMAIN}}',
+      apiHost: '{{ANALYTICS_API_HOST}}',
+    },
   };
 
   if (environment === 'development') {
