@@ -65,6 +65,7 @@
     "ember-moment": "^8.0.0",
     "ember-page-title": "^6.2.1",
     "ember-pdfjs-wrapper": "git+https://github.com/MikiDi/ember-pdfjs-wrapper.git#8300c671d3293dad0c5ccf87defdec6d08f839b3",
+    "ember-plausible": "^0.1.0",
     "ember-promise-helpers": "^1.0.9",
     "ember-qunit": "^5.1.4",
     "ember-resolver": "^8.0.2",
