@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 export default class NewsitemsIndexController extends Controller {
   @service store;
   @service searchNewsItems;
+  @service plausible;
 
   queryParams = [
     'search',
@@ -91,5 +92,6 @@ export default class NewsitemsIndexController extends Controller {
   async loadMore() {
     await this.searchNewsItems.loadMore();
     this.groupNewsItemsByMeeting();
+    this.plausible.trackEvent('Laad meer');
   }
 }
