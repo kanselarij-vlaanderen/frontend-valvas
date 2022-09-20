@@ -108,6 +108,13 @@ body > #valvas-inner-body-wrapper {
   content: ', ';
 }
 
+.decision__text {
+  ul, ol {
+    list-style-type: revert;
+    list-style-position: inside;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .filter__form {
     margin: 0;
