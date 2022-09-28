@@ -117,7 +117,7 @@ export default class SelectPresentedByComponent extends Component {
 
   @action
   onDidUpdate(element, [id]) {
-    if (!id) {
+    if (id === undefined) {
       this.isEnabledHistoricOption = false;
     } else if (this.selected.id === historicOption.id) {
       this.isEnabledHistoricOption = true;
@@ -142,6 +142,8 @@ export default class SelectPresentedByComponent extends Component {
   async onChangeHistoricOption(selected) {
     if (selected && this.selectedId !== selected.id) {
       this.args.onChange(selected.id, selected.firstName, selected.lastName);
+    } else if (selected === null) {
+      this.args.onChange(null, null, null);
     }
   }
 }
