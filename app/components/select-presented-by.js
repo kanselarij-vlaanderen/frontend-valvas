@@ -36,7 +36,7 @@ export default class SelectPresentedByComponent extends Component {
     );
     const currentGovernmentBody = currentGovernmentBodyArray.firstObject;
     const currentMandatees = currentGovernmentBody
-      ? await currentGovernmentBody.mandatees // no pagination limit since we included mandataes in the previous request
+      ? await currentGovernmentBody.mandatees // no pagination limit since we included mandatees in the previous request
       : [];
     const currentMandateesAndPersons = await Promise.all(
       currentMandatees
@@ -140,7 +140,7 @@ export default class SelectPresentedByComponent extends Component {
 
   @action
   async onChangeHistoricOption(selected) {
-    if (selected && this.selectedId !== selected.id) {
+    if (selected && this.args.selectedId !== selected.id) {
       this.args.onChange(selected.id, selected.firstName, selected.lastName);
     } else if (selected === null) {
       this.args.onChange(null, null, null);
