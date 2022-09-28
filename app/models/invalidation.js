@@ -1,8 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default class VersionModel extends Model {
+export default class InvalidationModel extends Model {
   @attr('date') time;
 
-  @belongsTo('government-body', { inverse: 'startDate' }) governmentBodyStart;
   @belongsTo('government-body', { inverse: 'endDate' }) governmentBodyEnd;
 }

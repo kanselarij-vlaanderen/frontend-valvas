@@ -10,8 +10,8 @@ export default class GovernmentBodyModel extends Model {
 
   @belongsTo('government-body', { inverse: 'governmentBodies' })
   isTimespecializationOf;
-  @belongsTo('version') startDate;
-  @belongsTo('version') endDate;
+  @belongsTo('generation') startDate;
+  @belongsTo('invalidation') endDate;
   @belongsTo('concept') classification;
   @belongsTo('government-unit') governmentUnit;
 }
