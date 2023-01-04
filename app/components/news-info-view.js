@@ -62,7 +62,12 @@ export default class NewsInfoViewComponent extends Component {
   }
 
   get htmlContent() {
-    return this.args.newsInfo.htmlContent || '';
+    if (this.args.newsInfo.htmlContent instanceof Array ) {
+      console.warn("Received more than one html content in newsInfo, showing last.", this.args.newsInfo);
+      return this.args.newsInfo.htmlContent[this.args.newsInfo.htmlContent.length - 1] || '';
+    } else {
+      return this.args.newsInfo.htmlContent || '';
+    }
   }
 
   get rawText() {
