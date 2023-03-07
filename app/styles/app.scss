@@ -109,9 +109,13 @@ body > #valvas-inner-body-wrapper {
 }
 
 .decision__text {
+  ul {
+    list-style: disc;
+  }
+
   ul, ol {
+    margin-left: 2.4rem;
     list-style-type: revert;
-    list-style-position: inside;
   }
 }
 
