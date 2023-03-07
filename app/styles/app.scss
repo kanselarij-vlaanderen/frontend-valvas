@@ -113,6 +113,16 @@ body > #valvas-inner-body-wrapper {
     list-style-type: revert;
     list-style-position: inside;
   }
+
+  sub {
+    vertical-align: sub;
+    font-size: smaller;
+  }
+
+  sup {
+    vertical-align: super;
+    font-size: smaller;
+  }
 }
 
 @media screen and (max-width: 767px) {
