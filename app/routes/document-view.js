@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import $ from 'jquery';
+import { setHash } from '../utils/hash-util';
 
 export default class DocumentViewRoute extends Route {
   async model(params) {
@@ -10,6 +11,10 @@ export default class DocumentViewRoute extends Route {
     if (results.length) {
       return results.firstObject;
     }
+  }
+
+  async afterModel(model) {
+    setHash(model.title);
   }
 
   activate() {
