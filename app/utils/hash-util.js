@@ -1,5 +1,9 @@
+import VRDocumentName from 'frontend-valvas/utils/vr-document-name';
+
 export function setHash(name) {
-  const shortName = name.substring(0, name.search(/-\d+\s/) + name.match(/-\d+\s/)[0].length).trim();
-  const shortNameWithDashes = shortName.replaceAll(" ", "-");
-  window.location.hash = shortNameWithDashes;
+  const vrDoc = new VRDocumentName(name);
+  const shortName = vrDoc.vrNumberWithSuffix()
+                         .replaceAll(' ', '-')
+                         .replaceAll('/', '-');
+  window.location.hash = shortName;
 }
