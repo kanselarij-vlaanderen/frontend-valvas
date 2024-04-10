@@ -5,5 +5,5 @@ export function setHash(name) {
   const shortName = vrDoc.vrNumberWithSuffix()
                          .replaceAll(' ', '-')
                          .replaceAll('/', '-');
-  window.location.hash = shortName;
+  window.location.replace(`#${shortName}`);
 }
